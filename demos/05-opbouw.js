@@ -69,14 +69,14 @@ function assemble(p) {
 }
 
 const c = v3(st.L / 2, st.H / 2, 0);
-const at = (x, y, z) => c.clone().add(v3(x, y, z));
+const at = (x, y, z) => c.clone().add(v3(x * 1.3, y * 1.2, z * 1.3));
 const keys = [
   { t: 0.0, pos: at(-4.6, 2.6, 7.0), look: c, fov: 32 },
-  { t: 0.2, pos: at(-2.6, 0.6, 5.0), look: at(-0.4, -0.6, 0), fov: 34 },
-  { t: 0.38, pos: at(-1.2, 3.6, 4.6), look: at(0, -0.2, 0), fov: 34 },
+  { t: 0.2, pos: at(-2.6, 0.6, 5.0), look: c.clone().add(v3(-0.4, -0.6, 0)), fov: 34 },
+  { t: 0.38, pos: at(-1.2, 3.6, 4.6), look: c.clone().add(v3(0, -0.2, 0)), fov: 34 },
   { t: 0.53, pos: at(3.6, 1.4, 4.8), look: c, fov: 34 },
-  { t: 0.67, pos: at(2.6, 1.0, 3.4), look: at(0.2, 0.3, 0.3), fov: 34 },
-  { t: 0.81, pos: at(-3.4, 1.6, 3.8), look: at(0, 0.5, 0.3), fov: 34 },
+  { t: 0.67, pos: at(2.6, 1.0, 3.4), look: c.clone().add(v3(0.2, 0.3, 0.3)), fov: 34 },
+  { t: 0.81, pos: at(-3.4, 1.6, 3.8), look: c.clone().add(v3(0, 0.5, 0.3)), fov: 34 },
   { t: 0.93, pos: at(-5.0, 2.2, 6.4), look: c, fov: 32 },
   { t: 1.0, pos: at(-5.4, 2.4, 7.0), look: c, fov: 32 }
 ];
