@@ -1,14 +1,22 @@
-# Valier Trapleuningen: website
+# Valier: website
 
-Cinematische, premium homepage. Statische HTML/CSS/JS zonder build-stap.
+Een site rond één product: **de Valier-wandleuning**. Statische HTML/CSS/JS, zonder build-stap.
 
-- `STRATEGIE.md`: onderzoek, klantpsychologie, ontwerpsysteem en **wat we van jou nodig hebben**
-- `index.html`, `styles.css`, `main.js`: de site
-- `demos/`: **10 interactieve 3D-concepten** (Three.js). De camera beweegt via scroll langs trap en leuning. Overzicht: `demos/index.html`
-  - `demos/lib/core.js`: renderer, scroll naar camera-pad, hoofdstukken
-  - `demos/lib/stair.js`: procedurele trappen, leuningen en materialen
-  - Tip: voeg `?p=0.5` toe aan een demo-URL om direct naar 50% van de scroll te springen
-- `vendor/`: GSAP 3.12.5, ScrollTrigger, Lenis 1.1.13 en Three.js r160, lokaal meegeleverd (snel, geen CDN-afhankelijkheid)
+## Opbouw
+- `index.html`: de homepage
+  1. **Productfilm (3D):** de leuning in de hoofdrol. Scroll stuurt de camera langs het vierkante profiel, de wandhouder, de delen om de hoek en de afwerkingen. Scherptediepte houdt de leuning scherp.
+  2. **Projecten:** echte foto's (zonder metadata/locatie), met een vergrotingsweergave
+  3. Waarom Valier, werkwijze, specificaties, veelgestelde vragen
+  4. **Aanvraag:** prijs op maat in drie stappen
+- `js/film.js`: de 3D-scène (Three.js) met het leuningmodel, de houders, de trap en de camera-choreografie
+- `main.js`: smooth scroll, navigatie, onthullingen, lightbox en formulier
+- `styles.css`: vormgeving
+- `assets/photos/`: geoptimaliseerde projectfoto's (1200px en 600px)
+- `vendor/`: Three.js r160 (met postprocessing), GSAP, ScrollTrigger en Lenis, lokaal meegeleverd
+- `STRATEGIE.md`: onderzoek, klantpsychologie en ontwerpkeuzes
+- `demos/`: eerdere 3D-concepten (archief, niet meer gelinkt)
+
+Tip: `?p=0.5` achter de URL springt de film direct naar 50%.
 
 ## Lokaal bekijken
 ```bash
@@ -17,9 +25,9 @@ python3 -m http.server 8080
 ```
 
 ## Live zetten
-Sleep de map naar Netlify Drop, of koppel de repo aan Vercel/Netlify. Er is geen build nodig.
+Sleep de map naar app.netlify.com/drop, of koppel de repo aan Netlify of Vercel. Er is geen build nodig.
 
-## Echte beelden invoegen
-- Hero-video: zie de opmerking in `index.html` bij `.hero__media`
-- Projecten: vervang `<div class="ph ph--1">` door `<img src="assets/project-1.avif" alt="…" class="ph" style="object-fit:cover;width:100%;height:124%">`
-- Formulier: koppel in `main.js` (zoek op `TODO`) aan Formspree of HubSpot
+## Nog te doen
+- Formulier koppelen: in `main.js`, zoek op `TODO`
+- Echte contactgegevens in de footer
+- Specificaties controleren (profielmaat, kleuren)

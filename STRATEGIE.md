@@ -92,20 +92,18 @@ Bij een site van €50k betaal je niet voor "meer pagina's". Je betaalt voor **z
 - **Motion:** easing `cubic-bezier(.16,1,.3,1)`. Alles glijdt, niets stuitert. Smooth scroll via Lenis, scroll-animaties via GSAP ScrollTrigger.
 - **Respect voor `prefers-reduced-motion`:** wie minder beweging wil, krijgt een rustige versie.
 
-## 5. Sitestructuur (huidige build = de homepage, het belangrijkste deel)
+## 5. Sitestructuur: één product
 
-1. **Intro / preloader:** het merk en een lijn die de leuning tekent
-2. **Hero:** "Elke trede verdient een lijn." Cinematisch beeld/video, één CTA
-3. **Manifest:** wie we zijn, in drie zinnen. Woorden lichten op tijdens het scrollen
-4. **Materialen:** staal, RVS, eiken en glas, met horizontale cinematic scroll
-5. **De leuning tekent zich:** SVG-lijn die met het scrollen wordt getekend (wow-moment)
-6. **Werkwijze:** vier stappen (sticky): inmeten, ontwerp, werkplaats, montage
-7. **Projecten:** grote beeldkaarten
-8. **Bewijs:** cijfers en een quote
-9. **Intake:** stapsgewijze aanvraag (materiaal → stijl → gegevens)
-10. **Footer:** groot merkstatement
+Valier verkoopt één product: de vierkante stalen wandleuning op maat. De site is daarom gebouwd als een **productpagina**, net als bij Apple of Rimowa: de leuning staat in de hoofdrol en de trap is decor.
 
-**Volgende pagina's (fase 2):** projectdetail-cases, Over ons / Atelier, Voor architecten (technische downloads), FAQ, Contact.
+1. **Productfilm (3D, scroll-gestuurd):** de leuning, het vierkante profiel (40 × 40), de wandhouder (die uit elkaar schuift), de delen om de hoek, de afwerkingen (mat zwart, goud, antraciet, wit) en een totaalbeeld
+2. **Projecten:** echte foto's als bewijs ("Geplaatst. Niet gerenderd.")
+3. **Waarom Valier:** op maat, om elke hoek, strak gemonteerd
+4. **Werkwijze:** foto sturen, op maat gemaakt, montage
+5. **Specificaties**
+6. **Veelgestelde vragen:** neemt bezwaren weg vóór de aanvraag
+7. **Aanvraag:** prijs op maat in drie stappen
+8. Op mobiel staat er een vaste knop "Vraag een prijs op maat" onderin beeld
 
 ## 6. Technische kwaliteit
 
