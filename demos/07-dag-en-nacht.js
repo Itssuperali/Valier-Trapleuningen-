@@ -25,7 +25,7 @@ for (let i = 0; i < st.N; i += 2) {
   scene.add(s);
 }
 const ledLights = [0.15, 0.4, 0.65, 0.9].map(u => {
-  const l = new THREE.PointLight(0xffc98a, 0, 2.6, 2);
+  const l = new THREE.PointLight(0xffc98a, 0, 1.8, 2);
   l.position.copy(st.railCurve.getPointAt(u)).add(v3(0, -0.12, 0));
   scene.add(l);
   return l;
@@ -103,8 +103,8 @@ onFrame((dt, t) => {
   gobo.lookAt(sun.position);
   ledMat.color.setRGB(1, 0.8, 0.55).multiplyScalar(s.led * 1.6);
   stepMat.color.setRGB(0.55, 0.53, 0.5).lerp(tmp.setRGB(1.4, 1.15, 0.84), s.led); // brushed plate by day, warm glow at night
-  ledLights.forEach(l => (l.intensity = s.led * 2.2));
-  renderer.toneMappingExposure = lerp(1.0, 1.25, s.led);
+  ledLights.forEach(l => (l.intensity = s.led * 0.8));
+  renderer.toneMappingExposure = lerp(1.0, 1.1, s.led);
   setEnvIntensity(scene, lerp(0.08, 0.75, s.hemi));
   // readable UI on light/dark backgrounds
   const lum = s.bg.r * 0.299 + s.bg.g * 0.587 + s.bg.b * 0.114;
