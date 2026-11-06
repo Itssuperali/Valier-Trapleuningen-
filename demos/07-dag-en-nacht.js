@@ -76,9 +76,9 @@ function sample(p) {
 }
 
 const keys = [
-  { t: 0, pos: v3(-1.6, 2.1, 6.6), look: v3(st.L * 0.5, st.H * 0.48, 0), fov: 36 },
-  { t: 0.5, pos: v3(0.3, 1.8, 5.4), look: v3(st.L * 0.52, st.H * 0.5, 0), fov: 36 },
-  { t: 1, pos: v3(1.6, 1.5, 4.3), look: v3(st.L * 0.56, st.H * 0.55, 0), fov: 36 }
+  { t: 0, pos: v3(-2.4, 2.1, 7.0), look: v3(st.L * 0.5 - 1.3, st.H * 0.46, 0), fov: 36 },
+  { t: 0.5, pos: v3(-0.6, 1.8, 5.9), look: v3(st.L * 0.52 - 1.1, st.H * 0.5, 0), fov: 36 },
+  { t: 1, pos: v3(0.8, 1.5, 4.8), look: v3(st.L * 0.56 - 0.9, st.H * 0.55, 0), fov: 36 }
 ];
 const rig = createRig(keys, { sway: 0.05 });
 const scroll = createScroll();
@@ -102,7 +102,7 @@ onFrame((dt, t) => {
   gobo.position.copy(target).addScaledVector(dir, 4.5);
   gobo.lookAt(sun.position);
   ledMat.color.setRGB(1, 0.8, 0.55).multiplyScalar(s.led * 1.6);
-  stepMat.color.setRGB(1, 0.82, 0.6).multiplyScalar(s.led * 1.4);
+  stepMat.color.setRGB(0.55, 0.53, 0.5).lerp(tmp.setRGB(1.4, 1.15, 0.84), s.led); // brushed plate by day, warm glow at night
   ledLights.forEach(l => (l.intensity = s.led * 2.2));
   renderer.toneMappingExposure = lerp(1.0, 1.25, s.led);
   setEnvIntensity(scene, lerp(0.08, 0.75, s.hemi));
