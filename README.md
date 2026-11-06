@@ -4,7 +4,11 @@ Cinematische, premium homepage. Statische HTML/CSS/JS zonder build-stap.
 
 - `STRATEGIE.md`: onderzoek, klantpsychologie, ontwerpsysteem en **wat we van jou nodig hebben**
 - `index.html`, `styles.css`, `main.js`: de site
-- `vendor/`: GSAP 3.12.5, ScrollTrigger en Lenis 1.1.13, lokaal meegeleverd (snel, geen CDN-afhankelijkheid)
+- `demos/`: **10 interactieve 3D-concepten** (Three.js). De camera beweegt via scroll langs trap en leuning. Overzicht: `demos/index.html`
+  - `demos/lib/core.js`: renderer, scroll naar camera-pad, hoofdstukken
+  - `demos/lib/stair.js`: procedurele trappen, leuningen en materialen
+  - Tip: voeg `?p=0.5` toe aan een demo-URL om direct naar 50% van de scroll te springen
+- `vendor/`: GSAP 3.12.5, ScrollTrigger, Lenis 1.1.13 en Three.js r160, lokaal meegeleverd (snel, geen CDN-afhankelijkheid)
 
 ## Lokaal bekijken
 ```bash

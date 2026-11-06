@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Opbouw · Valier demo 05</title>
+  <meta name="description" content="De trap bouwt zichzelf op terwijl u scrolt, onderdeel voor onderdeel.">
+  <meta name="theme-color" content="#e9e5de">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lib/demo.css">
+  <script type="importmap">{"imports":{"three":"../vendor/three.module.min.js","three/addons/":"../vendor/addons/"}}</script>
+</head>
+<body data-theme="light" style="--bg:#e9e5de">
+  <canvas class="stage" aria-label="3D-weergave: Opbouw"></canvas>
+  <div class="scrim scrim--right" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="loader" aria-hidden="true">Valier</div>
+
+  <header class="top">
+    <a class="top__back" href="./">← Alle demo's</a>
+    <a class="top__brand" href="../">VALIER</a>
+    <span>05 / 10 · Opbouw</span>
+  </header>
+
+
+  <section class="chapter" data-from="0" data-to="0.1" data-pos="right"><p class="k">Demo 05 · Opbouw</p><h1>Van onderdeel<br>tot <em>geheel.</em></h1><p>Scroll en zie hoe een Valier-trap wordt opgebouwd.</p></section>
+  <section class="chapter" data-from="0.12" data-to="0.28" data-pos="right"><p class="k">01 · Draagconstructie</p><h2>De <em>boom.</em></h2><p>Twee zigzagbomen uit 12 mm staalplaat, gelaserd op 0,1 mm nauwkeurig.</p></section>
+  <section class="chapter" data-from="0.3" data-to="0.46" data-pos="right"><p class="k">02 · Treden</p><h2>Massief<br><em>eiken.</em></h2><p>15 treden van 45 mm dik, geolied en met de hand afgewerkt.</p></section>
+  <section class="chapter" data-from="0.48" data-to="0.6" data-pos="right"><p class="k">03 · Staanders</p><h2>De <em>staanders.</em></h2><p>Koker 40×40 mm, onzichtbaar gelast aan de boom.</p></section>
+  <section class="chapter" data-from="0.62" data-to="0.74" data-pos="right"><p class="k">04 · Spijlen</p><h2>Het <em>ritme.</em></h2><p>Twee spijlen per trede. Tussenruimte kleiner dan 10 cm, volgens het Bouwbesluit.</p></section>
+  <section class="chapter" data-from="0.76" data-to="0.88" data-pos="right"><p class="k">05 · Handlijst</p><h2>De <em>lijn.</em></h2><p>Als laatste schuift de handlijst op zijn plaats. Eén lijn die alles verbindt.</p></section>
+  <section class="chapter" data-from="0.91" data-to="1" data-pos="right"><p class="k">Gereed</p><h2>Klaar voor<br><em>generaties.</em></h2><div class="actions"><a class="btn btn--solid" href="06-configurator.html">Volgende demo →</a><a class="btn" href="./">Alle demo's</a><a class="btn" href="../#intake">Plan een gesprek</a></div></section>
+
+  <div class="progress" aria-hidden="true"><i></i></div>
+  <div class="hint" aria-hidden="true">Scroll</div>
+
+  <main class="scroll" style="height:1000vh" aria-hidden="true"></main>
+
+  <script src="../vendor/lenis.min.js"></script>
+  <script type="module" src="05-opbouw.js"></script>
+</body>
+</html>

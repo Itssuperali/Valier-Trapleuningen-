@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dag &amp; Nacht · Valier demo 07</title>
+  <meta name="description" content="Scroll door een dag. Van ochtendzon tot LED-verlichting in de leuning.">
+  <meta name="theme-color" content="#d9cbb6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lib/demo.css">
+  <script type="importmap">{"imports":{"three":"../vendor/three.module.min.js","three/addons/":"../vendor/addons/"}}</script>
+</head>
+<body data-theme="dark" style="--bg:#d9cbb6">
+  <canvas class="stage" aria-label="3D-weergave: Dag &amp; Nacht"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="loader" aria-hidden="true">Valier</div>
+
+  <header class="top">
+    <a class="top__back" href="./">← Alle demo's</a>
+    <a class="top__brand" href="../">VALIER</a>
+    <span>07 / 10 · Dag &amp; Nacht</span>
+  </header>
+
+  <aside class="hud" aria-hidden="true"></aside>
+
+  <section class="chapter" data-from="0" data-to="0.16"><p class="k">Demo 07 · Dag &amp; Nacht</p><h1>Een trap<br>leeft met het <em>licht.</em></h1><p>Scroll door een volledige dag in één huis.</p></section>
+  <section class="chapter" data-from="0.22" data-to="0.4"><p class="k">Middag</p><h2>Schaduwen<br>als <em>tekening.</em></h2><p>Spijlen werpen lijnen over de treden. Een tweede ontwerp, gratis geleverd door de zon.</p></section>
+  <section class="chapter" data-from="0.48" data-to="0.64"><p class="k">Avond</p><h2>Warm<br><em>strijklicht.</em></h2><p>Laag licht laat de nerf van het eiken en de korrel van het staal zien.</p></section>
+  <section class="chapter" data-from="0.72" data-to="0.86"><p class="k">Nacht</p><h2>Geïntegreerde<br><em>LED.</em></h2><p>Een warmwitte LED-lijn in de onderkant van de handlijst, plus wandspots per trede. Veilig zonder hard licht.</p><div class="spec"><span><b>2700 K</b>warmwit</span><span><b>dimbaar</b>via app</span></div></section>
+  <section class="chapter" data-from="0.9" data-to="1"><p class="k">Elk uur</p><h2>Mooi op elk <em>uur.</em></h2><div class="actions"><a class="btn btn--solid" href="08-de-vide.html">Volgende demo →</a><a class="btn" href="./">Alle demo's</a><a class="btn" href="../#intake">Plan een gesprek</a></div></section>
+
+  <div class="progress" aria-hidden="true"><i></i></div>
+  <div class="hint" aria-hidden="true">Scroll</div>
+
+  <main class="scroll" style="height:900vh" aria-hidden="true"></main>
+
+  <script src="../vendor/lenis.min.js"></script>
+  <script type="module" src="07-dag-en-nacht.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Showroom 360° · Valier demo 10</title>
+  <meta name="description" content="Draai zelf rond de trap. Tik op een punt voor details en wissel van afwerking.">
+  <meta name="theme-color" content="#11100f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lib/demo.css">
+  <script type="importmap">{"imports":{"three":"../vendor/three.module.min.js","three/addons/":"../vendor/addons/"}}</script>
+</head>
+<body data-theme="dark" style="--bg:#11100f">
+  <canvas class="stage" aria-label="3D-weergave: Showroom 360°"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="loader" aria-hidden="true">Valier</div>
+
+  <header class="top">
+    <a class="top__back" href="./">← Alle demo's</a>
+    <a class="top__brand" href="../">VALIER</a>
+    <span>10 / 10 · Showroom 360°</span>
+  </header>
+
+  <section class="chapter" data-from="0" data-to="1" style="opacity:1;visibility:visible">
+    <p class="k">Demo 10 · Showroom 360°</p>
+    <h1>Bekijk het<br>van <em>dichtbij.</em></h1>
+    <p>Sleep om te draaien, scroll of knijp om te zoomen. Tik op een punt voor details.</p>
+  </section>
+  <div class="hotspots"></div>
+  <article class="card" role="dialog" aria-live="polite"><button aria-label="Sluiten">×</button><p class="k"></p><h3></h3><p class="card__body"></p></article>
+  <nav class="swatches" aria-label="Kies een afwerking">
+    <button data-finish="steel" class="is-active"><i style="background:#1b1b1c"></i><span>Zwart staal</span></button>
+    <button data-finish="rvs"><i style="background:linear-gradient(135deg,#f0f1f2,#9a9c9e)"></i><span>RVS</span></button>
+    <button data-finish="brass"><i style="background:linear-gradient(135deg,#f0d29c,#9b7643)"></i><span>Messing</span></button>
+  </nav>
+
+
+
+
+  <main class="scroll" style="height:100vh" aria-hidden="true"></main>
+
+  <script src="../vendor/lenis.min.js"></script>
+  <script type="module" src="10-showroom.js"></script>
+</body>
+</html>

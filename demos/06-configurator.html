@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configurator · Valier demo 06</title>
+  <meta name="description" content="Scroll of klik door vier karakters. Dezelfde trap, steeds een ander gevoel.">
+  <meta name="theme-color" content="#0f0e0d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lib/demo.css">
+  <script type="importmap">{"imports":{"three":"../vendor/three.module.min.js","three/addons/":"../vendor/addons/"}}</script>
+</head>
+<body data-theme="dark" style="--bg:#0f0e0d">
+  <canvas class="stage" aria-label="3D-weergave: Configurator"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="loader" aria-hidden="true">Valier</div>
+
+  <header class="top">
+    <a class="top__back" href="./">← Alle demo's</a>
+    <a class="top__brand" href="../">VALIER</a>
+    <span>06 / 10 · Configurator</span>
+  </header>
+
+  <nav class="swatches" aria-label="Kies een karakter">
+    <button data-preset="0"><i style="background:#1b1b1c"></i><span>Staal</span></button>
+    <button data-preset="1"><i style="background:linear-gradient(135deg,#f0f1f2,#9a9c9e)"></i><span>RVS</span></button>
+    <button data-preset="2"><i style="background:#9c6e43"></i><span>Eiken</span></button>
+    <button data-preset="3"><i style="background:linear-gradient(135deg,#f0d29c,#9b7643)"></i><span>Messing</span></button>
+  </nav>
+
+  <section class="chapter" data-from="0" data-to="0.18"><p class="k">Karakter I</p><h1>Zwart staal<br>&amp; <em>spijlen.</em></h1><p>Architectonisch en grafisch. De klassieker van het moderne interieur.</p></section>
+  <section class="chapter" data-from="0.24" data-to="0.43"><p class="k">Karakter II</p><h2>RVS<br>&amp; <em>buizen.</em></h2><p>Geborsteld RVS met horizontale buizen: licht, open, maritiem.</p></section>
+  <section class="chapter" data-from="0.49" data-to="0.68"><p class="k">Karakter III</p><h2>Eiken<br>&amp; <em>glas.</em></h2><p>Een warme houten handlijst die zweeft boven helder glas.</p></section>
+  <section class="chapter" data-from="0.74" data-to="0.9"><p class="k">Karakter IV</p><h2>Messing<br>&amp; <em>glas.</em></h2><p>Gerookt eiken en messing. Voor wie het buitengewone zoekt.</p></section>
+  <section class="chapter" data-from="0.94" data-to="1"><p class="k">Uw karakter</p><h2>Welke past bij <em>u?</em></h2><div class="actions"><a class="btn btn--solid" href="07-dag-en-nacht.html">Volgende demo →</a><a class="btn" href="./">Alle demo's</a><a class="btn" href="../#intake">Plan een gesprek</a></div></section>
+
+  <div class="progress" aria-hidden="true"><i></i></div>
+  <div class="hint" aria-hidden="true">Scroll</div>
+
+  <main class="scroll" style="height:1000vh" aria-hidden="true"></main>
+
+  <script src="../vendor/lenis.min.js"></script>
+  <script type="module" src="06-configurator.js"></script>
+</body>
+</html>
