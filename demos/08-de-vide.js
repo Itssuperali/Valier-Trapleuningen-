@@ -16,7 +16,7 @@ const floor = plane(40, 40, M.concreteLight); floor.rotation.x = -Math.PI / 2; s
 const wall = plane(40, H * 2 + 2, M.plaster); wall.position.set(L / 2, H + 1, -W / 2 - 0.001); scene.add(wall);
 const slabD = 5.5;
 const slab = box(6, 0.3, slabD, M.plaster); slab.position.set(L + 3, H - 0.15, -W / 2 + slabD / 2); scene.add(slab);
-const upper = box(6, 0.015, slabD, M.oakLight); upper.position.set(L + 3, H + 0.0075, -W / 2 + slabD / 2); scene.add(upper);
+const upper = box(6, 0.015, slabD, M.concreteLight); upper.position.set(L + 3, H + 0.0075, -W / 2 + slabD / 2); scene.add(upper);
 const sideWall = plane(slabD + 8, H * 2 + 2, M.plaster); sideWall.rotation.y = -Math.PI / 2; sideWall.position.set(L + 6, H + 1, 2); scene.add(sideWall);
 
 // Glass balustrade on the slab edge (x = L), continuing the stair's glass line
@@ -50,8 +50,8 @@ scene.add(sun, sun.target);
 setEnvIntensity(scene, 0.9);
 
 const keys = [
-  { t: 0.0, pos: v3(L + 2.0, H + 1.6, 2.6), look: v3(L * 0.35, 0.3, 0.8), fov: 40 },
-  { t: 0.18, pos: v3(L + 0.55, H + 1.35, 1.9), look: v3(L * 0.45, H * 0.35, 0), fov: 38 },
+  { t: 0.0, pos: v3(L + 0.6, H + 1.55, 3.0), look: v3(L * 0.4, H * 0.2, 0.3), fov: 42 },
+  { t: 0.18, pos: v3(L + 0.2, H + 1.3, 1.9), look: v3(L * 0.45, H * 0.35, 0), fov: 38 },
   { t: 0.42, pos: v3(L * 0.62, H * 0.95, 2.6), look: v3(L * 0.42, H * 0.5, 0), fov: 36 },
   { t: 0.62, pos: v3(L * 0.3, H * 0.38, 2.1), look: v3(L * 0.55, H * 0.55, 0), fov: 34 },
   { t: 0.82, pos: v3(-0.9, 0.45, 2.4), look: v3(L * 0.6, H * 0.95, 0), fov: 36 },
