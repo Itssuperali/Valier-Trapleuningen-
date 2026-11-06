@@ -13,6 +13,11 @@ const wall = plane(40, 14, M.plasterDark); wall.position.set(L / 2, 7, -W / 2 - 
 
 // Blueprint layer: edges, grid and dimension lines
 const edges = addEdges(st.group, { color: 0xe8f1ff, opacity: 0.9, threshold: 28 });
+// handrail as two drawn lines (top and bottom of the Ø42 tube)
+for (const dy of [0.0212, -0.0212]) {
+  const pts = st.railCurve.getSpacedPoints(240).map(q => q.add(v3(0, dy, 0)));
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), edges.mat));
+}
 const grid = new THREE.GridHelper(24, 96, 0x6f93b8, 0x2f4d6b);
 grid.material.transparent = true;
 grid.position.set(L / 2, 0.002, 0);
@@ -74,7 +79,7 @@ scene.add(sun, sun.target);
 setEnvIntensity(scene, 0.45);
 
 const keys = [
-  { t: 0.0, pos: v3(L / 2, H / 2 + 0.2, 16), look: v3(L / 2, H / 2, 0), fov: 17 },
+  { t: 0.0, pos: v3(L / 2 - 1.4, H / 2 + 0.3, 19), look: v3(L / 2 - 1.4, H / 2 + 0.1, 0), fov: 17 },
   { t: 0.3, pos: v3(L / 2 + 7, H / 2 + 3, 11), look: v3(L / 2, H / 2, 0), fov: 20 },
   { t: 0.58, pos: v3(L + 2.6, H + 1.4, 5), look: v3(L * 0.45, H * 0.45, 0), fov: 32 },
   { t: 0.8, pos: v3(-1.4, 1.3, 4.4), look: v3(L * 0.5, H * 0.48, 0), fov: 36 },
