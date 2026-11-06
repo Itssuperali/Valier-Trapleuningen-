@@ -2,10 +2,13 @@
 import { createStage, createScroll, createRig, createChapters, setEnvIntensity, THREE, v3 } from './lib/core.js';
 import { createMaterials, straightStair, plane, box } from './lib/stair.js';
 
-const { scene, camera, onFrame } = createStage({ background: '#e7e3dc', fog: [12, 30], exposure: 1.0 });
+const { scene, camera, onFrame } = createStage({ background: '#dfd9cf', fog: [12, 30], exposure: 0.88 });
 const M = createMaterials();
+const clearGlass = M.glass.clone();
+clearGlass.opacity = 0.1;
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xd9d2c7, roughness: 0.95 });
 const st = straightStair(M, {
-  treadMat: M.oakLight, treadThickness: 0.09, stringers: 'none', infill: 'glass', panels: 3,
+  treadMat: M.oak, treadThickness: 0.09, glassMat: clearGlass, stringers: 'none', infill: 'glass', panels: 3,
   railMat: M.rvs, railRadius: 0.0175, clampMat: M.rvs, metal: M.rvs
 });
 scene.add(st.group);
@@ -13,15 +16,15 @@ const { L, H, W } = st;
 
 // Architecture: tall white wall, ground floor, upper floor with a glass balustrade along the void
 const floor = plane(40, 40, M.concreteLight); floor.rotation.x = -Math.PI / 2; scene.add(floor);
-const wall = plane(40, H * 2 + 2, M.plaster); wall.position.set(L / 2, H + 1, -W / 2 - 0.001); scene.add(wall);
+const wall = plane(40, H * 2 + 2, wallMat); wall.position.set(L / 2, H + 1, -W / 2 - 0.001); scene.add(wall);
 const slabD = 5.5;
 const slab = box(6, 0.3, slabD, M.plaster); slab.position.set(L + 3, H - 0.15, -W / 2 + slabD / 2); scene.add(slab);
 const upper = box(6, 0.015, slabD, M.concreteLight); upper.position.set(L + 3, H + 0.0075, -W / 2 + slabD / 2); scene.add(upper);
-const sideWall = plane(slabD + 8, H * 2 + 2, M.plaster); sideWall.rotation.y = -Math.PI / 2; sideWall.position.set(L + 6, H + 1, 2); scene.add(sideWall);
+const sideWall = plane(slabD + 8, H * 2 + 2, wallMat); sideWall.rotation.y = -Math.PI / 2; sideWall.position.set(L + 6, H + 1, 2); scene.add(sideWall);
 
 // Glass balustrade on the slab edge (x = L), continuing the stair's glass line
 const gLen = slabD - W - 0.1;
-const glass = new THREE.Mesh(new THREE.BoxGeometry(0.017, 0.95, gLen), M.glass);
+const glass = new THREE.Mesh(new THREE.BoxGeometry(0.017, 0.95, gLen), clearGlass);
 glass.position.set(L + 0.04, H + 0.475, W / 2 + 0.1 + gLen / 2);
 glass.renderOrder = 2;
 scene.add(glass);
@@ -37,8 +40,8 @@ win.rotation.y = Math.PI / 2;
 win.position.set(-3.5, H, 2);
 scene.add(win);
 
-scene.add(new THREE.HemisphereLight(0xffffff, 0xd6cfc4, 1.2));
-const sun = new THREE.DirectionalLight(0xfff4e6, 2.8);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8f8576, 0.55));
+const sun = new THREE.DirectionalLight(0xfff0de, 3.0);
 sun.position.set(-6, 9, 5);
 sun.target.position.set(L / 2, H / 2, 0);
 sun.castShadow = true;
@@ -47,7 +50,8 @@ Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near:
 sun.shadow.bias = -0.0004;
 sun.shadow.radius = 4;
 scene.add(sun, sun.target);
-setEnvIntensity(scene, 0.9);
+setEnvIntensity(scene, 0.6);
+clearGlass.envMapIntensity = 1.4;
 
 const keys = [
   { t: 0.0, pos: v3(L + 0.6, H + 1.55, 3.0), look: v3(L * 0.4, H * 0.2, 0.3), fov: 42 },
