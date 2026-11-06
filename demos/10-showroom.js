@@ -40,7 +40,8 @@ Object.assign(controls, {
   enableDamping: true, dampingFactor: 0.06, minDistance: 0.9, maxDistance: 10,
   maxPolarAngle: Math.PI * 0.49, enablePan: false, autoRotate: true, autoRotateSpeed: 0.35, rotateSpeed: 0.6
 });
-const stopAuto = () => { controls.autoRotate = false; focus = null; };
+const intro = document.querySelector('.chapter');
+const stopAuto = () => { controls.autoRotate = false; focus = null; intro.style.transition = 'opacity .8s'; intro.style.opacity = 0; };
 renderer.domElement.addEventListener('pointerdown', stopAuto);
 renderer.domElement.addEventListener('wheel', stopAuto, { passive: true });
 
@@ -71,7 +72,6 @@ function open(i) {
   card.querySelector('h3').textContent = s.t;
   card.querySelector('.card__body').textContent = s.b;
   card.classList.add('is-open');
-  document.querySelector('.chapter').style.opacity = 0;
   stopAuto();
   const dir = camera.position.clone().sub(s.pt).normalize();
   dir.y = Math.max(dir.y, 0.2);
