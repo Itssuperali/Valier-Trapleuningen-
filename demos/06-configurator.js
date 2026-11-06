@@ -65,7 +65,9 @@ function wipe(p) {
 const c = v3(st.L / 2, st.H / 2, 0);
 const orbit = (deg, r, y, fov = 32) => {
   const a = THREE.MathUtils.degToRad(deg);
-  return { pos: c.clone().add(v3(Math.sin(a) * r, y, Math.cos(a) * r)), look: c.clone().add(v3(0, -0.15, 0)), fov };
+  // aim left of the stair so it sits on the right half of the screen, clear of the text
+  const side = v3(-Math.cos(a), 0, Math.sin(a)).multiplyScalar(0.9);
+  return { pos: c.clone().add(v3(Math.sin(a) * r * 1.12, y + 0.2, Math.cos(a) * r * 1.12)), look: c.clone().add(v3(0, -0.1, 0)).add(side), fov };
 };
 const keys = [
   { t: 0, ...orbit(-38, 7.2, 0.9) },
