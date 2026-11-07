@@ -61,7 +61,7 @@ const numbered = s => s.rails.map((r, i) => ({ ...r, nr: i + 1 }));
 let state = S.load();
 let maxStep = state.step;
 const host = $('.cfg-viewer');
-const photoImg = $('.d-photo', host);
+let photoImg = $('.d-photo.is-on', host);
 const viewKey = { rail: 1 };   // which rail the photo shows when finishes differ per rail
 const preload = new Set();
 function syncViewer() {
@@ -73,13 +73,20 @@ function syncViewer() {
   const color = S.railColor(s, r);
   const file = `assets/detail/${size.form === 'rond' ? 'rond' : 'rect'}-${color}.jpg`;
   if (photoImg.getAttribute('src') !== file) {
-    host.classList.add('is-swapping');
+    // cross-fade: load into the hidden layer, then swap layers
+    const next = [...host.querySelectorAll('.d-photo')].find(i => i !== photoImg);
     const img = new Image();
-    img.onload = () => { photoImg.src = file; host.classList.remove('is-swapping'); };
-    img.onerror = () => host.classList.remove('is-swapping');
+    img.onload = () => {
+      next.src = file;
+      next.removeAttribute('aria-hidden');
+      photoImg.setAttribute('aria-hidden', 'true');
+      requestAnimationFrame(() => { next.classList.add('is-on'); photoImg.classList.remove('is-on'); photoImg = next; syncAlt(); });
+    };
     img.src = file;
   }
-  photoImg.alt = `Detail: VALIER-leuning ${size.formName.toLowerCase()} ${size.name}, ${colorOf(color).name.toLowerCase()}`;
+  const syncAlt = () => { host.querySelectorAll('.d-photo').forEach(i => (i.alt = i === photoImg ? altText : '')); };
+  const altText = `Detail: VALIER-leuning ${size.formName.toLowerCase()} ${size.name}, ${colorOf(color).name.toLowerCase()}`;
+  syncAlt();
   $('.d-spec', host).innerHTML = `<b>${esc(size.formName)} ${esc(size.name)}</b><span>${esc(colorOf(color).name)}${color === 'ral' && S.railRal(s, r) ? ' ' + esc(S.railRal(s, r)) : ''}</span>`;
   const lens = list.map(x => (lenOk(x.lengthMm) ? x.lengthMm.toLocaleString('nl-NL') + ' mm' : '—'));
   const differs = list.some(x => S.railProfile(s, x) !== S.railProfile(s, list[0]) || S.railColor(s, x) !== S.railColor(s, list[0]));
