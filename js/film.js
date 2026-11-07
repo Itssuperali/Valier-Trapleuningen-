@@ -446,7 +446,7 @@ function finishFor(p) {
   if (chosen) return finishes[chosen];
   if (p < 0.75 || p > 0.93) return finishes.zwart;
   if (p < 0.82) return finishes.goud;
-  if (p < 0.88) return finishes.antraciet;
+  if (p < 0.88) return finishes.wit;
   return finishes.zwart;
 }
 function updateFinish(p, dt) {
