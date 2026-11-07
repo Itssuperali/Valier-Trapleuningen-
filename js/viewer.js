@@ -1,7 +1,9 @@
 /* =========================================================
-   VALIER — productfilm: de leuning in de hoofdrol
-   Vierkant profiel 40×40, vierkante wandhouders, segmenten om de hoek.
-   Scroll stuurt de camera; scherptediepte houdt de leuning scherp.
+   VALIER — productviewer: de wandleuning in 3D
+   Vierkant (40×40) of rond profiel, haakse wandhouders, 1–4 delen om de hoek.
+   De pagina stuurt configuratie en camerastandpunt via events:
+     document.dispatchEvent(new CustomEvent('valier:config', { detail: { profiel, kleur, delen } }))
+     document.dispatchEvent(new CustomEvent('valier:shot',   { detail: 'profiel' }))
    ========================================================= */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
@@ -10,10 +12,11 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-const film = document.querySelector('.film');
-const canvas = film.querySelector('.film__canvas');
+const viewer = document.querySelector('.viewer');
+const canvas = viewer.querySelector('.viewer__canvas');
 const params = new URLSearchParams(location.search);
-const forced = params.has('p') ? Math.min(1, Math.max(0, parseFloat(params.get('p')))) : null;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let dirty = 30; // frames still to render; the loop sleeps when nothing changes
 const light = matchMedia('(pointer: coarse), (max-width: 760px)').matches; // phones/tablets: no post-processing
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -27,8 +30,7 @@ let renderer;
 try {
   renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 } catch (e) {
-  film.classList.add('no-webgl');
-  document.documentElement.classList.add('film-ready');
+  viewer.classList.add('no-webgl', 'is-ready');
   throw e;
 }
 renderer.setPixelRatio(Math.min(devicePixelRatio, light ? 1.5 : 1.75));
@@ -111,12 +113,6 @@ floorMat.map.repeat.set(4, 16);
 const riserMat = new THREE.MeshStandardMaterial({ color: 0xf2efe9, roughness: 0.7, emissive: 0xffffff, emissiveMap: glowTexture(), emissiveIntensity: 0.9, envMapIntensity: 0.3 });
 const ledMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.6, 1.25, 0.85) });
 
-const finishes = {
-  zwart: { color: new THREE.Color(0x141414), metalness: 0.3, roughness: 0.5, clearcoat: 0.3 },
-  goud: { color: new THREE.Color(0x8c7650), metalness: 0.7, roughness: 0.42, clearcoat: 0.12 }, // champagne-brons, gemeten op projectfoto's
-  antraciet: { color: new THREE.Color(0x3b3d3f), metalness: 0.35, roughness: 0.48, clearcoat: 0.25 },
-  wit: { color: new THREE.Color(0xeeece7), metalness: 0.05, roughness: 0.45, clearcoat: 0.2 }
-};
 
 /* ---------- Geometry helpers ---------- */
 function roundedRect(w, h, r) {
@@ -300,212 +296,247 @@ for (let j = 0; j < 8; j++) {
   scene.add(sb);
 }
 
-// Rails
+/* =========================================================
+   Rails: pieces along the two walls, each in square and round profile
+   ========================================================= */
 const railYA = x => rise + slope * (x - x0) + 0.9;
 const railYB = z => top2(0) + slope * (z - W) + 0.9;
-const A0 = v3(-0.05, railYA(-0.05), OFF), A1 = v3(Xc - 0.11, railYA(Xc - 0.11), OFF);
-const B0 = v3(Xc - OFF, railYB(0.11), 0.11), B1 = v3(Xc - OFF, railYB(2.6), 2.6);
-const railA = railSegment(A0, A1, v3(0, 0, 1));
-const railB = railSegment(B0, B1, v3(-1, 0, 0));
-scene.add(railA, railB);
-const dirA = A1.clone().sub(A0).normalize();
-const RA = u => A0.clone().lerp(A1, u);
+const ptA = x => v3(x, railYA(x), OFF);
+const ptB = (z, y) => v3(Xc - OFF, y, z);
+const yCorner = railYA(Xc - 0.11) + 0.05;
 
-const brackets = [];
-for (const u of [0.1, 0.5, 0.9]) {
-  const p = RA(u), b = bracket(ang);
-  b.position.set(p.x, p.y, 0);
-  scene.add(b); brackets.push(b);
+const PIECES = {
+  A:  { a: ptA(-0.05), b: ptA(Xc - 0.11), wall: 'A' },
+  A1: { a: ptA(-0.05), b: ptA(0.78), wall: 'A' },
+  A2: { a: ptA(0.92), b: ptA(Xc - 0.11), wall: 'A' },
+  B:  { a: ptB(0.11, yCorner), b: ptB(2.6, railYB(2.6)), wall: 'B' },
+  C:  { a: ptB(0.11, yCorner), b: ptB(0.8, railYB(0.8) - 0.02), wall: 'B' },
+  B2: { a: ptB(0.92, railYB(0.92)), b: ptB(2.6, railYB(2.6)), wall: 'B' }
+};
+// how many pieces → which pieces are shown (matches how Valier splits a kwartslag on site)
+const LAYOUTS = { 1: ['A'], 2: ['A', 'B'], 3: ['A', 'C', 'B2'], 4: ['A1', 'A2', 'C', 'B2'] };
+
+const RADIUS = 0.021;
+function roundSegment(a, b) {
+  const len = a.distanceTo(b);
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(RADIUS, RADIUS, len, 48, 1), railMat);
+  m.quaternion.setFromUnitVectors(v3(0, 1, 0), b.clone().sub(a).normalize());
+  m.position.copy(a).add(b).multiplyScalar(0.5);
+  m.castShadow = m.receiveShadow = true;
+  return m;
 }
-for (const u of [0.15, 0.85]) {
-  const p = B0.clone().lerp(B1, u), b = bracket(ang);
-  b.rotation.y = -Math.PI / 2;
-  b.position.set(Xc, p.y, p.z);
-  scene.add(b); brackets.push(b);
+
+for (const [name, p] of Object.entries(PIECES)) {
+  const normal = p.wall === 'A' ? v3(0, 0, 1) : v3(-1, 0, 0);
+  const horiz = p.wall === 'A' ? Math.abs(p.b.x - p.a.x) : Math.abs(p.b.z - p.a.z);
+  const pAng = Math.atan2(p.b.y - p.a.y, horiz);
+  p.square = railSegment(p.a, p.b, normal);
+  p.round = roundSegment(p.a, p.b);
+  p.brackets = [];
+  const len = p.a.distanceTo(p.b);
+  const us = len > 2.2 ? [0.1, 0.5, 0.9] : len > 0.9 ? [0.18, 0.82] : [0.5];
+  for (const u of us) {
+    const q = p.a.clone().lerp(p.b, u), b = bracket(pAng);
+    if (p.wall === 'A') b.position.set(q.x, q.y, 0);
+    else { b.rotation.y = -Math.PI / 2; b.position.set(Xc, q.y, q.z); }
+    p.brackets.push(b);
+    scene.add(b);
+  }
+  scene.add(p.square, p.round);
+  p.name = name;
 }
-const hero = brackets[1];
+
+const config = { profiel: 'vierkant', kleur: 'zwart', delen: 3 };
+function applyLayout() {
+  const shown = LAYOUTS[Math.max(1, Math.min(4, config.delen | 0))];
+  for (const p of Object.values(PIECES)) {
+    const on = shown.includes(p.name);
+    p.square.visible = on && config.profiel === 'vierkant';
+    p.round.visible = on && config.profiel === 'rond';
+    p.brackets.forEach(b => (b.visible = on));
+  }
+  dirty = 30;
+}
 
 /* ---------- Light: warm, raking along the wall ---------- */
-scene.add(new THREE.HemisphereLight(0xfff1df, 0x2a2018, 0.18));
-const key = new THREE.SpotLight(0xffdcb2, 75, 16, 0.5, 0.85, 1.3);
-key.position.set(-0.5, 5.0, 1.25);
-key.target.position.set(2.0, 2.4, 0);
+scene.add(new THREE.HemisphereLight(0xfff1df, 0x2a2018, 0.2));
+const key = new THREE.SpotLight(0xffdcb2, 80, 16, 0.55, 0.85, 1.3);
+key.position.set(-0.5, 5.2, 1.4);
+key.target.position.set(2.1, 2.6, 0);
 key.castShadow = true;
 key.shadow.mapSize.set(light ? 1024 : 2048, light ? 1024 : 2048);
 key.shadow.bias = -0.0002;
 key.shadow.normalBias = 0.01;
 scene.add(key, key.target);
-const fill = new THREE.PointLight(0xffc690, 1.4, 6, 2);
-fill.position.set(Xc - 0.6, 3.6, 1.6);
+const fill = new THREE.PointLight(0xffc690, 1.6, 6, 2);
+fill.position.set(Xc - 0.6, 3.8, 1.6);
 scene.add(fill);
 
-/* ---------- Camera choreography ---------- */
-const BK = hero.position.clone();
-const keys = [
-  { t: 0.0, pos: RA(0.45).add(v3(-0.38, -0.22, 0.95)), look: RA(0.45).add(v3(-0.15, 0.12, 0)), fov: 30, ap: 0.5 },
-  { t: 0.15, pos: RA(0.4).add(v3(-0.3, -0.2, 0.8)), look: RA(0.42).add(v3(-0.16, 0.15, 0)), fov: 30, ap: 0.5 },
-  { t: 0.3, pos: A0.clone().addScaledVector(dirA, -0.3).add(v3(0.015, 0.03, 0.06)), look: A0.clone().addScaledVector(dirA, 0.04), fov: 26, ap: 1 },
-  { t: 0.47, pos: BK.clone().add(v3(-0.17, -0.2, 0.3)), look: BK.clone().add(v3(0, -0.06, 0.035)), fov: 28, ap: 1 },
-  { t: 0.63, pos: v3(Xc - 0.8, 3.5, 1.15), look: v3(Xc - 0.1, 3.22, 0.18), fov: 34, ap: 0.5 },
-  { t: 0.8, pos: RA(0.64).add(v3(-0.28, 0.1, 0.58)), look: RA(0.6).add(v3(0.04, -0.03, 0)), fov: 30, ap: 0.5 },
-  { t: 1.0, pos: v3(-1.7, 1.55, 4.7), look: v3(1.9, 1.95, 0.5), fov: 38, ap: 0.15 }
-];
-const P = new THREE.CatmullRomCurve3(keys.map(k => k.pos), false, 'centripetal');
-const T = new THREE.CatmullRomCurve3(keys.map(k => k.look), false, 'centripetal');
-const pos = new THREE.Vector3(), look = new THREE.Vector3();
-const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
-addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; });
-function placeCamera(p, dt, t) {
-  let i = 0;
-  while (i < keys.length - 2 && p > keys[i + 1].t) i++;
-  const k0 = keys[i], k1 = keys[i + 1];
-  const local = clamp((p - k0.t) / (k1.t - k0.t));
-  const e = lerp(local, smooth(local), 0.6);
-  const u = (i + e) / (keys.length - 1);
-  P.getPoint(u, pos); T.getPoint(u, look);
-  // portrait hero: aim lower so the rail rises through the top half, clear of the headline
-  if (camera.aspect < 1) look.y -= 0.3 * (1 - smooth(range(p, 0.12, 0.24)));
-  // portrait screens: step back so the rail stays in frame
-  if (camera.aspect < 1.25) pos.sub(look).multiplyScalar(Math.pow(Math.min(2.2, 1.25 / camera.aspect), 0.85)).add(look);
-  const fov = lerp(k0.fov, k1.fov, smooth(local));
-  if (Math.abs(camera.fov - fov) > 1e-3) { camera.fov = fov; camera.updateProjectionMatrix(); }
-  camera.position.copy(pos);
-  camera.lookAt(look);
-  mouse.sx += (mouse.x - mouse.sx) * (1 - Math.exp(-dt * 2));
-  mouse.sy += (mouse.y - mouse.sy) * (1 - Math.exp(-dt * 2));
-  const d = pos.distanceTo(look), amp = 0.03 * Math.min(1, d / 1.5);
-  camera.translateX(mouse.sx * amp + Math.sin(t * 0.5) * amp * 0.12);
-  camera.translateY(-mouse.sy * amp + Math.sin(t * 0.7) * amp * 0.1);
-  camera.lookAt(look);
-  return { focus: camera.position.distanceTo(look), ap: lerp(k0.ap, k1.ap, smooth(local)) };
+/* =========================================================
+   Camera: fixed shots, calm straight-line moves between them.
+   All shots sit inside the room (x < wall B, z > wall A) and above the
+   stair, so a straight move can never pass through a wall or the steps.
+   ========================================================= */
+const A0 = ptA(-0.05), AEND = ptA(Xc - 0.11);
+const dirA = AEND.clone().sub(A0).normalize();
+const RA = u => A0.clone().lerp(AEND, u);
+function heroBracket() {
+  let best = null, d = Infinity;
+  for (const p of Object.values(PIECES)) for (const b of p.brackets) {
+    if (!b.visible || p.wall !== 'A') continue;
+    const dd = Math.abs(b.position.x - 1.75);
+    if (dd < d) { d = dd; best = b; }
+  }
+  return (best || PIECES.A.brackets[1]).position.clone();
+}
+const SHOTS = {
+  overzicht: () => ({ pos: RA(0.44).add(v3(-0.5, -0.3, 1.02)), look: RA(0.53).add(v3(-0.04, -0.03, 0)), fov: 32, ap: 0.6 }),
+  profiel: () => ({ pos: A0.clone().addScaledVector(dirA, -0.34).add(v3(0.02, 0.035, 0.075)), look: A0.clone().addScaledVector(dirA, 0.05), fov: 26, ap: 1 }),
+  kleur: () => ({ pos: RA(0.46).add(v3(-0.3, -0.17, 0.66)), look: RA(0.5).add(v3(-0.02, 0.0, 0)), fov: 30, ap: 0.7 }),
+  hoek: () => ({ pos: v3(Xc - 2.0, 4.05, 2.55), look: v3(Xc - 0.55, 3.45, 0.5), fov: 42, ap: 0.35 }),
+  lengte: () => ({ pos: v3(-1.05, 1.5, 2.45), look: v3(1.75, 2.45, 0.1), fov: 42, ap: 0.25 }),
+  houder: () => { const b = heroBracket(); return { pos: b.clone().add(v3(-0.18, -0.2, 0.32)), look: b.clone().add(v3(0, -0.06, 0.035)), fov: 28, ap: 1 }; }
+};
+
+const cam = { pos: v3(0, 0, 0), look: v3(0, 0, 0), fov: 34, ap: 0.5 };
+let tween = null, current = 'overzicht';
+const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+function goTo(name, instant = false) {
+  if (!SHOTS[name]) return;
+  current = name;
+  const to = SHOTS[name]();
+  if (instant || reduceMotion) { Object.assign(cam, { pos: to.pos, look: to.look, fov: to.fov, ap: to.ap }); tween = null; }
+  else tween = { from: { pos: cam.pos.clone(), look: cam.look.clone(), fov: cam.fov, ap: cam.ap }, to, t: 0, dur: 1.15 };
+  viewer.dataset.shot = name;
+  tabs.forEach(t => t.classList.toggle('is-active', t.dataset.view === name));
+  dirty = 60;
 }
 
-/* ---------- Post-processing: depth of field ---------- */
+/* ---------- Post-processing: gentle depth of field on desktop ---------- */
 let composer = null, bokeh = null;
 if (!light) {
   composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  bokeh = new BokehPass(scene, camera, { focus: 1, aperture: 0.003, maxblur: 0.006 });
+  bokeh = new BokehPass(scene, camera, { focus: 1, aperture: 0.002, maxblur: 0.005 });
   composer.addPass(bokeh);
   composer.addPass(new OutputPass());
 }
 function resize() {
-  const w = canvas.clientWidth || innerWidth, h = canvas.clientHeight || innerHeight;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (!w || !h) return;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
-  // portrait: shift the picture up so the rail sits above the text block
-  if (camera.aspect < 1) camera.setViewOffset(w, h, 0, h * 0.2, w, h); else camera.clearViewOffset();
   camera.updateProjectionMatrix();
   if (composer) {
     composer.setPixelRatio(renderer.getPixelRatio());
     composer.setSize(w, h);
     bokeh.uniforms.aspect.value = camera.aspect;
   }
+  dirty = 4;
 }
-addEventListener('resize', resize);
-resize();
+new ResizeObserver(resize).observe(canvas);
 
-/* ---------- Overlays: chapters, labels, finishes ---------- */
-const chapters = [...film.querySelectorAll('.chapter')].map(el => ({ el, from: +el.dataset.from, to: +el.dataset.to }));
-const bar = film.querySelector('.film__progress i');
-function updateChapters(p) {
-  for (const c of chapters) {
-    const fi = c.from <= 0 ? 1 : smooth(range(p, c.from, c.from + 0.04));
-    const fo = c.to >= 1 ? 0 : smooth(range(p, c.to - 0.04, c.to));
-    const o = fi * (1 - fo);
-    c.el.style.opacity = o.toFixed(3);
-    c.el.style.transform = `translate3d(0, ${((1 - fi) * 24 - fo * 24).toFixed(1)}px, 0)`;
-    c.el.style.visibility = o < 0.002 ? 'hidden' : 'visible';
-    c.el.style.pointerEvents = o > 0.6 ? 'auto' : 'none';
-  }
-  if (bar) bar.style.transform = `scaleY(${p.toFixed(4)})`;
+/* ---------- Finish ---------- */
+const finishes = {
+  zwart: { color: new THREE.Color(0x141414), metalness: 0.3, roughness: 0.5, clearcoat: 0.3 },
+  goud: { color: new THREE.Color(0x8c7650), metalness: 0.7, roughness: 0.42, clearcoat: 0.12 }, // champagne-brons, gemeten op projectfoto's
+  wit: { color: new THREE.Color(0xeeece7), metalness: 0.05, roughness: 0.45, clearcoat: 0.2 }
+};
+let goal = finishes.zwart;
+function stepFinish(dt) {
+  const k = 1 - Math.exp(-dt * 6);
+  const before = railMat.color.getHex();
+  railMat.color.lerp(goal.color, k);
+  railMat.metalness = lerp(railMat.metalness, goal.metalness, k);
+  railMat.roughness = lerp(railMat.roughness, goal.roughness, k);
+  railMat.clearcoat = lerp(railMat.clearcoat, goal.clearcoat, k);
+  return before !== railMat.color.getHex();
 }
 
+/* ---------- Dimension labels (profile shot) ---------- */
 const yA = new THREE.Vector3().crossVectors(dirA, v3(0, 0, 1));
 const labels = [
-  { el: film.querySelector('[data-label="w"]'), pt: A0.clone().addScaledVector(yA, 0.034), from: 0.22, to: 0.37 },
-  { el: film.querySelector('[data-label="h"]'), pt: A0.clone().add(v3(0, 0, 0.034)), from: 0.22, to: 0.37 }
+  { el: viewer.querySelector('[data-label="w"]'), pt: () => A0.clone().addScaledVector(yA, 0.036) },
+  { el: viewer.querySelector('[data-label="h"]'), pt: () => A0.clone().add(v3(0, 0, 0.036)) }
 ];
 const _p = new THREE.Vector3();
-function updateLabels(p) {
+function updateLabels(show) {
   for (const l of labels) {
     if (!l.el) continue;
-    _p.copy(l.pt).project(camera);
-    const o = smooth(range(p, l.from, l.from + 0.04)) * (1 - smooth(range(p, l.to - 0.04, l.to)));
-    l.el.style.opacity = (_p.z < 1 ? o : 0).toFixed(3);
+    _p.copy(l.pt()).project(camera);
+    l.el.style.opacity = show && _p.z < 1 ? 1 : 0;
     l.el.style.transform = `translate3d(${((_p.x * 0.5 + 0.5) * canvas.clientWidth).toFixed(1)}px, ${((-_p.y * 0.5 + 0.5) * canvas.clientHeight).toFixed(1)}px, 0)`;
   }
 }
 
-// Finish: automatic tour while scrolling, or the visitor's own choice
-let chosen = null;
-const finishButtons = [...film.querySelectorAll('[data-finish]')];
-finishButtons.forEach(b => b.addEventListener('click', () => { chosen = b.dataset.finish; }));
-const tmpC = new THREE.Color();
-function finishFor(p) {
-  if (chosen) return finishes[chosen];
-  if (p < 0.75 || p > 0.93) return finishes.zwart;
-  if (p < 0.82) return finishes.goud;
-  if (p < 0.88) return finishes.wit;
-  return finishes.zwart;
-}
-function updateFinish(p, dt) {
-  const f = finishFor(p);
-  const k = forced !== null ? 1 : 1 - Math.exp(-dt * 4);
-  railMat.color.lerp(f.color, k);
-  railMat.metalness = lerp(railMat.metalness, f.metalness, k);
-  railMat.roughness = lerp(railMat.roughness, f.roughness, k);
-  railMat.clearcoat = lerp(railMat.clearcoat, f.clearcoat, k);
-  const name = Object.keys(finishes).find(n => finishes[n] === f);
-  finishButtons.forEach(b => b.classList.toggle('is-active', b.dataset.finish === name));
+/* ---------- Pointer: a little life, desktop only ---------- */
+const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+if (matchMedia('(pointer: fine)').matches && !reduceMotion) {
+  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; dirty = Math.max(dirty, 2); });
 }
 
-// Bracket "explodes" so the fixing is visible
-function updateBracket(p) {
-  const e = smooth(range(p, 0.4, 0.47)) * (1 - smooth(range(p, 0.53, 0.58)));
-  hero.userData.screws.forEach((s, i) => {
-    s.position.copy(s.userData.home);
-    s.position.z += e * 0.055;
-    s.rotation.y = e * (i ? -3 : 3);
-  });
-  hero.userData.plate.position.z = 0.003 + e * 0.012;
+/* ---------- Wiring to the page ---------- */
+const tabs = [...viewer.querySelectorAll('[data-view]')];
+tabs.forEach(t => t.addEventListener('click', () => goTo(t.dataset.view)));
+function setConfig(c) {
+  const layoutChanged = c.delen !== config.delen || c.profiel !== config.profiel;
+  Object.assign(config, c);
+  goal = finishes[config.kleur] || finishes.zwart;
+  if (layoutChanged) applyLayout();
+  viewer.querySelector('[data-label="w"]').textContent = config.profiel === 'rond' ? 'Ø rond' : '40 mm';
+  viewer.querySelector('[data-label="h"]').hidden = config.profiel === 'rond';
+  dirty = 60;
 }
+document.addEventListener('valier:config', e => setConfig(e.detail));
+document.addEventListener('valier:shot', e => goTo(e.detail));
+if (window.valierState) setConfig(window.valierState);
+applyLayout();
+goal = finishes[config.kleur] || finishes.zwart;
+const firstShot = params.get('shot') || window.valierShot || 'overzicht';
+goTo(firstShot, true);
+if (params.has('shot') || reduceMotion) { const f = goal; railMat.color.copy(f.color); railMat.metalness = f.metalness; railMat.roughness = f.roughness; railMat.clearcoat = f.clearcoat; }
 
-/* ---------- Progress & loop ---------- */
-let target = forced ?? 0, value = target;
-function readScroll() {
-  if (forced !== null) return;
-  const r = film.getBoundingClientRect();
-  target = clamp(-r.top / Math.max(1, r.height - innerHeight));
-}
-addEventListener('scroll', readScroll, { passive: true });
-readScroll(); value = target;
-
-let visible = true;
-new IntersectionObserver(([en]) => { visible = en.isIntersecting; }, { rootMargin: '100px' }).observe(film);
-
+/* ---------- Loop: render only when something changes ---------- */
+let visible = true, ready = false;
+new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) dirty = 4; }).observe(viewer);
 const clock = new THREE.Clock();
-let ready = false;
 renderer.setAnimationLoop(() => {
   const dt = Math.min(clock.getDelta(), 0.05);
   if (!visible && ready) return;
-  readScroll();
-  value = forced !== null ? forced : value + (target - value) * (1 - Math.exp(-dt * 4));
-  const p = value;
-  const { focus, ap } = placeCamera(p, dt, clock.elapsedTime);
-  updateFinish(p, dt);
-  updateBracket(p);
-  updateChapters(p);
-  updateLabels(p);
-  if (composer) {
-    bokeh.uniforms.focus.value = focus;
-    bokeh.uniforms.aperture.value = 0.0025 * ap;
-    composer.render(dt);
-  } else {
-    renderer.render(scene, camera);
+  if (tween) {
+    tween.t = Math.min(1, tween.t + dt / tween.dur);
+    const e = ease(tween.t), f = tween.from, to = tween.to;
+    cam.pos.lerpVectors(f.pos, to.pos, e);
+    cam.look.lerpVectors(f.look, to.look, e);
+    cam.fov = lerp(f.fov, to.fov, e);
+    cam.ap = lerp(f.ap, to.ap, e);
+    if (tween.t >= 1) tween = null;
+    dirty = Math.max(dirty, 2);
   }
+  if (stepFinish(dt)) dirty = Math.max(dirty, 2);
+  const msx = mouse.sx, msy = mouse.sy;
+  mouse.sx += (mouse.x - mouse.sx) * (1 - Math.exp(-dt * 2.5));
+  mouse.sy += (mouse.y - mouse.sy) * (1 - Math.exp(-dt * 2.5));
+  if (Math.abs(mouse.sx - msx) + Math.abs(mouse.sy - msy) > 1e-4) dirty = Math.max(dirty, 1);
+  if (dirty <= 0 && ready) return;
+  dirty--;
+
+  if (Math.abs(camera.fov - cam.fov) > 1e-3) { camera.fov = cam.fov; camera.updateProjectionMatrix(); }
+  camera.position.copy(cam.pos);
+  camera.lookAt(cam.look);
+  const d = cam.pos.distanceTo(cam.look), amp = 0.025 * Math.min(1, d / 1.5);
+  camera.translateX(mouse.sx * amp);
+  camera.translateY(-mouse.sy * amp);
+  camera.lookAt(cam.look);
+  updateLabels(current === 'profiel' && !tween);
+
+  if (composer) {
+    bokeh.uniforms.focus.value = camera.position.distanceTo(cam.look);
+    bokeh.uniforms.aperture.value = 0.0022 * cam.ap;
+    composer.render(dt);
+  } else renderer.render(scene, camera);
   if (!ready) {
     ready = true;
-    requestAnimationFrame(() => document.documentElement.classList.add('film-ready'));
+    requestAnimationFrame(() => viewer.classList.add('is-ready'));
   }
 });

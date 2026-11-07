@@ -2,113 +2,227 @@
 <html lang="nl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Valier: de wandleuning op maat</title>
-  <meta name="description" content="De Valier-leuning: een strakke, vierkante wandleuning van staal, op maat gemaakt voor elke trap. Ook voor kwartslag- en wenteltrappen. Mat zwart, goud en meer.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Valier Wandleuning</title>
+  <meta name="description" content="De Valier-wandleuning: staal, vierkant of rond, op maat gemaakt en gemonteerd. Stel uw leuning samen en bestel direct.">
   <meta name="theme-color" content="#15120f">
-  <meta property="og:title" content="Valier: de wandleuning op maat">
-  <meta property="og:description" content="Vierkant, staal, op maat. Een leuning die precies de lijn van uw trap volgt.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/photos/leuning-diagonaal.jpg">
+  <meta property="og:title" content="Valier Wandleuning">
+  <meta property="og:description" content="Staal, vierkant of rond, op maat gemaakt en gemonteerd. Stel samen en bestel.">
+  <meta property="og:type" content="product">
+  <meta property="og:image" content="assets/photos/eindkap-plaat.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/addons/"}}</script>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Product","name":"Valier wandleuning","brand":{"@type":"Brand","name":"Valier"},
-   "description":"Vierkante stalen wandleuning, op maat gemaakt voor rechte trappen, kwartslag- en wenteltrappen.",
-   "image":["assets/photos/leuning-diagonaal.jpg","assets/photos/leuning-goud.jpg"],"color":"Mat zwart, goud, antraciet, wit","material":"Staal"}
+  {"@context":"https://schema.org","@type":"Product","name":"Valier Wandleuning","brand":{"@type":"Brand","name":"Valier"},
+   "description":"Stalen wandleuning, vierkant of rond, op maat gemaakt en gemonteerd. Ook voor kwartslag- en wenteltrappen.",
+   "image":["assets/photos/eindkap-plaat.jpg","assets/photos/goud-led.jpg"],"color":"Mat zwart, goud, wit","material":"Staal"}
   </script>
 </head>
 <body>
 
-  <div class="loader" aria-hidden="true"><span>VALIER</span><i></i></div>
-  <div class="grain" aria-hidden="true"></div>
-
-  <!-- ===== Navigation ===== -->
   <header class="nav">
-    <a href="#top" class="nav__logo" aria-label="Valier, naar boven">VALIER</a>
+    <a href="#product" class="nav__logo" aria-label="Valier, naar boven">VALIER</a>
     <nav class="nav__links" aria-label="Hoofdmenu">
-      <a href="#leuning">De leuning</a>
-      <a href="#werk">Projecten</a>
-      <a href="#werkwijze">Werkwijze</a>
-      <a href="#vragen">Vragen</a>
+      <a href="#stap-profiel">Samenstellen</a>
+      <a href="#projecten">Projecten</a>
+      <a href="#info">Vragen</a>
     </nav>
-    <a href="#aanvraag" class="nav__cta">Prijs op maat</a>
+    <a href="#bestellen" class="nav__cta">Bestellen</a>
   </header>
 
-  <main id="top">
+  <main>
+    <!-- ===== Product: viewer left (sticky), buy panel right ===== -->
+    <section class="product" id="product">
+      <div class="product__media">
+        <div class="viewer" data-shot="overzicht">
+          <canvas class="viewer__canvas" aria-label="3D-weergave van de Valier-wandleuning in uw gekozen uitvoering"></canvas>
+          <img class="viewer__fallback" src="assets/photos/eindkap-plaat.jpg" alt="De Valier-wandleuning met vierkant profiel en wandplaat" width="1200" height="1600">
+          <span class="dim" data-label="w">40 mm</span>
+          <span class="dim" data-label="h">40 mm</span>
+          <div class="viewer__tabs" role="group" aria-label="Bekijk de leuning">
+            <button type="button" data-view="overzicht" class="is-active">Overzicht</button>
+            <button type="button" data-view="profiel">Profiel</button>
+            <button type="button" data-view="houder">Houder</button>
+            <button type="button" data-view="hoek">Hoek</button>
+          </div>
+        </div>
+      </div>
 
-    <!-- ===== The film: the handrail in the lead role ===== -->
-    <section class="film" id="leuning" aria-label="De Valier-leuning in beeld">
-      <div class="film__stage">
-        <canvas class="film__canvas" aria-label="3D-weergave van de Valier-leuning"></canvas>
-        <div class="film__fallback" aria-hidden="true"></div>
-        <div class="film__scrim" aria-hidden="true"></div>
-
-        <span class="dim" data-label="w">40 mm</span>
-        <span class="dim" data-label="h">40 mm</span>
-
-        <div class="chapter" data-from="0" data-to="0.14">
-          <p class="eyebrow">Valier · Wandleuning op maat</p>
-          <h1>De leuning.<br><em>Niets meer.</em></h1>
-          <p>Massief staal, vierkant profiel, gemaakt op de maat van uw trap.</p>
-          <div class="actions">
-            <a class="btn btn--solid" href="#aanvraag">Vraag een prijs op maat</a>
-            <a class="btn" href="#werk">Bekijk projecten</a>
+      <div class="product__panel">
+        <!-- Buy box: the first thing a visitor reads -->
+        <div class="buy" data-shot="overzicht">
+          <p class="eyebrow">Wandleuning op maat</p>
+          <h1 class="buy__title">Valier Wandleuning</h1>
+          <p class="buy__lead">Een strakke stalen wandleuning, op maat gemaakt voor uw trap. Vierkant of rond, in mat zwart, goud of wit. Ook om de hoek, in delen.</p>
+          <p class="buy__price"><span class="js-price">Prijs op maat</span><small class="js-price-note">U ontvangt de prijs na uw aanvraag.</small></p>
+          <ul class="buy__facts">
+            <li>Op maat gemaakt</li>
+            <li>Gemonteerd door Valier</li>
+            <li>Ook voor kwartslag en wenteltrap</li>
+          </ul>
+          <div class="buy__actions">
+            <a class="btn btn--solid" href="#stap-profiel">Stel samen en bestel</a>
+            <a class="link" href="#projecten">Bekijk 45 projecten</a>
+          </div>
+          <div class="buy__thumbs" aria-label="Geplaatste leuningen">
+            <button type="button" data-full="assets/photos/eindkap-plaat.jpg" data-cap="Mat zwart · profiel en wandplaat"><img src="assets/photos/eindkap-plaat-600.jpg" alt="Uiteinde van de zwarte leuning met wandplaat" width="600" height="800"></button>
+            <button type="button" data-full="assets/photos/goud-led.jpg" data-cap="Goud · met LED-treden"><img src="assets/photos/goud-led-600.jpg" alt="Gouden wandleuning langs een trap met LED-treden" width="600" height="800"></button>
+            <button type="button" data-full="assets/photos/avondlicht-zwart.jpg" data-cap="Mat zwart · warm licht"><img src="assets/photos/avondlicht-zwart-600.jpg" alt="Zwarte leuning met haakse houders in warm avondlicht" width="600" height="800"></button>
+            <button type="button" data-full="assets/photos/hoek-segmenten.jpg" data-cap="Om de hoek, in delen"><img src="assets/photos/hoek-segmenten-600.jpg" alt="Leuning in drie delen om de hoek van een kwartslagtrap" width="600" height="800"></button>
           </div>
         </div>
 
-        <div class="chapter chapter--right" data-from="0.19" data-to="0.37">
-          <p class="eyebrow">01 · Profiel</p>
-          <h2>Vierkant.<br><em>Strak.</em></h2>
-          <p>Een kokerprofiel met zacht afgeronde hoeken. Prettig in de hand en rustig voor het oog.</p>
-        </div>
+        <!-- Configurator -->
+        <form class="config" id="config" novalidate>
+          <fieldset class="step" id="stap-profiel" data-shot="profiel">
+            <legend><span class="step__n">1</span>Profiel</legend>
+            <div class="tiles tiles--2">
+              <label class="tile"><input type="radio" name="profiel" value="vierkant" checked><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="8" y="8" width="16" height="16" rx="2"/></svg></span><span class="tile__name">Vierkant</span><span class="tile__sub">40 × 40 mm</span></label>
+              <label class="tile"><input type="radio" name="profiel" value="rond"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="8.5"/></svg></span><span class="tile__name">Rond</span><span class="tile__sub">Rond profiel</span></label>
+            </div>
+          </fieldset>
 
-        <div class="chapter" data-from="0.4" data-to="0.56">
-          <p class="eyebrow">02 · Bevestiging</p>
-          <h2>Gedragen<br>door <em>staal.</em></h2>
-          <p>Een vierkante wandplaat met een haakse houder, stevig verankerd in de muur. Net zo strak vormgegeven als de leuning zelf.</p>
-        </div>
+          <fieldset class="step" id="stap-kleur" data-shot="kleur">
+            <legend><span class="step__n">2</span>Kleur</legend>
+            <div class="tiles tiles--3">
+              <label class="tile tile--swatch"><input type="radio" name="kleur" value="zwart" checked><i style="--sw:#151515"></i><span class="tile__name">Mat zwart</span></label>
+              <label class="tile tile--swatch"><input type="radio" name="kleur" value="goud"><i style="--sw:linear-gradient(135deg,#b8a274,#7a6642)"></i><span class="tile__name">Goud</span></label>
+              <label class="tile tile--swatch"><input type="radio" name="kleur" value="wit"><i style="--sw:#eeece7"></i><span class="tile__name">Wit</span></label>
+            </div>
+          </fieldset>
 
-        <div class="chapter chapter--right" data-from="0.58" data-to="0.72">
-          <p class="eyebrow">03 · Elke trap</p>
-          <h2>Om elke<br><em>hoek.</em></h2>
-          <p>Kwartslag, dubbele kwartslag of wenteltrap: wij maken de leuning in delen die precies de lijn van uw trap volgen.</p>
-        </div>
+          <fieldset class="step" id="stap-trap" data-shot="hoek">
+            <legend><span class="step__n">3</span>Uw trap</legend>
+            <div class="tiles tiles--2">
+              <label class="tile"><input type="radio" name="trap" value="recht"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v24"/></svg></span><span class="tile__name">Rechte trap</span></label>
+              <label class="tile"><input type="radio" name="trap" value="kwartslag" checked><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 28V8h18"/></svg></span><span class="tile__name">Kwartslag</span></label>
+              <label class="tile"><input type="radio" name="trap" value="dubbele-kwartslag"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 28V6h16v22"/></svg></span><span class="tile__name">Dubbele kwartslag</span></label>
+              <label class="tile"><input type="radio" name="trap" value="wenteltrap"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 16a2 2 0 0 1 2 2a4 4 0 0 1-4 4a6 6 0 0 1-6-6a8 8 0 0 1 8-8a10 10 0 0 1 10 10"/></svg></span><span class="tile__name">Wenteltrap</span></label>
+            </div>
+          </fieldset>
 
-        <div class="chapter" data-from="0.74" data-to="0.9">
-          <p class="eyebrow">04 · Afwerking</p>
-          <h2>Uw <em>kleur.</em></h2>
-          <p>Gepoedercoat en slijtvast. Mat zwart is onze klassieker; ook in goud en wit.</p>
-          <div class="finish" role="group" aria-label="Kies een afwerking">
-            <button data-finish="zwart"><i style="background:#141414"></i>Mat zwart</button>
-            <button data-finish="goud"><i style="background:linear-gradient(135deg,#b8a274,#7a6642)"></i>Goud</button>
-            <button data-finish="antraciet"><i style="background:#3b3d3f"></i>Antraciet</button>
-            <button data-finish="wit"><i style="background:#eeece7"></i>Wit</button>
+          <fieldset class="step" id="stap-delen" data-shot="hoek">
+            <legend><span class="step__n">4</span>Aantal leuningdelen</legend>
+            <div class="stepper" data-min="1" data-max="8">
+              <button type="button" class="stepper__btn" data-step="-1" aria-label="Eén deel minder">−</button>
+              <output class="stepper__val" name="delen-out" for="delen"><span class="js-delen">3</span> <span class="js-delen-unit">delen</span></output>
+              <button type="button" class="stepper__btn" data-step="1" aria-label="Eén deel meer">+</button>
+              <input type="hidden" name="delen" id="delen" value="3">
+            </div>
+            <p class="hint js-delen-hint">Bij een kwartslag maken wij meestal 3 delen: langs de muur, om de hoek en weer omhoog.</p>
+          </fieldset>
+
+          <fieldset class="step" id="stap-lengte" data-shot="lengte">
+            <legend><span class="step__n">5</span>Totale lengte</legend>
+            <div class="stepper stepper--len" data-min="1" data-max="25" data-inc="0.5">
+              <button type="button" class="stepper__btn" data-step="-1" aria-label="Halve meter korter">−</button>
+              <output class="stepper__val" name="lengte-out" for="lengte">ca. <span class="js-lengte">5,0</span> m</output>
+              <button type="button" class="stepper__btn" data-step="1" aria-label="Halve meter langer">+</button>
+              <input type="hidden" name="lengte" id="lengte" value="5">
+            </div>
+            <label class="check"><input type="checkbox" name="lengte_onbekend" id="lengte_onbekend"><span>Ik weet de lengte niet</span></label>
+          </fieldset>
+
+          <fieldset class="step" id="stap-extra" data-shot="houder">
+            <legend><span class="step__n">6</span>Inmeten en foto's</legend>
+            <label class="check"><input type="checkbox" name="inmeten" id="inmeten"><span>Valier komt bij mij inmeten</span></label>
+            <label class="upload">
+              <input type="file" name="fotos" id="fotos" accept="image/*" multiple>
+              <span class="upload__btn">Foto's van uw trap toevoegen</span>
+              <span class="upload__note js-fotos">Optioneel. Zo kunnen wij sneller een prijs geven.</span>
+            </label>
+          </fieldset>
+
+          <fieldset class="step" id="stap-gegevens" data-shot="overzicht">
+            <legend><span class="step__n">7</span>Uw gegevens</legend>
+            <div class="fields">
+              <label class="field"><input type="text" id="naam" name="naam" placeholder=" " required autocomplete="name"><span>Naam</span></label>
+              <label class="field"><input type="email" id="email" name="email" placeholder=" " required autocomplete="email"><span>E-mail</span></label>
+              <label class="field"><input type="tel" id="telefoon" name="telefoon" placeholder=" " autocomplete="tel"><span>Telefoon</span></label>
+              <label class="field"><input type="text" id="postcode" name="postcode" placeholder=" " required autocomplete="postal-code"><span>Postcode</span></label>
+            </div>
+          </fieldset>
+
+          <section class="summary" id="bestellen" data-shot="overzicht" aria-label="Overzicht van uw bestelling">
+            <h2 class="summary__title">Uw leuning</h2>
+            <dl class="summary__list">
+              <div><dt>Profiel</dt><dd class="js-sum-profiel">Vierkant 40 × 40 mm</dd></div>
+              <div><dt>Kleur</dt><dd class="js-sum-kleur">Mat zwart</dd></div>
+              <div><dt>Trap</dt><dd class="js-sum-trap">Kwartslag</dd></div>
+              <div><dt>Delen</dt><dd class="js-sum-delen">3</dd></div>
+              <div><dt>Lengte</dt><dd class="js-sum-lengte">ca. 5,0 m</dd></div>
+              <div><dt>Montage</dt><dd>Door Valier</dd></div>
+            </dl>
+            <p class="summary__price"><span>Prijs</span><strong class="js-price">Prijs op maat</strong></p>
+            <button type="submit" class="btn btn--solid btn--wide">Bestelling aanvragen</button>
+            <p class="summary__note">U ontvangt eerst een definitieve prijs en planning. Pas als u akkoord geeft, is de bestelling definitief.</p>
+          </section>
+
+          <div class="done" hidden tabindex="-1">
+            <h2 class="done__title js-done-title">Dank u.</h2>
+            <p class="js-done-body">Wij nemen contact met u op over uw leuning.</p>
           </div>
+        </form>
+
+        <!-- Information, after the order -->
+        <div class="info" id="info">
+          <details>
+            <summary>Specificaties</summary>
+            <dl class="specs">
+              <div><dt>Profiel</dt><dd>Vierkant 40 × 40 mm, of rond</dd></div>
+              <div><dt>Materiaal</dt><dd>Staal</dd></div>
+              <div><dt>Afwerking</dt><dd>Poedercoating in mat zwart, goud of wit</dd></div>
+              <div><dt>Bevestiging</dt><dd>Vierkante wandplaat met haakse houder</dd></div>
+              <div><dt>Uiteinden</dt><dd>Strak afgesloten met een vlakke eindkap</dd></div>
+              <div><dt>Vorm</dt><dd>Recht, of in delen voor kwartslag- en wenteltrappen</dd></div>
+              <div><dt>Montage</dt><dd>Door Valier, bij u thuis</dd></div>
+            </dl>
+          </details>
+          <details>
+            <summary>Hoe het werkt</summary>
+            <ol class="how">
+              <li><b>Aanvraag</b> U stelt uw leuning samen en verstuurt de aanvraag, eventueel met foto's.</li>
+              <li><b>Prijs en planning</b> U ontvangt een prijs op maat. Indien nodig meten wij eerst bij u in.</li>
+              <li><b>Maken en monteren</b> Wij maken de leuning op maat en monteren hem bij u thuis.</li>
+            </ol>
+          </details>
+          <details>
+            <summary>Past een Valier-leuning op mijn trap?</summary>
+            <p>Ja. Elke leuning wordt op maat gemaakt. Rechte trap, kwartslag, dubbele kwartslag of wenteltrap: we volgen de lijn van uw trap, in één stuk of in delen.</p>
+          </details>
+          <details>
+            <summary>Wat kost een leuning?</summary>
+            <p>Dat hangt af van de lengte, het aantal delen en de afwerking. Na uw aanvraag ontvangt u een prijs op maat.</p>
+          </details>
+          <details>
+            <summary>Op wat voor muur kan de leuning?</summary>
+            <p>De leuning wordt met wandhouders in de muur verankerd. Per wand kiezen we de juiste bevestiging.</p>
+          </details>
+          <details>
+            <summary>Maken jullie ook balustrades?</summary>
+            <p>Ja. Naast wandleuningen maken we glazen balustrades in een zwart stalen kader, voor trapgaten en overlopen.</p>
+          </details>
         </div>
 
-        <div class="chapter" data-from="0.92" data-to="1">
-          <p class="eyebrow">Op maat</p>
-          <h2>Gemaakt voor<br><em>uw trap.</em></h2>
-          <div class="actions">
-            <a class="btn btn--solid" href="#aanvraag">Vraag een prijs op maat</a>
+        <!-- Order bar: always within reach while configuring -->
+        <div class="orderbar" aria-label="Uw keuze">
+          <div class="orderbar__sum">
+            <span class="orderbar__label">Uw leuning</span>
+            <span class="orderbar__text js-bar">Vierkant · Mat zwart · Kwartslag · 3 delen</span>
           </div>
+          <a class="btn btn--solid orderbar__btn" href="#bestellen">Bestellen</a>
         </div>
-
-        <div class="film__progress" aria-hidden="true"><i></i></div>
-        <div class="film__hint" aria-hidden="true">Scroll</div>
       </div>
     </section>
 
-    <!-- ===== Real work ===== -->
-    <section class="work" id="werk">
+    <section class="work" id="projecten">
       <div class="work__head">
         <p class="eyebrow">Projecten</p>
         <h2 class="h2">Geplaatst.<br>Niet <em>gerenderd.</em></h2>
-        <p class="body">Hierboven ziet u de leuning in 3D. Hieronder hangt hij aan de muur bij onze klanten.</p>
+        <p class="body">Boven ziet u de leuning in 3D. Hier hangt hij aan de muur bij onze klanten.</p>
       </div>
       <div class="work__filters" role="group" aria-label="Filter projecten">
         <button class="is-active" data-filter="alle">Alle <sup>45</sup></button>
@@ -167,132 +281,22 @@
       </div>
       <div class="work__more"><button class="btn js-more">Toon alle projecten</button></div>
     </section>
-
-    <!-- ===== Why ===== -->
-    <section class="why">
-      <div class="why__item"><span>I</span><h3>Op maat</h3><p>Geen standaardlengtes. Elke leuning wordt gemaakt op de maten van uw trap.</p></div>
-      <div class="why__item"><span>II</span><h3>Om elke hoek</h3><p>In één stuk of in delen. Ook voor kwartslag-, dubbele kwartslag- en wenteltrappen.</p></div>
-      <div class="why__item"><span>III</span><h3>Strak gemonteerd</h3><p>Wij plaatsen de leuning zelf, recht, stevig en netjes afgewerkt.</p></div>
-    </section>
-
-    <!-- ===== Process ===== -->
-    <section class="process" id="werkwijze">
-      <div class="process__head">
-        <p class="eyebrow">Werkwijze</p>
-        <h2 class="h2">In drie stappen<br>een <em>nieuwe leuning.</em></h2>
-      </div>
-      <ol class="steps">
-        <li><span class="steps__n">01</span><h3>Stuur een foto</h3><p>Stuur een paar foto's van uw trap, of plan een afspraak om in te meten. U ontvangt een prijs op maat.</p></li>
-        <li><span class="steps__n">02</span><h3>Op maat gemaakt</h3><p>Wij maken uw leuning en houders op de exacte maat, in de afwerking van uw keuze.</p></li>
-        <li><span class="steps__n">03</span><h3>Montage</h3><p>Wij monteren de leuning bij u thuis en laten alles netjes achter.</p></li>
-      </ol>
-    </section>
-
-    <!-- ===== Specs ===== -->
-    <section class="specs">
-      <div class="specs__img"><img src="assets/photos/eindkap-plaat.jpg" alt="Close-up van het vierkante uiteinde van de zwarte leuning met de wandplaat erachter" loading="lazy" width="1200" height="1600"></div>
-      <div class="specs__body">
-        <p class="eyebrow">Specificaties</p>
-        <h2 class="h2">Het <em>product.</em></h2>
-        <dl>
-          <div><dt>Profiel</dt><dd>Vierkant (40 × 40 mm) of rond</dd></div>
-          <div><dt>Materiaal</dt><dd>Staal</dd></div>
-          <div><dt>Afwerking</dt><dd>Poedercoating: mat zwart, goud, antraciet, wit</dd></div>
-          <div><dt>Bevestiging</dt><dd>Vierkante wandplaat met haakse houder</dd></div>
-          <div><dt>Uiteinden</dt><dd>Strak afgesloten met een vlakke eindkap</dd></div>
-          <div><dt>Vorm</dt><dd>Recht, of in delen voor kwartslag- en wenteltrappen</dd></div>
-          <div><dt>Montage</dt><dd>Door Valier, bij u thuis</dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- ===== FAQ ===== -->
-    <section class="faq" id="vragen">
-      <div class="faq__head">
-        <p class="eyebrow">Vragen</p>
-        <h2 class="h2">Goed om te <em>weten.</em></h2>
-      </div>
-      <div class="faq__list">
-        <details><summary>Past een Valier-leuning op mijn trap?</summary><p>Ja. Elke leuning wordt op maat gemaakt. Rechte trap, kwartslag, dubbele kwartslag of wenteltrap: we volgen de lijn van uw trap, in één stuk of in delen.</p></details>
-        <details><summary>Wat kost een leuning?</summary><p>Dat hangt af van de lengte, de vorm van uw trap en de afwerking. Stuur ons een paar foto's en u ontvangt een prijs op maat.</p></details>
-        <details><summary>Hoe wordt er gemeten?</summary><p>U kunt zelf foto's en maten sturen, of we plannen een afspraak om de trap in te meten.</p></details>
-        <details><summary>Op wat voor muur kan de leuning?</summary><p>De leuning wordt met wandhouders in de muur verankerd. Per wand kiezen we de juiste bevestiging.</p></details>
-        <details><summary>Welke kleuren zijn er?</summary><p>Mat zwart is onze klassieker. Daarnaast goud, antraciet en wit. Heeft u een andere kleur in gedachten? Vraag het ons.</p></details>
-        <details><summary>Maken jullie ook balustrades?</summary><p>Ja. Naast wandleuningen maken we glazen balustrades in een zwart stalen kader, voor trapgaten en overlopen. Ze passen naadloos bij de leuning.</p></details>
-        <details><summary>Hoe lang duurt het?</summary><p>De levertijd hoort u bij uw prijsopgave. De montage zelf is snel en netjes.</p></details>
-      </div>
-    </section>
-
-    <!-- ===== Request ===== -->
-    <section class="intake" id="aanvraag">
-      <div class="intake__head">
-        <p class="eyebrow">Prijs op maat</p>
-        <h2 class="h2">Uw trap.<br>Uw <em>leuning.</em></h2>
-        <p class="body">Drie korte vragen. Wij nemen persoonlijk contact met u op.</p>
-      </div>
-      <form class="form" novalidate>
-        <div class="form__progress" aria-hidden="true"><i></i></div>
-        <fieldset class="form__step is-active">
-          <legend>Wat voor trap heeft u?</legend>
-          <div class="choices">
-            <label><input type="radio" name="trap" value="recht" required><span>Rechte trap</span></label>
-            <label><input type="radio" name="trap" value="kwartslag"><span>Kwartslag</span></label>
-            <label><input type="radio" name="trap" value="dubbele-kwartslag"><span>Dubbele kwartslag</span></label>
-            <label><input type="radio" name="trap" value="wenteltrap"><span>Wenteltrap</span></label>
-            <label><input type="radio" name="trap" value="weet-niet"><span>Weet ik niet</span></label>
-          </div>
-        </fieldset>
-        <fieldset class="form__step">
-          <legend>Welke afwerking?</legend>
-          <div class="choices">
-            <label><input type="radio" name="afwerking" value="zwart" required><span>Mat zwart</span></label>
-            <label><input type="radio" name="afwerking" value="goud"><span>Goud</span></label>
-            <label><input type="radio" name="afwerking" value="antraciet"><span>Antraciet</span></label>
-            <label><input type="radio" name="afwerking" value="wit"><span>Wit</span></label>
-            <label><input type="radio" name="afwerking" value="advies"><span>Graag advies</span></label>
-          </div>
-        </fieldset>
-        <fieldset class="form__step">
-          <legend>Hoe bereiken we u?</legend>
-          <div class="fields">
-            <label class="field"><input type="text" name="naam" placeholder=" " required autocomplete="name"><span>Naam</span></label>
-            <label class="field"><input type="email" name="email" placeholder=" " required autocomplete="email"><span>E-mail</span></label>
-            <label class="field"><input type="tel" name="telefoon" placeholder=" " autocomplete="tel"><span>Telefoon</span></label>
-            <label class="field"><input type="text" name="plaats" placeholder=" " autocomplete="address-level2"><span>Plaats</span></label>
-          </div>
-        </fieldset>
-        <div class="form__step form__done">
-          <h3 class="h3">Dank u. <em>We nemen snel contact op.</em></h3>
-          <p class="body">Heeft u foto's van uw trap? Die mag u alvast naar ons sturen.</p>
-        </div>
-        <div class="form__nav">
-          <button type="button" class="link js-prev" hidden>← Terug</button>
-          <button type="button" class="btn btn--solid js-next"><span>Volgende</span></button>
-        </div>
-      </form>
-    </section>
   </main>
 
   <footer class="footer">
-    <div class="footer__top">
-      <p class="footer__claim">De leuning.<br><em>Niets meer.</em></p>
+    <div class="footer__inner">
+      <p class="footer__brand">VALIER</p>
       <div class="footer__cols">
-        <div><p class="eyebrow">Contact</p><a href="mailto:info@valier.nl">info@valier.nl</a><a href="tel:+31000000000">+31 (0)00 000 00 00</a></div>
-        <div><p class="eyebrow">Volg</p><a href="#">Instagram</a><a href="#">Pinterest</a></div>
+        <div><p class="eyebrow">Contact</p><p class="footer__text">info@valier.nl</p><p class="footer__text">+31 (0)00 000 00 00</p></div>
+        <div><p class="eyebrow">Product</p><a href="#stap-profiel">Samenstellen</a><a href="#projecten">Projecten</a><a href="#info">Veelgestelde vragen</a></div>
       </div>
     </div>
-    <div class="footer__mark" aria-hidden="true">VALIER</div>
-    <div class="footer__bottom"><span>© 2026 Valier</span><span>Wandleuningen op maat</span></div>
+    <p class="footer__bottom"><span>© 2026 Valier</span><span>Wandleuningen op maat</span></p>
   </footer>
-
-  <a class="sticky-cta" href="#aanvraag">Vraag een prijs op maat</a>
 
   <dialog class="lightbox" aria-label="Foto vergroot"><img alt=""><button class="lightbox__close" aria-label="Sluiten">×</button><button class="lightbox__prev" aria-label="Vorige foto">←</button><button class="lightbox__next" aria-label="Volgende foto">→</button><p class="lightbox__cap"></p></dialog>
 
-  <script src="vendor/gsap.min.js"></script>
-  <script src="vendor/ScrollTrigger.min.js"></script>
-  <script src="vendor/lenis.min.js"></script>
   <script src="main.js"></script>
-  <script type="module" src="js/film.js"></script>
+  <script type="module" src="js/viewer.js"></script>
 </body>
 </html>
