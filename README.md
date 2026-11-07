@@ -5,15 +5,13 @@ Statische site (HTML, CSS, JavaScript-modules met Three.js), zonder build-stap.
 ## Opbouw van de pagina
 1. **Ons werk:** de beste projectfoto's (nabewerkt in `assets/hero/`), alle 45 foto's via "Bekijk alle projecten".
 2. **3D-configurator** (desktop: stap links, 3D rechts; mobiel: 3D boven, knoppen onderin):
-   1. Welke trap heb je? (2D-pictogrammen; linksom/rechtsom)
-   2. Bekijk jouw trap in 3D (draaien, zoomen, boven- en zijaanzicht, touch)
-   3. Waar wil je een trapleuning? (klikken in het 3D-model of in de lijst; genummerd)
-   4. Lengte per leuning (mm/cm, meetuitleg, waarschuwing bij afwijking van het model)
-   5. Vorm en profiel (alle leuningen of per leuning)
-   6. Kleur (alle leuningen of per leuning; RAL op aanvraag)
-   7. Overzicht (elke keuze direct te wijzigen)
-   8. Aanvraag (gegevens, leverwijze, foto's, opmerkingen) → aanvraagnummer en bevestiging
-   - Snelle route: "Ik weet al welke leuning ik nodig heb" (losse rechte leuningen, direct naar de lengtes)
+   1. Hoeveel leuningen? (elke leuning is recht)
+   2. Lengte per leuning (mm/cm, meetuitleg)
+   3. Vorm en profiel (koker 50×30 / 50×20 plat gemonteerd, of rond Ø50; alle leuningen of per leuning)
+   4. Kleur (alle leuningen of per leuning; RAL op aanvraag)
+   5. Overzicht (elke keuze direct te wijzigen)
+   6. Aanvraag (gegevens, leverwijze, foto's, opmerkingen) → aanvraagnummer en bevestiging
+   De traptype-keuze is op verzoek verwijderd; `js/stairs.js` (trapmodellen) blijft beschikbaar voor later.
 3. **Vragen** en footer.
 
 ## Code

@@ -3,12 +3,12 @@
    Eén object; elke wijziging gaat via update() en wordt doorgegeven
    aan het 3D-model, de prijs en het overzicht. Keuzes worden lokaal bewaard.
    ========================================================= */
-const KEY = 'valier-configuratie-v2';
+const KEY = 'valier-configuratie-v3';
 
 const DEFAULTS = () => ({
   step: 0,
-  stair: { type: null, dir: 'links' },
-  rails: [],                          // [{ pos, lengthMm, profile, color, ral }]
+  stair: { type: 'los', dir: 'links' },
+  rails: [{ pos: 'los-1', lengthMm: null }],                          // [{ pos, lengthMm, profile, color, ral }]
   apply: { profile: 'all', color: 'all' },
   profile: '50x30',                   // keuze voor "alle leuningen"
   color: 'zwart',

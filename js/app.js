@@ -21,8 +21,6 @@ const typeOf = id => STAIR_TYPES.find(t => t.id === id);
 const isLoose = t => t === 'los' || t === 'anders';
 
 const STEPS = [
-  { id: 'trap', short: 'Trap', title: 'Welke trap heb je?', sub: 'Selecteer de trap die het meest op jouw situatie lijkt.' },
-  { id: '3d', short: '3D', title: 'Bekijk jouw trap in 3D', sub: 'Draai, zoom en bekijk je trap van alle kanten.' },
   { id: 'posities', short: 'Leuningen', title: 'Waar wil je een trapleuning?', sub: 'Klik op de gewenste plekken in het 3D-model.' },
   { id: 'lengte', short: 'Lengte', title: 'Wat is de lengte van jouw leuningen?', sub: 'Meet langs de leuning, in millimeters.' },
   { id: 'vorm', short: 'Vorm', title: 'Welke vorm past bij jouw interieur?', sub: 'Kies de vorm en de maat van het profiel.' },
@@ -44,7 +42,7 @@ const ICONS = {
   anders: svg(`<circle class="ic-out ic-dash" cx="32" cy="32" r="24"/>${lines([[32, 32, 32, 8], [32, 32, 52, 20], [32, 32, 54, 40], [32, 32, 40, 55], [32, 32, 16, 50], [32, 32, 9, 28]])}<circle class="ic-core" cx="32" cy="32" r="4"/>`)
 };
 const PROFILE_ICONS = {
-  rechthoekig: `<svg viewBox="0 0 64 64" aria-hidden="true"><rect class="ic-solid" x="24" y="10" width="16" height="44" rx="2"/></svg>`,
+  rechthoekig: `<svg viewBox="0 0 64 64" aria-hidden="true"><rect class="ic-solid" x="10" y="22" width="44" height="20" rx="2"/></svg>`,
   rond: `<svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ic-solid" cx="32" cy="32" r="20"/></svg>`
 };
 
@@ -140,9 +138,9 @@ function quickRoute() {
   set(s => {
     s.stair = { type: 'los', dir: 'links' };
     if (!s.rails.length || !s.rails.every(r => r.pos.startsWith('los-'))) s.rails = [{ pos: 'los-1', lengthMm: null }];
-    s.step = 3;
+    s.step = 0;
   });
-  maxStep = Math.max(maxStep, 3);
+  maxStep = Math.max(maxStep, 0);
   $('#configurator').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -167,7 +165,6 @@ function go(i) {
   $('.cfg-panel__body').scrollTop = 0;
   const top = $('#configurator').getBoundingClientRect().top;
   if (top < -40 || top > innerHeight * 0.5) $('#configurator').scrollIntoView({ behavior: 'smooth' });
-  if (STEPS[state.step].id === '3d') viewer?.view('perspectief');
 }
 function showError(msg) {
   const el = $('.cfg-error');
@@ -293,7 +290,7 @@ const VIEWS = {
       ${s.rails.length > 1 ? applyToggle('profile', s.apply.profile) : ''}
       ${s.apply.profile === 'per' ? `<div class="per">${numbered(s).map(r => `<label class="per__row">${badge(r.nr)}<span>${esc(posLabel(s, r.pos))}</span>
         <select data-action="rail-profile" data-pos="${r.pos}">${PROFILE_FORMS.map(f => `<optgroup label="${f.name}">${f.sizes.map(z => `<option value="${z.id}" ${S.railProfile(s, r) === z.id ? 'selected' : ''}>${f.name} ${z.name}</option>`).join('')}</optgroup>`).join('')}</select></label>`).join('')}</div>` : ''}
-      <p class="fine">Het 3D-model toont de echte doorsnede: rechthoekig staat rechtop, 50 mm hoog.</p>`;
+      <p class="fine">Het 3D-model toont de echte doorsnede: rechthoekig ligt plat, 50 mm breed.</p>`;
   },
   kleur(s) {
     return `
@@ -310,10 +307,9 @@ const VIEWS = {
   overzicht(s) {
     const t = typeOf(s.stair.type);
     const total = s.rails.reduce((a, r) => a + (lenOk(r.lengthMm) ? r.lengthMm : 0), 0);
-    const edit = (step, txt = 'Wijzig') => `<button type="button" class="link link--sm" data-action="goto" data-step="${step}">${txt}</button>`;
+    const edit = (old, txt = 'Wijzig') => { const id = { 2: 'posities', 3: 'lengte', 4: 'vorm', 5: 'kleur' }[old]; return `<button type="button" class="link link--sm" data-action="goto" data-step="${STEPS.findIndex(x => x.id === id)}">${txt}</button>`; };
     return `
       <dl class="ov">
-        <div><dt>Traptype</dt><dd>${s.stair.type === 'los' ? 'Losse leuningen (geen trap gekozen)' : esc(t?.name)}${t?.turn ? `, ${s.stair.dir}om` : ''}</dd>${edit(0)}</div>
         <div><dt>Aantal leuningen</dt><dd>${s.rails.length}</dd>${edit(2)}</div>
         <div><dt>Bevestiging</dt><dd>${MOUNTING.name}</dd></div>
         <div><dt>Totale lengte</dt><dd>${s.lengthsUnknown ? 'Wordt ingemeten' : total.toLocaleString('nl-NL') + ' mm'}</dd>${edit(3)}</div>
@@ -590,7 +586,7 @@ $('.cfg-progress').innerHTML = STEPS.map((st, i) => `<li><button type="button" d
 $('.cfg-progress').addEventListener('click', e => { const b = e.target.closest('[data-goto]'); if (b && !b.disabled) go(+b.dataset.goto); });
 $('.cfg-next').addEventListener('click', () => go(state.step + 1));
 $('.cfg-back').addEventListener('click', () => go(state.step - 1));
-$$('[data-start]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); if (b.dataset.start === 'quick') quickRoute(); else { $('#configurator').scrollIntoView({ behavior: 'smooth' }); if (!state.stair.type) go(0); } }));
+$$('[data-start]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); quickRoute(); }));
 
 // Mobile: bottom nav only while the configurator is on screen
 const cfg = $('.cfg');

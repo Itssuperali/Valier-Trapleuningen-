@@ -14,12 +14,12 @@ export const STAIR_TYPES = [
   { id: 'anders', name: 'Andere trap', turn: false, custom: true }
 ];
 
-/* Leverbare profielen (VALIER): rechthoekige koker rechtop gemonteerd, of rond.
+/* Leverbare profielen (VALIER): rechthoekige koker plat gemonteerd (50 mm van de muur af), of rond.
    w = breedte vanaf de muur, h = hoogte, d = diameter (mm). Vierkant: voeg hier toe zodra leverbaar. */
 export const PROFILE_FORMS = [
   { id: 'rechthoekig', name: 'Rechthoekig', sizes: [
-    { id: '50x30', name: '50 × 30 mm', w: 30, h: 50 },
-    { id: '50x20', name: '50 × 20 mm', w: 20, h: 50 }
+    { id: '50x30', name: '50 × 30 mm', w: 50, h: 30 },
+    { id: '50x20', name: '50 × 20 mm', w: 50, h: 20 }
   ] },
   { id: 'rond', name: 'Rond', sizes: [
     { id: 'r50', name: 'Ø 50 mm', d: 50 }
