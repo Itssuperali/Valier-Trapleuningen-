@@ -3,310 +3,131 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Valier Wandleuning</title>
-  <meta name="description" content="De Valier-wandleuning: stalen koker 50×30, 50×20 of rond Ø50, op maat gemaakt en gemonteerd. € 85 per meter. Stel samen en bestel direct.">
-  <meta name="theme-color" content="#15120f">
-  <meta property="og:title" content="Valier Wandleuning">
-  <meta property="og:description" content="Stalen wandleuning op maat, gemonteerd. € 85 per meter. Stel samen en bestel.">
-  <meta property="og:type" content="product">
-  <meta property="og:image" content="assets/photos/eindkap-plaat.jpg">
+  <title>VALIER Trapleuningen</title>
+  <meta name="description" content="Stalen trapleuningen op maat. Bekijk ons werk en stel je eigen leuning samen in 3D: traptype, plekken, lengtes, vorm en kleur. Vraag direct een offerte aan.">
+  <meta name="theme-color" content="#f4f1ec">
+  <meta property="og:title" content="VALIER Trapleuningen">
+  <meta property="og:description" content="Stalen trapleuningen op maat. Stel je leuning samen in 3D en vraag een offerte aan.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/hero/goud-led.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/addons/"}}</script>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Product","name":"Valier Wandleuning","brand":{"@type":"Brand","name":"Valier"},
-   "description":"Stalen wandleuning: koker 50×30, 50×20 of rond Ø50, op maat gemaakt en gemonteerd. Ook voor kwartslag- en wenteltrappen.",
-   "image":["assets/photos/eindkap-plaat.jpg","assets/photos/goud-led.jpg"],"color":"Mat zwart, goud, wit","material":"Staal","offers":{"@type":"Offer","priceCurrency":"EUR","price":"85","unitText":"per meter","availability":"https://schema.org/InStock"}}
+  {"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"VALIER Trapleuningen","description":"Stalen trapleuningen op maat, met tweelaagse poedercoating.","email":"info@valier.nl","address":{"@type":"PostalAddress","addressLocality":"Ulft","addressCountry":"NL"},"areaServed":"NL"}
   </script>
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="ic-head" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8f6f45"/></marker></defs></svg>
 
   <header class="nav">
-    <a href="#product" class="nav__logo" aria-label="Valier, naar boven">VALIER</a>
+    <a href="#top" class="nav__logo" aria-label="VALIER, naar boven">VALIER</a>
     <nav class="nav__links" aria-label="Hoofdmenu">
-      <a href="#stap-profiel">Samenstellen</a>
-      <a href="#projecten">Projecten</a>
-      <a href="#info">Vragen</a>
+      <a href="#werk">Ons werk</a>
+      <a href="#configurator">Configurator</a>
+      <a href="#vragen">Vragen</a>
     </nav>
-    <a href="#bestellen" class="nav__cta">Bestellen</a>
+    <a href="#configurator" class="nav__cta" data-start="full">Stel samen</a>
   </header>
 
-  <main>
-    <!-- ===== Product: viewer left (sticky), buy panel right ===== -->
-    <section class="product" id="product">
-      <div class="product__media">
-        <div class="viewer" data-shot="overzicht">
-          <canvas class="viewer__canvas" aria-label="3D-weergave van de Valier-wandleuning in uw gekozen uitvoering"></canvas>
-          <img class="viewer__fallback" src="assets/photos/eindkap-plaat.jpg" alt="De Valier-wandleuning met vierkant profiel en wandplaat" width="1200" height="1600">
-          <span class="dim" data-label="w">30 mm</span>
-          <span class="dim" data-label="h">50 mm</span>
-          <div class="viewer__tabs" role="group" aria-label="Bekijk de leuning">
-            <button type="button" data-view="overzicht" class="is-active">Overzicht</button>
-            <button type="button" data-view="profiel">Profiel</button>
-            <button type="button" data-view="houder">Houder</button>
-            <button type="button" data-view="hoek">Hoek</button>
-          </div>
+  <main id="top">
+    <!-- ===== Our work first ===== -->
+    <section class="hero" id="werk" aria-label="Ons werk">
+      <div class="hero__text">
+        <p class="eyebrow">VALIER Trapleuningen</p>
+        <h1>Stalen trapleuningen,<br><em>op maat gemaakt.</em></h1>
+        <p class="hero__lead">Strak, sterk en precies passend. Gemaakt in onze werkplaats in Ulft, met tweelaagse poedercoating. Bekijk ons werk en stel daarna je eigen leuning samen in 3D.</p>
+        <div class="hero__actions">
+          <a href="#configurator" class="btn btn--solid" data-start="full">Stel je leuning samen</a>
+          <a href="#configurator" class="link" data-start="quick">Ik weet al welke leuning ik nodig heb</a>
         </div>
       </div>
+      <div class="hero__grid" role="list">
+        <figure class="hg hg--a" role="listitem"><button type="button" data-lightbox="goud-led"><img src="assets/hero/goud-led-720.jpg" srcset="assets/hero/goud-led-720.jpg 720w, assets/hero/goud-led.jpg 1200w" sizes="(max-width: 760px) 78vw, 30vw" alt="Gouden wandleuning langs een trap met LED-verlichting onder elke trede" width="720" height="960" fetchpriority="high"></button><figcaption>Goud · met LED</figcaption></figure>
+        <figure class="hg hg--b" role="listitem"><button type="button" data-lightbox="avondlicht-zwart"><img src="assets/hero/avondlicht-zwart-720.jpg" srcset="assets/hero/avondlicht-zwart-720.jpg 720w, assets/hero/avondlicht-zwart.jpg 1200w" sizes="(max-width: 760px) 78vw, 22vw" alt="Mat zwarte leuning met haakse houders langs een trap met zwarte treden" width="720" height="960"></button><figcaption>Mat zwart</figcaption></figure>
+        <figure class="hg hg--c" role="listitem"><button type="button" data-lightbox="eindkap-plaat"><img src="assets/hero/eindkap-plaat-720.jpg" srcset="assets/hero/eindkap-plaat-720.jpg 720w, assets/hero/eindkap-plaat.jpg 1200w" sizes="(max-width: 760px) 78vw, 22vw" alt="Close-up van de rechthoekige koker met vlakke eindkap en wandplaat" width="720" height="960"></button><figcaption>Detail · koker en houder</figcaption></figure>
+        <figure class="hg hg--d" role="listitem"><button type="button" data-lightbox="wit-avond"><img src="assets/hero/wit-avond-720.jpg" srcset="assets/hero/wit-avond-720.jpg 720w, assets/hero/wit-avond.jpg 1200w" sizes="(max-width: 760px) 78vw, 22vw" alt="Witte wandleuning langs een kwartslagtrap met eiken treden" width="720" height="960"></button><figcaption>Wit · kwarttrap</figcaption></figure>
+        <figure class="hg hg--e" role="listitem"><button type="button" data-lightbox="leuning-diagonaal"><img src="assets/hero/leuning-diagonaal-720.jpg" srcset="assets/hero/leuning-diagonaal-720.jpg 720w, assets/hero/leuning-diagonaal.jpg 1200w" sizes="(max-width: 760px) 78vw, 22vw" alt="Mat zwarte wandleuning in één lijn langs een trap met LED-treden" width="720" height="960"></button><figcaption>Eén doorlopende lijn</figcaption></figure>
+      </div>
+      <button type="button" class="hero__all link" data-lightbox="leuning-diagonaal">Bekijk alle 45 projecten</button>
+    </section>
 
-      <div class="product__panel">
-        <!-- Buy box: the first thing a visitor reads -->
-        <div class="buy" data-shot="overzicht">
-          <p class="eyebrow">Wandleuning op maat</p>
-          <h1 class="buy__title">Valier Wandleuning</h1>
-          <p class="buy__lead">Een strakke stalen wandleuning, op maat gemaakt en bij u gemonteerd. Koker 50 × 30, 50 × 20 of rond Ø 50, in mat zwart, goud of wit. Ook om de hoek, met een aparte leuning per stuk muur.</p>
-          <p class="buy__price"><span>€ 85 <small class="buy__unit">per meter</small></span><small>+ € 35 montage per leuning · € 1 per km vanaf Ulft</small></p>
-          <ul class="buy__facts">
-            <li>Op maat gemaakt</li>
-            <li>Gemonteerd door Valier</li>
-            <li>Direct of achteraf betalen</li>
-          </ul>
-          <div class="buy__actions">
-            <a class="btn btn--solid" href="#stap-profiel">Stel samen en bestel</a>
-            <a class="link" href="#projecten">Bekijk 45 projecten</a>
-          </div>
-          <div class="buy__thumbs" aria-label="Geplaatste leuningen">
-            <button type="button" data-full="assets/photos/eindkap-plaat.jpg" data-cap="Mat zwart · profiel en wandplaat"><img src="assets/photos/eindkap-plaat-600.jpg" alt="Uiteinde van de zwarte leuning met wandplaat" width="600" height="800"></button>
-            <button type="button" data-full="assets/photos/goud-led.jpg" data-cap="Goud · met LED-treden"><img src="assets/photos/goud-led-600.jpg" alt="Gouden wandleuning langs een trap met LED-treden" width="600" height="800"></button>
-            <button type="button" data-full="assets/photos/avondlicht-zwart.jpg" data-cap="Mat zwart · warm licht"><img src="assets/photos/avondlicht-zwart-600.jpg" alt="Zwarte leuning met haakse houders in warm avondlicht" width="600" height="800"></button>
-            <button type="button" data-full="assets/photos/hoek-segmenten.jpg" data-cap="Om de hoek, in delen"><img src="assets/photos/hoek-segmenten-600.jpg" alt="Leuning in drie delen om de hoek van een kwartslagtrap" width="600" height="800"></button>
-          </div>
+    <!-- ===== Configurator ===== -->
+    <section class="cfg" id="configurator" aria-label="3D-configurator">
+      <div class="cfg-panel">
+        <ol class="cfg-progress" aria-label="Voortgang"></ol>
+        <div class="cfg-head">
+          <p class="cfg-step-no eyebrow"></p>
+          <h2 class="cfg-title"></h2>
+          <p class="cfg-sub"></p>
         </div>
-
-        <!-- Configurator -->
-        <form class="config" id="config" novalidate>
-          <fieldset class="step" id="stap-profiel" data-shot="profiel">
-            <legend><span class="step__n">1</span>Profiel</legend>
-            <div class="tiles tiles--3">
-              <label class="tile"><input type="radio" name="profiel" value="50x30" checked><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="10.5" y="5" width="11" height="22" rx="1.5"/></svg></span><span class="tile__name">Koker</span><span class="tile__sub">50 × 30 mm</span></label>
-              <label class="tile"><input type="radio" name="profiel" value="50x20"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="12.5" y="5" width="7" height="22" rx="1.5"/></svg></span><span class="tile__name">Slank</span><span class="tile__sub">50 × 20 mm</span></label>
-              <label class="tile"><input type="radio" name="profiel" value="rond"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="10"/></svg></span><span class="tile__name">Rond</span><span class="tile__sub">Ø 50 mm</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="step" id="stap-kleur" data-shot="kleur">
-            <legend><span class="step__n">2</span>Kleur</legend>
-            <div class="tiles tiles--3">
-              <label class="tile tile--swatch"><input type="radio" name="kleur" value="zwart" checked><i style="--sw:#151515"></i><span class="tile__name">Mat zwart</span></label>
-              <label class="tile tile--swatch"><input type="radio" name="kleur" value="goud"><i style="--sw:linear-gradient(135deg,#b8a274,#7a6642)"></i><span class="tile__name">Goud</span></label>
-              <label class="tile tile--swatch"><input type="radio" name="kleur" value="wit"><i style="--sw:#eeece7"></i><span class="tile__name">Wit</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="step" id="stap-trap" data-shot="hoek">
-            <legend><span class="step__n">3</span>Uw trap</legend>
-            <div class="tiles tiles--2">
-              <label class="tile"><input type="radio" name="trap" value="recht"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v24"/></svg></span><span class="tile__name">Rechte trap</span></label>
-              <label class="tile"><input type="radio" name="trap" value="kwartslag" checked><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 28V8h18"/></svg></span><span class="tile__name">Kwartslag</span></label>
-              <label class="tile"><input type="radio" name="trap" value="dubbele-kwartslag"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 28V6h16v22"/></svg></span><span class="tile__name">Dubbele kwartslag</span></label>
-              <label class="tile"><input type="radio" name="trap" value="wenteltrap"><span class="tile__icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 16a2 2 0 0 1 2 2a4 4 0 0 1-4 4a6 6 0 0 1-6-6a8 8 0 0 1 8-8a10 10 0 0 1 10 10"/></svg></span><span class="tile__name">Wenteltrap</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="step" id="stap-delen" data-shot="hoek">
-            <legend><span class="step__n">4</span>Aantal leuningen</legend>
-            <div class="stepper" data-min="1" data-max="8">
-              <button type="button" class="stepper__btn" data-step="-1" aria-label="Eén leuning minder">−</button>
-              <output class="stepper__val" name="delen-out" for="delen"><span class="js-delen">3</span> <span class="js-delen-unit">leuningen</span></output>
-              <button type="button" class="stepper__btn" data-step="1" aria-label="Eén leuning meer">+</button>
-              <input type="hidden" name="delen" id="delen" value="3">
-            </div>
-            <p class="hint"><span class="js-delen-hint">Elke leuning is recht. Tel de rechte stukken muur langs uw trap: elk stuk is één leuning.</span> Montage: € 35 per leuning.</p>
-          </fieldset>
-
-          <fieldset class="step" id="stap-lengte" data-shot="lengte">
-            <legend><span class="step__n">5</span>Totale lengte</legend>
-            <div class="stepper stepper--len" data-min="1" data-max="25" data-inc="0.5">
-              <button type="button" class="stepper__btn" data-step="-1" aria-label="Halve meter korter">−</button>
-              <output class="stepper__val" name="lengte-out" for="lengte">ca. <span class="js-lengte">5,0</span> m</output>
-              <button type="button" class="stepper__btn" data-step="1" aria-label="Halve meter langer">+</button>
-              <input type="hidden" name="lengte" id="lengte" value="5">
-            </div>
-            <p class="hint">Alle leuningen samen, € 85 per meter.</p>
-            <label class="check"><input type="checkbox" name="lengte_onbekend" id="lengte_onbekend"><span>Ik weet de lengte niet, kom inmeten</span></label>
-          </fieldset>
-
-          <fieldset class="step" id="stap-locatie" data-shot="houder">
-            <legend><span class="step__n">6</span>Uw postcode</legend>
-            <label class="field field--pc"><input type="text" id="postcode" name="postcode" placeholder=" " required inputmode="text" autocomplete="postal-code" maxlength="7"><span>Postcode</span></label>
-            <p class="hint js-km" aria-live="polite">Wij rekenen € 1 per km vanaf onze werkplaats in Ulft.</p>
-          </fieldset>
-
-          <fieldset class="step" id="stap-betaling" data-shot="overzicht">
-            <legend><span class="step__n">7</span>Betalen</legend>
-            <div class="tiles tiles--2">
-              <label class="tile"><input type="radio" name="betaling" value="direct" checked><span class="tile__name">Direct betalen</span><span class="tile__sub">Via iDEAL</span></label>
-              <label class="tile"><input type="radio" name="betaling" value="achteraf"><span class="tile__name">Achteraf betalen</span><span class="tile__sub">+ 10%</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="step" id="stap-gegevens" data-shot="overzicht">
-            <legend><span class="step__n">8</span>Uw gegevens</legend>
-            <div class="fields">
-              <label class="field"><input type="text" id="naam" name="naam" placeholder=" " required autocomplete="name"><span>Naam</span></label>
-              <label class="field"><input type="email" id="email" name="email" placeholder=" " required autocomplete="email"><span>E-mail</span></label>
-              <label class="field"><input type="tel" id="telefoon" name="telefoon" placeholder=" " required autocomplete="tel"><span>Telefoon</span></label>
-              <label class="field"><input type="text" id="adres" name="adres" placeholder=" " required autocomplete="street-address"><span>Straat en huisnummer</span></label>
-              <label class="field field--wide"><input type="text" id="plaats" name="plaats" placeholder=" " required autocomplete="address-level2"><span>Plaats</span></label>
-            </div>
-          </fieldset>
-
-          <section class="summary" id="bestellen" data-shot="overzicht" aria-label="Overzicht van uw bestelling">
-            <h2 class="summary__title">Uw leuning</h2>
-            <p class="summary__spec js-sum-spec">Koker 50 × 30 mm · Mat zwart · Kwartslag</p>
-            <dl class="summary__list">
-              <div><dt class="js-l-leuning">Leuning, 5,0 m × € 85</dt><dd class="js-p-leuning">€ 425</dd></div>
-              <div><dt class="js-l-montage">Montage, 3 × € 35</dt><dd class="js-p-montage">€ 105</dd></div>
-              <div><dt class="js-l-reis">Reiskosten vanaf Ulft</dt><dd class="js-p-reis">Vul uw postcode in</dd></div>
-              <div class="js-row-toeslag" hidden><dt>Achteraf betalen, 10%</dt><dd class="js-p-toeslag">€ 0</dd></div>
-            </dl>
-            <p class="summary__price"><span>Totaal</span><strong class="js-total">€ 530</strong></p>
-            <button type="submit" class="btn btn--solid btn--wide js-submit">Bestellen en betalen</button>
-            <p class="summary__note js-pay-note">Na uw bestelling ontvangt u per e-mail een betaalverzoek via iDEAL. De prijs is gebaseerd op de lengte die u opgeeft.</p>
-          </section>
-
-          <div class="done" hidden tabindex="-1">
-            <h2 class="done__title js-done-title">Dank u.</h2>
-            <p class="js-done-body">Wij nemen contact met u op over uw leuning.</p>
-          </div>
-        </form>
-
-        <!-- Information, after the order -->
-        <div class="info" id="info">
-          <details>
-            <summary>Specificaties</summary>
-            <dl class="specs">
-              <div><dt>Profiel</dt><dd>Koker 50 × 30 mm, koker 50 × 20 mm of rond Ø 50 mm</dd></div>
-              <div><dt>Materiaal</dt><dd>Staal</dd></div>
-              <div><dt>Afwerking</dt><dd>Poedercoating in mat zwart, goud of wit</dd></div>
-              <div><dt>Bevestiging</dt><dd>Vierkante wandplaat met haakse houder</dd></div>
-              <div><dt>Uiteinden</dt><dd>Strak afgesloten met een vlakke eindkap</dd></div>
-              <div><dt>Vorm</dt><dd>Altijd recht; om de hoek een aparte leuning per stuk muur</dd></div>
-              <div><dt>Montage</dt><dd>Door Valier, bij u thuis</dd></div>
-            </dl>
-          </details>
-          <details>
-            <summary>Hoe het werkt</summary>
-            <ol class="how">
-              <li><b>Bestellen</b> U stelt uw leuning samen, ziet direct de prijs en bestelt. Direct betalen of achteraf.</li>
-              <li><b>Op maat maken</b> Wij maken elke leuning op maat in onze werkplaats in Ulft. Weet u de lengte niet, dan meten wij eerst in.</li>
-              <li><b>Monteren</b> Wij monteren de leuningen bij u thuis.</li>
-            </ol>
-          </details>
-          <details>
-            <summary>Past een Valier-leuning op mijn trap?</summary>
-            <p>Ja. Elke leuning wordt op maat gemaakt en is recht. Bij een kwartslag, dubbele kwartslag of wenteltrap plaatsen wij per stuk muur een aparte leuning, zodat de lijn van uw trap gevolgd wordt.</p>
-          </details>
-          <details>
-            <summary>Wat kost een leuning?</summary>
-            <p>€ 85 per meter, plus € 35 montage per leuning en € 1 per km reiskosten vanaf Ulft. Betaalt u achteraf, dan komt er 10% bij. Bovenaan deze pagina ziet u direct de prijs van uw keuze.</p>
-          </details>
-          <details>
-            <summary>Ik heb foto's van mijn trap. Waar stuur ik die heen?</summary>
-            <p>Stuur ze na uw bestelling naar info@valier.nl. Dan kijken wij mee of alles klopt.</p>
-          </details>
-          <details>
-            <summary>Op wat voor muur kan de leuning?</summary>
-            <p>De leuning wordt met wandhouders in de muur verankerd. Per wand kiezen we de juiste bevestiging.</p>
-          </details>
-          <details>
-            <summary>Maken jullie ook balustrades?</summary>
-            <p>Ja. Naast wandleuningen maken we glazen balustrades in een zwart stalen kader, voor trapgaten en overlopen.</p>
-          </details>
+        <div class="cfg-panel__body" aria-live="polite"></div>
+        <p class="cfg-error" role="alert" hidden></p>
+        <div class="cfg-nav">
+          <button type="button" class="btn cfg-back">Terug</button>
+          <div class="cfg-price" hidden></div>
+          <button type="button" class="btn btn--solid cfg-next">Volgende</button>
         </div>
-
-        <!-- Order bar: always within reach while configuring -->
-        <div class="orderbar" aria-label="Uw keuze">
-          <div class="orderbar__sum">
-            <span class="orderbar__label js-bar">50 × 30 · Mat zwart · 3 leuningen</span>
-            <span class="orderbar__text"><strong class="js-bar-total">€ 530</strong> <span class="js-bar-extra">+ reiskosten</span></span>
-          </div>
-          <a class="btn btn--solid orderbar__btn" href="#bestellen">Bestellen</a>
+      </div>
+      <div class="cfg-viewer">
+        <canvas aria-label="Interactief 3D-model van je trap en leuningen"></canvas>
+        <div class="v-labels" aria-hidden="true"></div>
+        <div class="v-tip" hidden></div>
+        <div class="v-views" role="group" aria-label="Standpunt">
+          <button type="button" data-view="perspectief" class="is-active">Perspectief</button>
+          <button type="button" data-view="boven">Boven</button>
+          <button type="button" data-view="zij">Zij</button>
         </div>
+        <p class="v-fallback">Het 3D-model werkt niet op dit apparaat. Je kunt de configurator gewoon gebruiken; kies je leuningen in de lijst.</p>
       </div>
     </section>
 
-    <section class="work" id="projecten">
-      <div class="work__head">
-        <p class="eyebrow">Projecten</p>
-        <h2 class="h2">Geplaatst.<br>Niet <em>gerenderd.</em></h2>
-        <p class="body">Boven ziet u de leuning in 3D. Hier hangt hij aan de muur bij onze klanten.</p>
+    <!-- ===== Questions ===== -->
+    <section class="faq" id="vragen">
+      <div class="faq__head">
+        <p class="eyebrow">Vragen</p>
+        <h2>Goed om te <em>weten.</em></h2>
       </div>
-      <div class="work__filters" role="group" aria-label="Filter projecten">
-        <button class="is-active" data-filter="alle">Alle <sup>45</sup></button>
-        <button data-filter="recht">Rechte trap <sup>11</sup></button>
-        <button data-filter="hoek">Om de hoek <sup>30</sup></button>
-        <button data-filter="glas">Met glas <sup>5</sup></button>
-        <button data-filter="kleur">Goud &amp; wit <sup>6</sup></button>
-        <button data-filter="details">Details <sup>8</sup></button>
+      <div class="faq__list">
+        <details><summary>Wat maakt VALIER precies?</summary><p>Stalen wandleuningen op maat: rechthoekig (50 × 30 of 50 × 20 mm, rechtop gemonteerd) of rond (Ø 50 mm), met tweelaagse poedercoating. Elke leuning is recht; om een hoek komt per stuk wand een aparte leuning.</p></details>
+        <details><summary>Hoe meet ik mijn trapleuning?</summary><p>Meet langs de lijn waar de leuning komt, schuin mee met de trap, van begin tot eind. Dus niet de horizontale lengte van de trap. Twijfel je? Vink in de configurator aan dat wij komen inmeten.</p></details>
+        <details><summary>Wat kost een leuning?</summary><p>Dat hangt af van de lengte, het aantal leuningen en je keuzes. In de configurator zie je een indicatie. De definitieve prijs staat in je offerte.</p></details>
+        <details><summary>Leveren, bezorgen of monteren?</summary><p>Je kunt de leuningen afhalen in Ulft, laten bezorgen of door ons laten monteren. Dat kies je in de laatste stap.</p></details>
+        <details><summary>Is een aanvraag meteen een bestelling?</summary><p>Nee. Wij controleren eerst je maten en situatie en sturen je een offerte. Pas na jouw akkoord gaan we produceren.</p></details>
       </div>
-      <div class="work__grid">
-        <figure class="ph ph--tall" data-cat="recht"><button data-full="assets/photos/leuning-diagonaal.jpg"><img src="assets/photos/leuning-diagonaal-600.jpg" alt="Mat zwarte vierkante wandleuning langs een trap met LED-verlichting" loading="lazy" width="600" height="800"></button><figcaption>Eén doorlopende lijn</figcaption></figure>
-        <figure class="ph" data-cat="hoek kleur"><button data-full="assets/photos/goud-boven.jpg"><img src="assets/photos/goud-boven-600.jpg" alt="Gouden vierkante wandleuning boven een draaiende trap met eiken treden" loading="lazy" width="600" height="800"></button><figcaption>Goud · van boven</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/avondlicht-zwart.jpg"><img src="assets/photos/avondlicht-zwart-600.jpg" alt="Mat zwarte leuning met haakse houders langs een trap met zwarte treden, in warm avondlicht" loading="lazy" width="600" height="800"></button><figcaption>Zwart · warm licht</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/hoek-segmenten.jpg"><img src="assets/photos/hoek-segmenten-600.jpg" alt="Leuning in drie delen die de hoek van een kwartslagtrap volgen" loading="lazy" width="600" height="800"></button><figcaption>Om de hoek, in delen</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="recht kleur"><button data-full="assets/photos/goud-led.jpg"><img src="assets/photos/goud-led-600.jpg" alt="Gouden wandleuning langs een trap met LED-strips onder elke trede" loading="lazy" width="600" height="800"></button><figcaption>Goud · met LED</figcaption></figure>
-        <figure class="ph" data-cat="details"><button data-full="assets/photos/eindkap-plaat.jpg"><img src="assets/photos/eindkap-plaat-600.jpg" alt="Close-up van het vierkante uiteinde van de zwarte leuning met de wandplaat erachter" loading="lazy" width="600" height="800"></button><figcaption>Detail · het profiel</figcaption></figure>
-        <figure class="ph" data-cat="recht glas"><button data-full="assets/photos/glas-recht.jpg"><img src="assets/photos/glas-recht-600.jpg" alt="Rechte trap met vierkante wandleuning en een glazen balustrade in zwart stalen kader" loading="lazy" width="600" height="800"></button><figcaption>Rechte trap · met glas</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/led-trap.jpg"><img src="assets/photos/led-trap-600.jpg" alt="Twee zwarte wandleuningen in een trappenhuis met warme LED-verlichting" loading="lazy" width="600" height="800"></button><figcaption>Mat zwart · avondlicht</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/schakelaar-zwart.jpg"><img src="assets/photos/schakelaar-zwart-600.jpg" alt="Zwarte leuningdelen om de hoek, naast een zwarte lichtschakelaar" loading="lazy" width="600" height="800"></button><figcaption>Zwart op zwart</figcaption></figure>
-        <figure class="ph" data-cat="details"><button data-full="assets/photos/houder-closeup.jpg"><img src="assets/photos/houder-closeup-600.jpg" alt="Close-up van de vierkante wandplaat en haakse houder onder de leuning" loading="lazy" width="600" height="800"></button><figcaption>Detail · de houder</figcaption></figure>
-        <figure class="ph" data-cat="hoek kleur"><button data-full="assets/photos/wit-avond.jpg"><img src="assets/photos/wit-avond-600.jpg" alt="Witte vierkante wandleuning langs een kwartslagtrap met eiken treden" loading="lazy" width="600" height="800"></button><figcaption>Wit · kwartslag</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="recht"><button data-full="assets/photos/zwart-led.jpg"><img src="assets/photos/zwart-led-600.jpg" alt="Mat zwarte wandleuning langs een trap met verlichte eiken treden" loading="lazy" width="600" height="800"></button><figcaption>Mat zwart · LED-treden</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/draaitrap-donker.jpg"><img src="assets/photos/draaitrap-donker-600.jpg" alt="Zwarte leuning boven een draaiende trap met donkere houten treden" loading="lazy" width="600" height="800"></button><figcaption>Draaitrap · donker hout</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/hoek-lijn.jpg"><img src="assets/photos/hoek-lijn-600.jpg" alt="Twee zwarte leuningdelen die in de hoek van de muur op elkaar aansluiten" loading="lazy" width="600" height="800"></button><figcaption>Twee delen, één lijn</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/rond-kwartslag.jpg"><img src="assets/photos/rond-kwartslag-600.jpg" alt="Ronde zwarte wandleuning met vierkante wandplaten langs een kwartslagtrap" loading="lazy" width="600" height="800"></button><figcaption>Rond profiel</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek kleur"><button data-full="assets/photos/goud-hoek.jpg"><img src="assets/photos/goud-hoek-600.jpg" alt="Gouden leuningdelen met haakse houders bij de bocht van een trap" loading="lazy" width="600" height="800"></button><figcaption>Goud · om de hoek</figcaption></figure>
-        <figure class="ph" data-cat="recht"><button data-full="assets/photos/rechte-trap-wit.jpg"><img src="assets/photos/rechte-trap-wit-600.jpg" alt="Lange zwarte wandleuning met haakse houders langs een witte trap" loading="lazy" width="600" height="800"></button><figcaption>Rechte lijn · wit</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/drie-delen.jpg"><img src="assets/photos/drie-delen-600.jpg" alt="Drie zwarte leuningdelen rond de bocht van een witte trap, van boven gezien" loading="lazy" width="600" height="800"></button><figcaption>Drie delen · van boven</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/hoek-licht.jpg"><img src="assets/photos/hoek-licht-600.jpg" alt="Twee zwarte leuningdelen in de hoek van een trappenhuis met daglicht" loading="lazy" width="600" height="800"></button><figcaption>Hoek · daglicht</figcaption></figure>
-        <figure class="ph" data-cat="recht kleur"><button data-full="assets/photos/leuning-goud.jpg"><img src="assets/photos/leuning-goud-600.jpg" alt="Gouden wandleuning naast een trap met LED-traptreden" loading="lazy" width="600" height="800"></button><figcaption>Goud</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/led-twee-delen.jpg"><img src="assets/photos/led-twee-delen-600.jpg" alt="Twee zwarte leuningdelen bij een trap met donkere treden en LED-verlichting" loading="lazy" width="600" height="800"></button><figcaption>Twee delen · LED</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/trappenhuis-boven.jpg"><img src="assets/photos/trappenhuis-boven-600.jpg" alt="Trappenhuis van boven gezien met zwarte leuningdelen langs de muur" loading="lazy" width="600" height="800"></button><figcaption>Trappenhuis · van boven</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="glas"><button data-full="assets/photos/glas-overloop.jpg"><img src="assets/photos/glas-overloop-600.jpg" alt="Overloop met glazen balustrades in zwart stalen kader en een wandleuning" loading="lazy" width="600" height="800"></button><figcaption>Overloop · glas en staal</figcaption></figure>
-        <figure class="ph" data-cat="details"><button data-full="assets/photos/houder-onder.jpg"><img src="assets/photos/houder-onder-600.jpg" alt="Kort zwart leuningdeel met twee haakse houders, van onderaf gezien" loading="lazy" width="600" height="800"></button><figcaption>Detail · van onderaf</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/hoek-avond.jpg"><img src="assets/photos/hoek-avond-600.jpg" alt="Leuningdelen in de hoek van een trap met donkere treden, in avondlicht" loading="lazy" width="600" height="800"></button><figcaption>Hoek · avondlicht</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/hoek-led.jpg"><img src="assets/photos/hoek-led-600.jpg" alt="Zwarte leuningdelen bij de bocht van een trap met LED-verlichting" loading="lazy" width="600" height="800"></button><figcaption>Hoek · met LED</figcaption></figure>
-        <figure class="ph" data-cat="hoek kleur"><button data-full="assets/photos/wit-hoek.jpg"><img src="assets/photos/wit-hoek-600.jpg" alt="Witte leuningdelen die de hoek van een trappenhuis volgen" loading="lazy" width="600" height="800"></button><figcaption>Wit · om de hoek</figcaption></figure>
-        <figure class="ph" data-cat="hoek glas"><button data-full="assets/photos/trapgat-boven.jpg"><img src="assets/photos/trapgat-boven-600.jpg" alt="Trapgat van boven gezien met wandleuning en glazen balustrade" loading="lazy" width="600" height="800"></button><figcaption>Trapgat · leuning en glas</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="recht details"><button data-full="assets/photos/leuning-perspectief.jpg"><img src="assets/photos/leuning-perspectief-600.jpg" alt="De mat zwarte leuning in perspectief langs een witte muur" loading="lazy" width="600" height="800"></button><figcaption>Strak tot het einde</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="recht"><button data-full="assets/photos/lange-lijn.jpg"><img src="assets/photos/lange-lijn-600.jpg" alt="Lange mat zwarte leuning langs een trap met lichte houten treden" loading="lazy" width="600" height="800"></button><figcaption>Eén lange lijn</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/kwartslag-wit-boven.jpg"><img src="assets/photos/kwartslag-wit-boven-600.jpg" alt="Witte kwartslagtrap van boven met zwarte leuningdelen langs de muur" loading="lazy" width="600" height="800"></button><figcaption>Kwartslag · overzicht</figcaption></figure>
-        <figure class="ph" data-cat="details hoek"><button data-full="assets/photos/hoek-detail.jpg"><img src="assets/photos/hoek-detail-600.jpg" alt="Twee leuningdelen die elkaar in de hoek van de muur ontmoeten" loading="lazy" width="600" height="800"></button><figcaption>Detail · de hoek</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/recht-licht.jpg"><img src="assets/photos/recht-licht-600.jpg" alt="Zwarte leuningdelen op twee muren van een trappenhuis, in zacht daglicht" loading="lazy" width="600" height="800"></button><figcaption>Twee muren · daglicht</figcaption></figure>
-        <figure class="ph" data-cat="recht details"><button data-full="assets/photos/kort-recht.jpg"><img src="assets/photos/kort-recht-600.jpg" alt="Kort zwart leuningdeel op twee wandhouders" loading="lazy" width="600" height="800"></button><figcaption>Kort stuk · twee houders</figcaption></figure>
-        <figure class="ph" data-cat="glas hoek"><button data-full="assets/photos/glas-hal.jpg"><img src="assets/photos/glas-hal-600.jpg" alt="Kwartslagtrap met glazen balustrade en een zwarte wandleuning in de hal" loading="lazy" width="600" height="800"></button><figcaption>Hal · glas en staal</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/kwartslag-boven.jpg"><img src="assets/photos/kwartslag-boven-600.jpg" alt="Zwarte leuningdelen langs een witte kwartslagtrap, van boven gezien" loading="lazy" width="600" height="800"></button><figcaption>Kwartslag</figcaption></figure>
-        <figure class="ph" data-cat="details hoek"><button data-full="assets/photos/houder-detail.jpg"><img src="assets/photos/houder-detail-600.jpg" alt="Detail van de vierkante wandhouders onder de leuning" loading="lazy" width="600" height="800"></button><figcaption>Detail · houders</figcaption></figure>
-        <figure class="ph" data-cat="recht"><button data-full="assets/photos/open-trap.jpg"><img src="assets/photos/open-trap-600.jpg" alt="Zwarte wandleuning langs een open trap met witte treden" loading="lazy" width="600" height="800"></button><figcaption>Open trap</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="details hoek"><button data-full="assets/photos/eindkap-detail.jpg"><img src="assets/photos/eindkap-detail-600.jpg" alt="Close-up van de vlakke eindkap van de leuning bij een hoek" loading="lazy" width="600" height="800"></button><figcaption>Detail · eindkap</figcaption></figure>
-        <figure class="ph" data-cat="glas hoek"><button data-full="assets/photos/glas-wenteltrap.jpg"><img src="assets/photos/glas-wenteltrap-600.jpg" alt="Wenteltrap met glazen balustrade en wandleuning langs de muur" loading="lazy" width="600" height="800"></button><figcaption>Wenteltrap · met glas</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/wit-kwartslag.jpg"><img src="assets/photos/wit-kwartslag-600.jpg" alt="Zwarte vierkante leuning langs een witte kwartslagtrap, met een losse leuning bij de onderste treden" loading="lazy" width="600" height="800"></button><figcaption>Kwartslag · wit</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/hoek-eiken.jpg"><img src="assets/photos/hoek-eiken-600.jpg" alt="Leuningdelen in de hoek boven eiken traptreden" loading="lazy" width="600" height="800"></button><figcaption>Wenteltrap · eiken</figcaption></figure>
-        <figure class="ph" data-cat="hoek"><button data-full="assets/photos/hoek-boven-wit.jpg"><img src="assets/photos/hoek-boven-wit-600.jpg" alt="Leuningdelen in de bocht van een witte wenteltrap, van boven gezien" loading="lazy" width="600" height="800"></button><figcaption>Bocht · van boven</figcaption></figure>
-        <figure class="ph" data-cat="recht"><button data-full="assets/photos/leuning-detail.jpg"><img src="assets/photos/leuning-detail-600.jpg" alt="Close-up van de mat zwarte leuning met LED-treden" loading="lazy" width="600" height="800"></button><figcaption>Mat zwart</figcaption></figure>
-        <figure class="ph ph--tall" data-cat="hoek"><button data-full="assets/photos/opgang-eiken.jpg"><img src="assets/photos/opgang-eiken-600.jpg" alt="Trap met eiken treden en een zwarte leuning, van onderaf gezien" loading="lazy" width="600" height="800"></button><figcaption>Opgang</figcaption></figure>
-      </div>
-      <div class="work__more"><button class="btn js-more">Toon alle projecten</button></div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer__inner">
       <p class="footer__brand">VALIER</p>
-      <div class="footer__cols">
-        <div><p class="eyebrow">Contact</p><p class="footer__text">info@valier.nl</p><p class="footer__text footer__plain">Werkplaats in Ulft</p></div>
-        <div><p class="eyebrow">Product</p><a href="#stap-profiel">Samenstellen</a><a href="#projecten">Projecten</a><a href="#info">Veelgestelde vragen</a></div>
-      </div>
+      <p class="footer__text">Stalen trapleuningen op maat · Werkplaats in Ulft · <span class="sel">info@valier.nl</span></p>
     </div>
-    <p class="footer__bottom"><span>© 2026 Valier</span><span>Wandleuningen op maat</span></p>
   </footer>
 
-  <dialog class="lightbox" aria-label="Foto vergroot"><img alt=""><button class="lightbox__close" aria-label="Sluiten">×</button><button class="lightbox__prev" aria-label="Vorige foto">←</button><button class="lightbox__next" aria-label="Volgende foto">→</button><p class="lightbox__cap"></p></dialog>
+  <dialog class="modal" id="howto" aria-labelledby="howto-title">
+    <button type="button" class="modal__close" data-close aria-label="Sluiten">×</button>
+    <h3 id="howto-title">Hoe meet ik mijn trapleuning?</h3>
+    <svg class="howto-svg" viewBox="0 0 360 200" role="img" aria-label="Meet langs de leuning, schuin mee met de trap; niet de horizontale lengte">
+      <path class="hs-stair" d="M20 180 H70 V160 H110 V140 H150 V120 H190 V100 H230 V80 H270 V60 H340"/>
+      <line class="hs-rail" x1="60" y1="110" x2="300" y2="10"/>
+      <line class="hs-dim" x1="72" y1="128" x2="312" y2="28" marker-start="url(#ic-head)" marker-end="url(#ic-head)"/>
+      <text class="hs-ok" x="168" y="66" transform="rotate(-22.6 168 66)">lengte langs de leuning</text>
+      <line class="hs-no" x1="60" y1="196" x2="300" y2="196"/>
+      <text class="hs-bad" x="140" y="191">niet de horizontale lengte</text>
+    </svg>
+    <ol class="howto-list">
+      <li>Bepaal per stuk wand waar de leuning begint en eindigt.</li>
+      <li>Meet langs de wand, schuin mee met de trap, van begin tot eind.</li>
+      <li>Om een hoek? Meet elk stuk apart: elke VALIER-leuning is recht.</li>
+      <li>Twijfel je? Vink aan dat wij komen inmeten, of voeg foto's toe.</li>
+    </ol>
+  </dialog>
 
-  <script src="main.js"></script>
-  <script type="module" src="js/viewer.js"></script>
+  <dialog class="lightbox" id="lightbox" aria-label="Foto vergroot"><img alt=""><button class="lb-close" aria-label="Sluiten">×</button><button class="lb-prev" aria-label="Vorige foto">←</button><button class="lb-next" aria-label="Volgende foto">→</button><p class="lb-cap"></p></dialog>
+
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
