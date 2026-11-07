@@ -1,8 +1,8 @@
 /* =========================================================
    VALIER — productviewer: de wandleuning in 3D
-   Vierkant (40×40) of rond profiel, haakse wandhouders, 1–4 delen om de hoek.
+   Koker 50×30, koker 50×20 of rond Ø50; haakse wandhouders; 1–4 rechte leuningen om de hoek.
    De pagina stuurt configuratie en camerastandpunt via events:
-     document.dispatchEvent(new CustomEvent('valier:config', { detail: { profiel, kleur, delen } }))
+     document.dispatchEvent(new CustomEvent('valier:config', { detail: { profiel: '50x30'|'50x20'|'rond', kleur, delen } }))
      document.dispatchEvent(new CustomEvent('valier:shot',   { detail: 'profiel' }))
    ========================================================= */
 import * as THREE from 'three';
@@ -138,12 +138,12 @@ const box = (w, h, d, mat) => {
   return m;
 };
 
-/** A straight rail segment (square 40×40 profile) from a to b; one face parallel to the wall. */
-const PROFILE = 0.04;
-function railSegment(a, b, wallNormal) {
+/** A straight rail (rectangular tube pw × ph) from a to b; pw runs out from the wall, ph is the height. */
+const PROFILE = 0.04; // bracket reference: the saddle sits 20 mm below the rail centre line
+function railSegment(a, b, wallNormal, pw = 0.05, ph = 0.03) {
   const len = a.distanceTo(b);
   const bev = 0.0016;
-  const g = new THREE.ExtrudeGeometry(roundedRect(PROFILE - 2 * bev, PROFILE - 2 * bev, 0.0035), {
+  const g = new THREE.ExtrudeGeometry(roundedRect(pw - 2 * bev, ph - 2 * bev, 0.0035), {
     depth: len - 2 * bev, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 3, curveSegments: 8
   });
   g.translate(0, 0, bev);
@@ -156,7 +156,7 @@ function railSegment(a, b, wallNormal) {
   m.castShadow = m.receiveShadow = true;
   // flat end caps, a hair proud of the tube, like the real product
   for (const cz of [-0.0012, len + 0.0012]) {
-    const cap = roundedBox(PROFILE + 0.0008, PROFILE + 0.0008, 0.0024, 0.0035, railMat);
+    const cap = roundedBox(pw + 0.0008, ph + 0.0008, 0.0024, 0.0035, railMat);
     cap.position.z = cz;
     m.add(cap);
   }
@@ -316,7 +316,7 @@ const PIECES = {
 // how many pieces → which pieces are shown (matches how Valier splits a kwartslag on site)
 const LAYOUTS = { 1: ['A'], 2: ['A', 'B'], 3: ['A', 'C', 'B2'], 4: ['A1', 'A2', 'C', 'B2'] };
 
-const RADIUS = 0.021;
+const RADIUS = 0.025; // rond Ø 50 mm
 function roundSegment(a, b) {
   const len = a.distanceTo(b);
   const m = new THREE.Mesh(new THREE.CylinderGeometry(RADIUS, RADIUS, len, 48, 1), railMat);
@@ -330,8 +330,13 @@ for (const [name, p] of Object.entries(PIECES)) {
   const normal = p.wall === 'A' ? v3(0, 0, 1) : v3(-1, 0, 0);
   const horiz = p.wall === 'A' ? Math.abs(p.b.x - p.a.x) : Math.abs(p.b.z - p.a.z);
   const pAng = Math.atan2(p.b.y - p.a.y, horiz);
-  p.square = railSegment(p.a, p.b, normal);
-  p.round = roundSegment(p.a, p.b);
+  // each profile rests on the bracket saddle: shift it so its underside meets the saddle
+  const lift = hh => v3(0, (hh - PROFILE / 2) / Math.cos(pAng), 0);
+  p.meshes = {
+    '50x30': railSegment(p.a.clone().add(lift(0.015)), p.b.clone().add(lift(0.015)), normal, 0.05, 0.03),
+    '50x20': railSegment(p.a.clone().add(lift(0.01)), p.b.clone().add(lift(0.01)), normal, 0.05, 0.02),
+    rond: roundSegment(p.a.clone().add(lift(RADIUS)), p.b.clone().add(lift(RADIUS)))
+  };
   p.brackets = [];
   const len = p.a.distanceTo(p.b);
   const us = len > 2.2 ? [0.1, 0.5, 0.9] : len > 0.9 ? [0.18, 0.82] : [0.5];
@@ -342,17 +347,16 @@ for (const [name, p] of Object.entries(PIECES)) {
     p.brackets.push(b);
     scene.add(b);
   }
-  scene.add(p.square, p.round);
+  scene.add(...Object.values(p.meshes));
   p.name = name;
 }
 
-const config = { profiel: 'vierkant', kleur: 'zwart', delen: 3 };
+const config = { profiel: '50x30', kleur: 'zwart', delen: 3 };
 function applyLayout() {
   const shown = LAYOUTS[Math.max(1, Math.min(4, config.delen | 0))];
   for (const p of Object.values(PIECES)) {
     const on = shown.includes(p.name);
-    p.square.visible = on && config.profiel === 'vierkant';
-    p.round.visible = on && config.profiel === 'rond';
+    for (const [k, m] of Object.entries(p.meshes)) m.visible = on && config.profiel === k;
     p.brackets.forEach(b => (b.visible = on));
   }
   dirty = 30;
@@ -455,9 +459,11 @@ function stepFinish(dt) {
 
 /* ---------- Dimension labels (profile shot) ---------- */
 const yA = new THREE.Vector3().crossVectors(dirA, v3(0, 0, 1));
+const PROF = { '50x30': { w: '50 mm', h: '30 mm', hh: 0.015 }, '50x20': { w: '50 mm', h: '20 mm', hh: 0.01 }, rond: { w: 'Ø 50 mm', h: '', hh: RADIUS } };
+const centre = () => A0.clone().add(v3(0, (PROF[config.profiel].hh - PROFILE / 2) / Math.cos(Math.atan(slope)), 0));
 const labels = [
-  { el: viewer.querySelector('[data-label="w"]'), pt: () => A0.clone().addScaledVector(yA, 0.036) },
-  { el: viewer.querySelector('[data-label="h"]'), pt: () => A0.clone().add(v3(0, 0, 0.036)) }
+  { el: viewer.querySelector('[data-label="w"]'), pt: () => centre().addScaledVector(yA, PROF[config.profiel].hh + 0.016) },
+  { el: viewer.querySelector('[data-label="h"]'), pt: () => centre().add(v3(0, 0, 0.041)) }
 ];
 const _p = new THREE.Vector3();
 function updateLabels(show) {
@@ -483,8 +489,10 @@ function setConfig(c) {
   Object.assign(config, c);
   goal = finishes[config.kleur] || finishes.zwart;
   if (layoutChanged) applyLayout();
-  viewer.querySelector('[data-label="w"]').textContent = config.profiel === 'rond' ? 'Ø rond' : '40 mm';
-  viewer.querySelector('[data-label="h"]').hidden = config.profiel === 'rond';
+  const pr = PROF[config.profiel] || PROF['50x30'];
+  viewer.querySelector('[data-label="w"]').textContent = pr.w;
+  viewer.querySelector('[data-label="h"]').textContent = pr.h;
+  viewer.querySelector('[data-label="h"]').hidden = !pr.h;
   dirty = 60;
 }
 document.addEventListener('valier:config', e => setConfig(e.detail));

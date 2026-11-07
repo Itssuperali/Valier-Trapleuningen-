@@ -32,6 +32,7 @@ body {
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 img { display: block; max-width: 100%; height: auto; }
+[hidden] { display: none !important; }
 em { font-family: var(--serif); font-style: italic; font-weight: 300; color: var(--brass); }
 ::selection { background: var(--brass); color: var(--ink); }
 :focus-visible { outline: 1px solid var(--brass); outline-offset: 3px; }
@@ -180,6 +181,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; color: var
 .summary__list { display: grid; }
 .summary__list div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .summary__list dt { color: var(--stone); }
+.summary__list div[hidden] { display: none; }
 .summary__list dd { text-align: right; }
 .summary__price { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 6px; }
 .summary__price span { color: var(--stone); font-size: 14px; }
@@ -221,6 +223,17 @@ em { font-family: var(--serif); font-style: italic; font-weight: 300; color: var
 .orderbar__label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--stone); }
 .orderbar__text { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .orderbar__btn { flex-shrink: 0; }
+
+/* ---------- Prices & order details ---------- */
+.buy__unit { font-family: var(--sans); font-size: 14px; color: var(--stone); letter-spacing: 0; }
+.summary__spec { font-size: 14px; color: var(--muted); margin-top: -8px; }
+.field--pc { max-width: 220px; }
+.field--wide { grid-column: 1 / -1; }
+.orderbar__text strong { font-family: var(--serif); font-weight: 300; font-size: 22px; letter-spacing: -.01em; }
+.orderbar__text span { font-size: 13px; color: var(--stone); }
+.orderbar__label { text-transform: none; letter-spacing: .02em; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.footer__plain { user-select: auto; }
+.js-submit:disabled { opacity: .6; cursor: progress; }
 
 /* ---------- Mobile: viewer pinned on top, order bar pinned at the bottom ---------- */
 @media (max-width: 960px) {
