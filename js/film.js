@@ -158,17 +158,26 @@ function railSegment(a, b, wallNormal) {
   m.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(x, y, z));
   m.position.copy(a);
   m.castShadow = m.receiveShadow = true;
+  // flat end caps, a hair proud of the tube, like the real product
+  for (const cz of [-0.0012, len + 0.0012]) {
+    const cap = roundedBox(PROFILE + 0.0008, PROFILE + 0.0008, 0.0024, 0.0035, railMat);
+    cap.position.z = cz;
+    m.add(cap);
+  }
   return m;
 }
 
-/** Wall bracket like the real product: square wall plate, square arm out, then up to a saddle under the rail. */
+/** Wall bracket like the real product (checked against close-up photos):
+ *  square wall plate, a square bar straight out of the wall from its upper part,
+ *  then a square bar straight up into the rail, which rests on a small saddle. */
 const OFF = 0.068; // rail centre distance from wall
-function bracket(slope) {
+function bracket(ang) {
   const g = new THREE.Group();
-  const drop = 0.092;
-  const plate = roundedBox(0.06, 0.06, 0.006, 0.004, railMat);
+  const drop = 0.098, t = 0.015;          // plate centre below rail centre, bar section
+  const armY = -drop + 0.014;             // the arm leaves the plate above its centre
+  const plate = roundedBox(0.058, 0.066, 0.006, 0.004, railMat);
   plate.position.set(0, -drop, 0.003);
-  const screws = [[-0.018, 0.018], [0.018, -0.018]].map(([sx, sy]) => {
+  const screws = [[0, -0.02]].map(([sx, sy]) => {
     const s = new THREE.Mesh(new THREE.CylinderGeometry(0.0048, 0.0052, 0.0022, 24), screwMat);
     s.rotation.x = Math.PI / 2;
     s.position.set(sx, -drop + sy, 0.0068);
@@ -176,16 +185,16 @@ function bracket(slope) {
     s.castShadow = true;
     return s;
   });
-  const arm = roundedBox(0.012, 0.012, OFF - 0.006, 0.0015, railMat);
-  arm.position.set(0, -drop, 0.006 + (OFF - 0.006) / 2);
-  const riseLen = drop - PROFILE / 2 - 0.004;
-  const up = box(0.012, riseLen, 0.012, railMat);
-  up.position.set(0, -drop + riseLen / 2 + 0.006, OFF);
-  const saddle = roundedBox(0.032, 0.03, 0.004, 0.002, railMat);
-  saddle.rotation.x = -Math.PI / 2;
+  const arm = roundedBox(t, t, OFF - 0.006 + t / 2, 0.0015, railMat);    // straight out of the wall
+  arm.position.set(0, armY, 0.006 + (OFF - 0.006 + t / 2) / 2);
+  const yTop = -PROFILE / 2 / Math.cos(ang) - 0.003;
+  const up = box(t, yTop - armY + t / 2, t, railMat);                    // straight up into the rail
+  up.position.set(0, (armY - t / 2 + yTop) / 2, OFF);
+  const saddle = roundedBox(0.028, 0.02, 0.005, 0.002, railMat);
   saddle.rotation.order = 'ZXY';
-  saddle.rotation.z = slope;
-  saddle.position.set(0, -PROFILE / 2 - 0.002, OFF);
+  saddle.rotation.x = -Math.PI / 2;
+  saddle.rotation.z = ang;
+  saddle.position.set(0, yTop + 0.0015, OFF);
   g.add(plate, arm, up, saddle, ...screws);
   g.userData = { plate, screws };
   return g;

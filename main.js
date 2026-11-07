@@ -59,9 +59,18 @@
   /* ---------- Project filters + staggered grid ---------- */
   const grid = $('.work__grid');
   const figs = $$('.ph', grid);
+  const more = $('.work__more');
+  grid.classList.add('is-collapsed');
+  const isShown = f => getComputedStyle(f).display !== 'none';
+  $('.js-more', more).addEventListener('click', () => {
+    grid.classList.remove('is-collapsed');
+    more.hidden = true;
+    stagger();
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  });
   const stagger = () => {
     const cols = matchMedia('(max-width: 760px)').matches ? 2 : 3;
-    figs.filter(f => !f.classList.contains('is-hidden')).forEach((f, i) => f.classList.toggle('is-mid', i % cols === 1));
+    figs.filter(isShown).forEach((f, i) => f.classList.toggle('is-mid', i % cols === 1));
   };
   stagger();
   addEventListener('resize', stagger);
@@ -69,6 +78,8 @@
     if (b.classList.contains('is-active')) return;
     $$('.work__filters button').forEach(x => x.classList.toggle('is-active', x === b));
     const f = b.dataset.filter;
+    grid.classList.remove('is-collapsed');
+    more.hidden = true;
     grid.classList.add('is-switching');
     setTimeout(() => {
       figs.forEach(fig => fig.classList.toggle('is-hidden', f !== 'alle' && !fig.dataset.cat.split(' ').includes(f)));
@@ -91,7 +102,7 @@
       cap.textContent = `${$('figcaption', fig).textContent}  ·  ${at + 1} / ${list.length}`;
     };
     figs.forEach(fig => $('button', fig).addEventListener('click', () => {
-      list = figs.filter(x => !x.classList.contains('is-hidden'));
+      list = figs.filter(isShown);
       show(list.indexOf(fig));
       box.showModal();
       lenis?.stop();
