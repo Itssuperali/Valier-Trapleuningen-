@@ -1,6 +1,6 @@
 /* =========================================================
    VALIER — productviewer: de wandleuning in 3D
-   Koker 50×30, koker 50×20 of rond Ø50; haakse wandhouders; 1–4 rechte leuningen om de hoek.
+   Koker 50×30 of 50×20 (rechtop: 50 mm hoog) of rond Ø50; haakse wandhouders; 1–4 rechte leuningen.
    De pagina stuurt configuratie en camerastandpunt via events:
      document.dispatchEvent(new CustomEvent('valier:config', { detail: { profiel: '50x30'|'50x20'|'rond', kleur, delen } }))
      document.dispatchEvent(new CustomEvent('valier:shot',   { detail: 'profiel' }))
@@ -138,7 +138,8 @@ const box = (w, h, d, mat) => {
   return m;
 };
 
-/** A straight rail (rectangular tube pw × ph) from a to b; pw runs out from the wall, ph is the height. */
+/** A straight rail (rectangular tube pw × ph) from a to b; pw runs out from the wall, ph is the height.
+ *  Valier mounts its tubes upright: 50 mm high, 30 or 20 mm deep. */
 const PROFILE = 0.04; // bracket reference: the saddle sits 20 mm below the rail centre line
 function railSegment(a, b, wallNormal, pw = 0.05, ph = 0.03) {
   const len = a.distanceTo(b);
@@ -333,8 +334,9 @@ for (const [name, p] of Object.entries(PIECES)) {
   // each profile rests on the bracket saddle: shift it so its underside meets the saddle
   const lift = hh => v3(0, (hh - PROFILE / 2) / Math.cos(pAng), 0);
   p.meshes = {
-    '50x30': railSegment(p.a.clone().add(lift(0.015)), p.b.clone().add(lift(0.015)), normal, 0.05, 0.03),
-    '50x20': railSegment(p.a.clone().add(lift(0.01)), p.b.clone().add(lift(0.01)), normal, 0.05, 0.02),
+    // upright, as on site: 50 mm high, 30 or 20 mm out from the wall
+    '50x30': railSegment(p.a.clone().add(lift(0.025)), p.b.clone().add(lift(0.025)), normal, 0.03, 0.05),
+    '50x20': railSegment(p.a.clone().add(lift(0.025)), p.b.clone().add(lift(0.025)), normal, 0.02, 0.05),
     rond: roundSegment(p.a.clone().add(lift(RADIUS)), p.b.clone().add(lift(RADIUS)))
   };
   p.brackets = [];
@@ -459,11 +461,11 @@ function stepFinish(dt) {
 
 /* ---------- Dimension labels (profile shot) ---------- */
 const yA = new THREE.Vector3().crossVectors(dirA, v3(0, 0, 1));
-const PROF = { '50x30': { w: '50 mm', h: '30 mm', hh: 0.015 }, '50x20': { w: '50 mm', h: '20 mm', hh: 0.01 }, rond: { w: 'Ø 50 mm', h: '', hh: RADIUS } };
+const PROF = { '50x30': { w: '30 mm', h: '50 mm', hh: 0.025, hd: 0.015 }, '50x20': { w: '20 mm', h: '50 mm', hh: 0.025, hd: 0.01 }, rond: { w: 'Ø 50 mm', h: '', hh: RADIUS, hd: RADIUS } };
 const centre = () => A0.clone().add(v3(0, (PROF[config.profiel].hh - PROFILE / 2) / Math.cos(Math.atan(slope)), 0));
 const labels = [
   { el: viewer.querySelector('[data-label="w"]'), pt: () => centre().addScaledVector(yA, PROF[config.profiel].hh + 0.016) },
-  { el: viewer.querySelector('[data-label="h"]'), pt: () => centre().add(v3(0, 0, 0.041)) }
+  { el: viewer.querySelector('[data-label="h"]'), pt: () => centre().add(v3(0, 0, PROF[config.profiel].hd + 0.016)) }
 ];
 const _p = new THREE.Vector3();
 function updateLabels(show) {
