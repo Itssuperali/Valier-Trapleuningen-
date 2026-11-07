@@ -113,7 +113,7 @@ const ledMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.6, 1.25, 0
 
 const finishes = {
   zwart: { color: new THREE.Color(0x141414), metalness: 0.3, roughness: 0.5, clearcoat: 0.3 },
-  goud: { color: new THREE.Color(0xb39563), metalness: 0.85, roughness: 0.34, clearcoat: 0.2 },
+  goud: { color: new THREE.Color(0x8c7650), metalness: 0.7, roughness: 0.42, clearcoat: 0.12 }, // champagne-brons, gemeten op projectfoto's
   antraciet: { color: new THREE.Color(0x3b3d3f), metalness: 0.35, roughness: 0.48, clearcoat: 0.25 },
   wit: { color: new THREE.Color(0xeeece7), metalness: 0.05, roughness: 0.45, clearcoat: 0.2 }
 };
