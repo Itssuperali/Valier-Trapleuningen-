@@ -53,23 +53,62 @@
   if (window.gsap && window.ScrollTrigger && !reduce) {
     gsap.registerPlugin(ScrollTrigger);
     if (lenis) lenis.on('scroll', ScrollTrigger.update);
-    $$('.ph--offset').forEach(el => gsap.to(el, { yPercent: -8, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } }));
     gsap.from('.footer__mark', { yPercent: 40, ease: 'none', scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
   }
 
-  /* ---------- Lightbox ---------- */
+  /* ---------- Project filters + staggered grid ---------- */
+  const grid = $('.work__grid');
+  const figs = $$('.ph', grid);
+  const stagger = () => {
+    const cols = matchMedia('(max-width: 760px)').matches ? 2 : 3;
+    figs.filter(f => !f.classList.contains('is-hidden')).forEach((f, i) => f.classList.toggle('is-mid', i % cols === 1));
+  };
+  stagger();
+  addEventListener('resize', stagger);
+  $$('.work__filters button').forEach(b => b.addEventListener('click', () => {
+    if (b.classList.contains('is-active')) return;
+    $$('.work__filters button').forEach(x => x.classList.toggle('is-active', x === b));
+    const f = b.dataset.filter;
+    grid.classList.add('is-switching');
+    setTimeout(() => {
+      figs.forEach(fig => fig.classList.toggle('is-hidden', f !== 'alle' && !fig.dataset.cat.split(' ').includes(f)));
+      stagger();
+      requestAnimationFrame(() => grid.classList.remove('is-switching'));
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
+    }, 350);
+  }));
+
+  /* ---------- Lightbox (with browsing) ---------- */
   const box = $('.lightbox');
   if (box && box.showModal) {
-    const img = $('img', box);
-    $$('[data-full]').forEach(b => b.addEventListener('click', () => {
-      img.src = b.dataset.full;
-      img.alt = $('img', b).alt;
+    const img = $('img', box), cap = $('.lightbox__cap', box);
+    let list = [], at = 0;
+    const show = i => {
+      at = (i + list.length) % list.length;
+      const fig = list[at], btn = $('button', fig);
+      img.src = btn.dataset.full;
+      img.alt = $('img', btn).alt;
+      cap.textContent = `${$('figcaption', fig).textContent}  ·  ${at + 1} / ${list.length}`;
+    };
+    figs.forEach(fig => $('button', fig).addEventListener('click', () => {
+      list = figs.filter(x => !x.classList.contains('is-hidden'));
+      show(list.indexOf(fig));
       box.showModal();
       lenis?.stop();
     }));
-    const close = () => { box.close(); };
-    $('button', box).addEventListener('click', close);
-    box.addEventListener('click', e => { if (e.target === box) close(); });
+    $('.lightbox__close', box).addEventListener('click', () => box.close());
+    $('.lightbox__prev', box).addEventListener('click', () => show(at - 1));
+    $('.lightbox__next', box).addEventListener('click', () => show(at + 1));
+    box.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(at - 1); if (e.key === 'ArrowRight') show(at + 1); });
+    let sx = null;
+    box.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', e => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) show(at + (dx < 0 ? 1 : -1));
+      sx = null;
+    });
+    box.addEventListener('click', e => { if (e.target === box) box.close(); });
     box.addEventListener('close', () => lenis?.start());
   }
 
