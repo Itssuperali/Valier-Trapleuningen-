@@ -14,7 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/addons/"}}</script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"VALIER Trapleuningen","description":"Stalen trapleuningen op maat, met tweelaagse poedercoating.","email":"info@valier.nl","address":{"@type":"PostalAddress","addressLocality":"Ulft","addressCountry":"NL"},"areaServed":"NL"}
   </script>
@@ -38,7 +37,7 @@
       <div class="hero__text">
         <p class="eyebrow">VALIER Trapleuningen</p>
         <h1>Stalen trapleuningen,<br><em>op maat gemaakt.</em></h1>
-        <p class="hero__lead">Strak, sterk en precies passend. Gemaakt in onze werkplaats in Ulft, met tweelaagse poedercoating. Bekijk ons werk en stel daarna je eigen leuning samen in 3D.</p>
+        <p class="hero__lead">Strak, sterk en precies passend. Gemaakt in onze werkplaats in Ulft, met tweelaagse poedercoating. Bekijk ons werk en stel daarna je eigen leuning samen.</p>
         <div class="hero__actions">
           <a href="#configurator" class="btn btn--solid" data-start="full">Stel je leuning samen</a>
         </div>
@@ -54,7 +53,7 @@
     </section>
 
     <!-- ===== Configurator ===== -->
-    <section class="cfg" id="configurator" aria-label="3D-configurator">
+    <section class="cfg" id="configurator" aria-label="Configurator">
       <div class="cfg-panel">
         <ol class="cfg-progress" aria-label="Voortgang"></ol>
         <div class="cfg-head">
@@ -71,15 +70,12 @@
         </div>
       </div>
       <div class="cfg-viewer">
-        <canvas aria-label="Interactief 3D-model van je trap en leuningen"></canvas>
-        <div class="v-labels" aria-hidden="true"></div>
-        <div class="v-tip" hidden></div>
-        <div class="v-views" role="group" aria-label="Standpunt">
-          <button type="button" data-view="perspectief" class="is-active">Perspectief</button>
-          <button type="button" data-view="boven">Boven</button>
-          <button type="button" data-view="zij">Zij</button>
+        <img class="d-photo" src="assets/detail/rect-zwart.jpg" alt="Detail: VALIER-leuning rechthoekig, mat zwart" width="900" height="1200">
+        <div class="d-info">
+          <p class="d-spec"></p>
+          <div class="d-rails" aria-label="Je leuningen"></div>
         </div>
-        <p class="v-fallback">Het 3D-model werkt niet op dit apparaat. Je kunt de configurator gewoon gebruiken; kies je leuningen in de lijst.</p>
+        <p class="d-note">Detailfoto van een geplaatste VALIER-leuning. Kleur is een weergave; de definitieve kleur bevestigen we in de offerte.</p>
       </div>
     </section>
 

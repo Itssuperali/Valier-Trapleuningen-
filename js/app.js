@@ -1,13 +1,11 @@
 /* =========================================================
    VALIER — configurator: stappen, validatie, overzicht en aanvraag.
-   Alle keuzes gaan via state.js; het 3D-model (viewer3d.js), de prijs
+   Alle keuzes gaan via state.js; de detailfoto, de prijs
    (pricing.js) en het overzicht lezen dezelfde status.
    ========================================================= */
 import * as S from './state.js';
 import { STAIR_TYPES, PROFILE_FORMS, COLORS, DELIVERY, LIMITS, PRICING, QUOTE, MOUNTING, PHOTOS } from './catalog.js';
 import { calculate, euro } from './pricing.js';
-import { buildStair, looseSlots } from './stairs.js';
-import * as THREE from 'three';
 
 const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
@@ -47,18 +45,11 @@ const PROFILE_ICONS = {
 };
 
 /* ---------- candidates (positions) per stair, without needing WebGL ---------- */
-const dummyMat = new THREE.MeshBasicMaterial();
-const dummyMats = { oak: dummyMat, white: dummyMat, whiteDS: dummyMat, wall: dummyMat };
-const candCache = new Map();
 function candidates(s) {
-  const t = s.stair.type;
-  if (!t) return [];
-  if (isLoose(t)) return looseSlots(Math.max(1, s.rails.length));
-  const key = t + s.stair.dir;
-  if (!candCache.has(key)) candCache.set(key, buildStair(t, s.stair.dir, dummyMats).cands.map(c => ({ id: c.id, label: c.label, len: Math.round(c.a.distanceTo(c.b) * 1000) })));
-  return candCache.get(key);
+  // every VALIER rail is a separate straight rail; positions are simply "Leuning 1..n"
+  return s.rails.map((_, i) => ({ id: `los-${i + 1}`, label: `Leuning ${i + 1}` }));
 }
-const candLen = (s, pos) => { const c = candidates(s).find(x => x.id === pos); return c ? (c.len || Math.round((c.a ? c.a.distanceTo(c.b) : 2.2) * 1000)) : null; };
+const candLen = () => null;
 const posLabel = (s, pos) => candidates(s).find(x => x.id === pos)?.label || pos;
 function sortRails(s) {
   const order = candidates(s).map(c => c.id);
@@ -66,26 +57,38 @@ function sortRails(s) {
 }
 const numbered = s => s.rails.map((r, i) => ({ ...r, nr: i + 1 }));
 
-/* ---------- state & viewer ---------- */
+/* ---------- state & detail photo ---------- */
 let state = S.load();
 let maxStep = state.step;
-let viewer = null, viewerKey = '';
 const host = $('.cfg-viewer');
+const photoImg = $('.d-photo', host);
+const viewKey = { rail: 1 };   // which rail the photo shows when finishes differ per rail
+const preload = new Set();
 function syncViewer() {
-  if (!viewer) return;
   const s = state;
-  const key = `${s.stair.type}|${s.stair.dir}|${isLoose(s.stair.type) ? s.rails.length : ''}`;
-  if (key !== viewerKey) { viewer.setStair(s.stair.type || 'recht', s.stair.dir, s.rails.length); viewerKey = key; }
-  viewer.setRails(numbered(s).map(r => ({ pos: r.pos, nr: r.nr, lengthMm: r.lengthMm, size: S.railProfile(s, r), color: S.railColor(s, r) })));
-  viewer.setMode(STEPS[s.step].id === 'posities' && !isLoose(s.stair.type) ? 'positions' : 'view');
+  const list = numbered(s);
+  if (viewKey.rail > list.length) viewKey.rail = 1;
+  const r = list[viewKey.rail - 1] || { nr: 1 };
+  const size = SIZES[S.railProfile(s, r)] || SIZES['50x30'];
+  const color = S.railColor(s, r);
+  const file = `assets/detail/${size.form === 'rond' ? 'rond' : 'rect'}-${color}.jpg`;
+  if (photoImg.getAttribute('src') !== file) {
+    host.classList.add('is-swapping');
+    const img = new Image();
+    img.onload = () => { photoImg.src = file; host.classList.remove('is-swapping'); };
+    img.onerror = () => host.classList.remove('is-swapping');
+    img.src = file;
+  }
+  photoImg.alt = `Detail: VALIER-leuning ${size.formName.toLowerCase()} ${size.name}, ${colorOf(color).name.toLowerCase()}`;
+  $('.d-spec', host).innerHTML = `<b>${esc(size.formName)} ${esc(size.name)}</b><span>${esc(colorOf(color).name)}${color === 'ral' && S.railRal(s, r) ? ' ' + esc(S.railRal(s, r)) : ''}</span>`;
+  const lens = list.map(x => (lenOk(x.lengthMm) ? x.lengthMm.toLocaleString('nl-NL') + ' mm' : '—'));
+  const differs = list.some(x => S.railProfile(s, x) !== S.railProfile(s, list[0]) || S.railColor(s, x) !== S.railColor(s, list[0]));
+  $('.d-rails', host).innerHTML = list.map((x, i) => `<button type="button" class="d-rail${differs && x.nr === r.nr ? ' is-on' : ''}" data-rail="${x.nr}" ${differs ? '' : 'tabindex="-1"'}><span class="badge">${x.nr}</span>${s.lengthsUnknown ? 'inmeten' : lens[i]}</button>`).join('');
+  host.classList.toggle('is-multi', differs);
+  // warm the cache for the other finishes of this profile
+  for (const c of COLORS) { const f = `assets/detail/${size.form === 'rond' ? 'rond' : 'rect'}-${c.id}.jpg`; if (!preload.has(f)) { preload.add(f); new Image().src = f; } }
 }
-import('./viewer3d.js').then(m => {
-  viewer = m.createViewer(host, { onToggle: id => toggleRail(id) });
-  if (!viewer) return;
-  window.valierViewer = viewer;
-  syncViewer();
-}).catch(() => host.classList.add('no-webgl'));
-
+host.addEventListener('click', e => { const b = e.target.closest('[data-rail]'); if (b && host.classList.contains('is-multi')) { viewKey.rail = +b.dataset.rail; syncViewer(); } });
 function set(fn, { rerender = true } = {}) {
   S.update(fn);
   state = S.get();
@@ -365,7 +368,6 @@ body.addEventListener('click', e => {
   if (a === 'type') chooseType(id);
   if (a === 'dir') chooseDir(id);
   if (a === 'quick') quickRoute();
-  if (a === 'view') viewer?.view(id);
   if (a === 'pos') toggleRail(id);
   if (a === 'count') setLooseCount(state.rails.length + +b.dataset.d);
   if (a === 'unit') set(s => { s.unit = id; });
@@ -579,7 +581,7 @@ function showConfirmation(req) {
   $('.cfg-nav').hidden = true;
   $('.cfg-price').hidden = true;
 }
-body.addEventListener('click', e => { if (e.target.closest('[data-action="restart"]')) { S.reset(); state = S.get(); photos = []; maxStep = 0; $('.cfg').classList.remove('is-confirmed'); $('.cfg-nav').hidden = false; history.replaceState(null, '', location.pathname + '#configurator'); viewerKey = ''; syncViewer(); render(); } });
+body.addEventListener('click', e => { if (e.target.closest('[data-action="restart"]')) { S.reset(); state = S.get(); photos = []; maxStep = 0; $('.cfg').classList.remove('is-confirmed'); $('.cfg-nav').hidden = false; history.replaceState(null, '', location.pathname + '#configurator'); syncViewer(); render(); } });
 
 /* ---------- nav & progress ---------- */
 $('.cfg-progress').innerHTML = STEPS.map((st, i) => `<li><button type="button" data-goto="${i}"><span class="dot"></span><span class="lbl">${st.short}</span></button></li>`).join('');
@@ -623,6 +625,7 @@ if (params.get('type') && (typeOf(params.get('type')) || params.get('type') === 
   state = S.get();
 }
 maxStep = Math.max(maxStep, state.step);
+syncViewer();
 for (let k = 0; k < state.step; k++) if (stepError(k)) { state.step = k; break; }
 window.valier = { get: () => S.get(), set, go, toggleRail, STEPS, buildRequest: () => buildRequest(S.get(), 'TEST') };
 if (params.get('aanvraag')) {
