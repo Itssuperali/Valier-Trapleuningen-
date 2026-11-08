@@ -7,17 +7,8 @@
   const root = document.documentElement;
   root.classList.add('fx');
 
-  /* ---- Intro: once per visit ---- */
-  const intro = document.querySelector('.intro');
-  let seen = false;
-  try { seen = sessionStorage.getItem('valier-intro') === '1'; sessionStorage.setItem('valier-intro', '1'); } catch { /* ignore */ }
-  const start = () => root.classList.add('is-loaded');
-  if (!intro || reduce || seen || location.hash) { intro?.remove(); start(); }
-  else {
-    root.classList.add('is-intro');
-    setTimeout(() => { root.classList.remove('is-intro'); start(); }, 1500);
-    setTimeout(() => intro.remove(), 2600);
-  }
+  /* ---- Entrance: start right away, no waiting screen ---- */
+  requestAnimationFrame(() => root.classList.add('is-loaded'));
 
   /* ---- Hero slideshow with progress bars ---- */
   const slides = [...document.querySelectorAll('.hero2__media .hs')];

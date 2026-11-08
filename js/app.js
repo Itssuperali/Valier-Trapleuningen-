@@ -19,12 +19,12 @@ const typeOf = id => STAIR_TYPES.find(t => t.id === id);
 const isLoose = t => t === 'los' || t === 'anders';
 
 const STEPS = [
-  { id: 'posities', short: 'Leuningen', title: 'Waar wil je een trapleuning?', sub: 'Klik op de gewenste plekken in het 3D-model.' },
-  { id: 'lengte', short: 'Lengte', title: 'Wat is de lengte van jouw leuningen?', sub: 'Meet langs de leuning, in millimeters.' },
-  { id: 'vorm', short: 'Vorm', title: 'Welke vorm past bij jouw interieur?', sub: 'Kies de vorm en de maat van het profiel.' },
-  { id: 'kleur', short: 'Kleur', title: 'Welke kleur krijgt jouw trapleuning?', sub: 'Tweelaagse poedercoating.' },
-  { id: 'overzicht', short: 'Overzicht', title: 'Jouw trapleuningen op maat', sub: 'Controleer je keuzes. Alles is nog te wijzigen.' },
-  { id: 'aanvraag', short: 'Aanvraag', title: 'Bijna klaar!', sub: 'Vul je gegevens in en ontvang een offerte op maat.' }
+  { id: 'posities', short: 'Aantal', title: 'Hoeveel leuningen?', sub: 'Elke VALIER-leuning is recht. Tel de rechte stukken wand langs je trap.' },
+  { id: 'lengte', short: 'Lengte', title: 'De lengte per leuning', sub: 'Gemeten langs de leuning, schuin mee met de trap.' },
+  { id: 'vorm', short: 'Profiel', title: 'Het profiel', sub: 'Rechthoekig of rond. Beide in staal, op maat gezaagd.' },
+  { id: 'kleur', short: 'Afwerking', title: 'De afwerking', sub: 'Tweelaagse poedercoating. Mat, egaal en slijtvast.' },
+  { id: 'overzicht', short: 'Overzicht', title: 'Jouw leuningen', sub: 'Controleer je keuzes. Alles is nog aan te passen.' },
+  { id: 'aanvraag', short: 'Aanvraag', title: 'Vraag je offerte aan', sub: 'Persoonlijk en vrijblijvend. Wij controleren eerst je maten.' }
 ];
 
 /* ---------- 2D stair icons (top view, walking direction = arrow) ---------- */
@@ -191,14 +191,16 @@ function showError(msg) {
 
 /* ---------- rendering ---------- */
 const body = $('.cfg-panel__body');
+let lastStep = -1;
 function render() {
   const s = state, step = STEPS[s.step];
   $('.cfg-error').hidden = true;
   $('.cfg-step-no').textContent = `Stap ${s.step + 1} van ${STEPS.length}`;
   $('.cfg-title').textContent = step.title;
-  $('.cfg-sub').textContent = step.id === 'posities' && isLoose(s.stair.type) ? 'Hoeveel losse, rechte leuningen heb je nodig?' : step.id === 'posities' && s.stair.type && innerWidth < 960 ? 'Tik op de gewenste plekken in het 3D-model, of kies ze hieronder.' : step.sub;
-  if (step.id === 'posities' && isLoose(s.stair.type)) $('.cfg-title').textContent = 'Hoeveel leuningen?';
+  $('.cfg-sub').textContent = step.sub;
+  
   body.innerHTML = VIEWS[step.id](s);
+  if (lastStep !== s.step) { body.classList.remove('is-enter'); void body.offsetWidth; body.classList.add('is-enter'); lastStep = s.step; }
   renderNav();
   renderPrice();
   if (step.id === 'aanvraag') {
@@ -227,7 +229,7 @@ function renderPrice() {
   const p = calculate(s, { withDelivery: step === 'aanvraag' });
   el.hidden = false;
   el.innerHTML = p.status === 'indicatie'
-    ? `<span>Indicatie${step === 'aanvraag' ? ' totaal' : ''}</span><strong>${euro(p.total)}</strong><small>${PRICING.inclBtw ? 'incl. btw' : 'excl. btw'}</small>`
+    ? `<span>Indicatie</span><strong>${euro(p.total)}</strong><small>${PRICING.inclBtw ? 'inclusief btw' : 'exclusief btw'}</small>`
     : `<span>Prijs</span><strong>Op aanvraag</strong>`;
 }
 
@@ -263,7 +265,7 @@ const VIEWS = {
         <output>${s.rails.length} ${s.rails.length === 1 ? 'leuning' : 'leuningen'}</output>
         <button type="button" data-action="count" data-d="1" aria-label="Eén leuning meer" ${s.rails.length >= 8 ? 'disabled' : ''}>+</button>
       </div>
-      <p class="note">Elke VALIER-leuning is recht. Je vult straks per leuning de lengte in.</p>`;
+      <p class="fine">Twijfel je? Kies je beste schatting; wij controleren alles voordat je een offerte krijgt.</p>`;
     const nums = Object.fromEntries(numbered(s).map(r => [r.pos, r.nr]));
     return `
       <ul class="positions">
@@ -305,7 +307,7 @@ const VIEWS = {
       </div>
       ${s.rails.length > 1 ? applyToggle('profile', s.apply.profile) : ''}
       ${s.apply.profile === 'per' ? `<div class="per">${numbered(s).map(r => `<label class="per__row">${badge(r.nr)}<span>${esc(posLabel(s, r.pos))}</span>
-        <select data-action="rail-profile" data-pos="${r.pos}">${PROFILE_FORMS.map(f => `<optgroup label="${f.name}">${f.sizes.map(z => `<option value="${z.id}" ${S.railProfile(s, r) === z.id ? 'selected' : ''}>${f.name} ${z.name}</option>`).join('')}</optgroup>`).join('')}</select></label>`).join('')}</div>` : ''}
+        <span class="mini" role="group" aria-label="Profiel leuning ${r.nr}">${PROFILE_FORMS.flatMap(f => f.sizes.map(z => `<button type="button" class="mini__opt${S.railProfile(s, r) === z.id ? ' is-on' : ''}" data-action="rail-profile-set" data-pos="${r.pos}" data-id="${z.id}" aria-pressed="${S.railProfile(s, r) === z.id}">${f.id === 'rond' ? 'Rond ' : ''}${z.name}</button>`)).join('')}</span></label>`).join('')}</div>` : ''}
       <p class="fine">Het 3D-model toont de echte doorsnede: rechthoekig ligt plat, 50 mm breed.</p>`;
   },
   kleur(s) {
@@ -316,7 +318,7 @@ const VIEWS = {
       ${s.apply.color === 'all' && s.color === 'ral' ? `<label class="field"><span>RAL-code</span><input type="text" data-action="ral" value="${esc(s.ral)}" placeholder="bijv. RAL 7016"></label>` : ''}
       ${s.rails.length > 1 ? applyToggle('color', s.apply.color) : ''}
       ${s.apply.color === 'per' ? `<div class="per">${numbered(s).map(r => `<label class="per__row">${badge(r.nr)}<span>${esc(posLabel(s, r.pos))}</span>
-        <select data-action="rail-color" data-pos="${r.pos}">${COLORS.map(c => `<option value="${c.id}" ${S.railColor(s, r) === c.id ? 'selected' : ''}>${c.name}</option>`).join('')}</select>
+        <span class="mini mini--sw" role="group" aria-label="Kleur leuning ${r.nr}">${COLORS.map(c => `<button type="button" class="mini__sw${S.railColor(s, r) === c.id ? ' is-on' : ''}" data-action="rail-color-set" data-pos="${r.pos}" data-id="${c.id}" aria-pressed="${S.railColor(s, r) === c.id}" title="${c.name}"><i style="background:${c.swatch || c.hex}"></i><span class="sr">${c.name}</span></button>`).join('')}</span>
         ${S.railColor(s, r) === 'ral' ? `<input class="per__ral" type="text" data-action="rail-ral" data-pos="${r.pos}" value="${esc(r.ral || '')}" placeholder="RAL-code">` : ''}</label>`).join('')}</div>` : ''}
       <p class="fine">Kleuren op een scherm zijn indicatief. De definitieve kleur en afwerking bevestigen we in de offerte.</p>`;
   },
@@ -391,6 +393,8 @@ body.addEventListener('click', e => {
   if (a === 'color') set(s => { s.color = id; });
   if (a === 'apply-color') set(s => { s.apply.color = id; if (id === 'per') s.rails.forEach(r => (r.color = r.color || s.color)); });
   if (a === 'goto') go(+b.dataset.step);
+  if (a === 'rail-profile-set') set(s => { s.rails.find(x => x.pos === b.dataset.pos).profile = id; });
+  if (a === 'rail-color-set') set(s => { s.rails.find(x => x.pos === b.dataset.pos).color = id; });
 });
 body.addEventListener('input', e => {
   const t = e.target, a = t.dataset.action;
