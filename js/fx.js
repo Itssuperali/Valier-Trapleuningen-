@@ -74,4 +74,19 @@
   if (nav && hero && 'IntersectionObserver' in window) {
     new IntersectionObserver(([en]) => nav.classList.toggle('nav--dark', en.isIntersecting), { rootMargin: '-60px 0px -100% 0px' }).observe(hero);
   }
+
+  /* ---- Zoom for the editorial gallery ---- */
+  const box = document.getElementById('lightbox');
+  const zooms = [...document.querySelectorAll('[data-zoom]')];
+  if (box && box.showModal && zooms.length) {
+    const img = box.querySelector('img'), cap = box.querySelector('.lb-cap');
+    let at = 0, active = false;
+    const show = i => { at = (i + zooms.length) % zooms.length; img.src = zooms[at].dataset.zoom; img.alt = zooms[at].querySelector('img').alt; cap.textContent = `${zooms[at].dataset.cap}  ·  ${at + 1} / ${zooms.length}`; };
+    zooms.forEach((z, i) => z.addEventListener('click', () => { active = true; show(i); box.showModal(); }));
+    // take over prev/next only while a gallery photo is open
+    box.querySelector('.lb-prev').addEventListener('click', e => { if (active) { e.stopImmediatePropagation(); show(at - 1); } }, true);
+    box.querySelector('.lb-next').addEventListener('click', e => { if (active) { e.stopImmediatePropagation(); show(at + 1); } }, true);
+    box.addEventListener('keydown', e => { if (!active) return; if (e.key === 'ArrowLeft') { e.stopImmediatePropagation(); show(at - 1); } if (e.key === 'ArrowRight') { e.stopImmediatePropagation(); show(at + 1); } }, true);
+    box.addEventListener('close', () => { active = false; });
+  }
 })();

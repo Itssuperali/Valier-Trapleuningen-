@@ -62,7 +62,8 @@ let state = S.load();
 let maxStep = state.step;
 const host = $('.cfg-viewer');
 let photoImg = $('.d-photo.is-on', host);
-const viewKey = { rail: 1 };   // which rail the photo shows when finishes differ per rail
+const PROFILE_PHOTOS = { rechthoekig: ['koker-diagonaal', 'lijn-glas', 'led-detail', 'spots'], rond: ['rond-trap'] };
+const viewKey = { rail: 1, photo: null };   // which rail the photo shows when finishes differ per rail
 const preload = new Set();
 function syncViewer() {
   const s = state;
@@ -70,8 +71,12 @@ function syncViewer() {
   if (viewKey.rail > list.length) viewKey.rail = 1;
   const r = list[viewKey.rail - 1] || { nr: 1 };
   const size = SIZES[S.railProfile(s, r)] || SIZES['50x30'];
-  const color = S.railColor(s, r);
-  const file = `assets/detail/${size.form === 'rond' ? 'rond' : 'rect'}-${color}.jpg`;
+  const color = S.railColor(s, r), col = colorOf(color);
+  const photos = PROFILE_PHOTOS[size.form === 'rond' ? 'rond' : 'rechthoekig'];
+  if (!photos.includes(viewKey.photo)) viewKey.photo = photos[0];
+  const file = `assets/lux/${viewKey.photo}.jpg`;
+  const altText = `Geplaatste VALIER-leuning, ${size.formName.toLowerCase()} profiel`;
+  const syncAlt = () => host.querySelectorAll('.d-photo').forEach(i => (i.alt = i === photoImg ? altText : ''));
   if (photoImg.getAttribute('src') !== file) {
     // cross-fade: load into the hidden layer, then swap layers
     const next = [...host.querySelectorAll('.d-photo')].find(i => i !== photoImg);
@@ -84,17 +89,18 @@ function syncViewer() {
     };
     img.src = file;
   }
-  const syncAlt = () => { host.querySelectorAll('.d-photo').forEach(i => (i.alt = i === photoImg ? altText : '')); };
-  const altText = `Detail: VALIER-leuning ${size.formName.toLowerCase()} ${size.name}, ${colorOf(color).name.toLowerCase()}`;
   syncAlt();
-  $('.d-spec', host).innerHTML = `<b>${esc(size.formName)} ${esc(size.name)}</b><span>${esc(colorOf(color).name)}${color === 'ral' && S.railRal(s, r) ? ' ' + esc(S.railRal(s, r)) : ''}</span>`;
+  const ral = color === 'ral' && S.railRal(s, r) ? ' ' + esc(S.railRal(s, r)) : '';
+  $('.d-swatch', host).style.background = col.swatch || col.hex;
+  $('.d-spec', host).innerHTML = `<b>${esc(col.name)}${ral}</b><span>${esc(size.formName)} ${esc(size.name)}</span>`;
+  $('.d-thumbs', host).innerHTML = photos.length > 1 ? photos.map(p => `<button type="button" class="d-thumb${p === viewKey.photo ? ' is-on' : ''}" data-photo-id="${p}" aria-label="Toon andere foto"><img src="assets/lux/${p}-720.jpg" alt="" width="72" height="96" loading="lazy"></button>`).join('') : '';
   const lens = list.map(x => (lenOk(x.lengthMm) ? x.lengthMm.toLocaleString('nl-NL') + ' mm' : '—'));
   const differs = list.some(x => S.railProfile(s, x) !== S.railProfile(s, list[0]) || S.railColor(s, x) !== S.railColor(s, list[0]));
   $('.d-rails', host).innerHTML = list.map((x, i) => `<button type="button" class="d-rail${differs && x.nr === r.nr ? ' is-on' : ''}" data-rail="${x.nr}" ${differs ? '' : 'tabindex="-1"'}><span class="badge">${x.nr}</span>${s.lengthsUnknown ? 'inmeten' : lens[i]}</button>`).join('');
   host.classList.toggle('is-multi', differs);
-  // warm the cache for the other finishes of this profile
-  for (const c of COLORS) { const f = `assets/detail/${size.form === 'rond' ? 'rond' : 'rect'}-${c.id}.jpg`; if (!preload.has(f)) { preload.add(f); new Image().src = f; } }
+  photos.forEach(p => { const f = `assets/lux/${p}.jpg`; if (!preload.has(f)) { preload.add(f); new Image().src = f; } });
 }
+host.addEventListener('click', e => { const t = e.target.closest('[data-photo-id]'); if (t) { viewKey.photo = t.dataset.photoId; syncViewer(); } });
 host.addEventListener('click', e => { const b = e.target.closest('[data-rail]'); if (b && host.classList.contains('is-multi')) { viewKey.rail = +b.dataset.rail; syncViewer(); } });
 function set(fn, { rerender = true } = {}) {
   S.update(fn);
