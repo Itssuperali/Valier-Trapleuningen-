@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Offerte aanvragen | VALIER Trapleuningen</title>
+  <meta name="description" content="Stel je wandleuningen samen en vraag een vrijblijvende offerte aan. Direct een prijsindicatie.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Offerte aanvragen | VALIER Trapleuningen">
+  <meta property="og:description" content="Stel je wandleuningen samen en vraag een vrijblijvende offerte aan. Direct een prijsindicatie.">
+  <meta property="og:image" content="assets/lux/lijn-glas.jpg">
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<div class="topbar"><div class="container"><span>Stalen wandleuningen op maat, gemaakt in Ulft</span><span class="hide-m"><a href="mailto:info@valier.nl">info@valier.nl</a></span></div></div>
+<header class="header">
+  <div class="container">
+    <a class="logo" href="index.html" aria-label="VALIER Trapleuningen, naar de homepage"><svg viewBox="0 0 28 28" aria-hidden="true"><path fill="#1d1d1b" d="M5 5h4v14.5l5 3 5-3V5h4v16.8L14 27.4l-9-5.6z"/></svg><span><b>VALIER</b><small>Trapleuningen</small></span></a>
+    <nav class="menu" id="menu" aria-label="Hoofdmenu">
+      <a href="index.html">Home</a>
+      <a href="producten.html">Producten</a>
+      <a href="projecten.html">Projecten</a>
+      <a href="werkwijze.html">Werkwijze</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header__cta">
+      <a class="btn btn--primary btn--sm" href="offerte.html">Offerte aanvragen</a>
+      <button class="burger" type="button" aria-label="Menu openen" aria-controls="menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+<main>
+<section class="pagehead pagehead--sm">
+  <div class="container">
+    <nav class="crumbs" aria-label="Kruimelpad"><a href="index.html">Home</a> / Offerte aanvragen</nav>
+    <h1>Offerte aanvragen</h1>
+    <p class="lead">Stel je leuningen samen in vijf korte stappen. Je ziet direct een prijsindicatie; de offerte is vrijblijvend.</p>
+  </div>
+</section>
+
+<section class="section section--quote">
+  <div class="container quote">
+    <form class="quote__form" id="quote" action="https://formsubmit.co/info@valier.nl" method="POST" enctype="multipart/form-data" novalidate>
+
+      <fieldset class="qblock" id="q-profiel">
+        <legend><span class="qnum">1</span>Profiel</legend>
+        <div class="opts opts--3" data-group="profile"></div>
+      </fieldset>
+
+      <fieldset class="qblock" id="q-kleur">
+        <legend><span class="qnum">2</span>Kleur</legend>
+        <div class="opts opts--sw" data-group="color"></div>
+        <label class="field js-ral" hidden><span>RAL-code</span><input name="RAL" placeholder="Bijvoorbeeld RAL 7016" autocomplete="off"></label>
+        <p class="small">Tweelaagse poedercoating. De definitieve kleur bevestigen we in de offerte.</p>
+      </fieldset>
+
+      <fieldset class="qblock" id="q-lengtes">
+        <legend><span class="qnum">3</span>Leuningen en lengtes</legend>
+        <p class="small">Elke leuning is recht. Om een hoek komt per stuk wand een aparte leuning. Meet langs de wand, schuin mee met de trap. <a href="werkwijze.html#meten">Zo meet je</a></p>
+        <div class="rails" data-rails></div>
+        <div class="rails__foot">
+          <button type="button" class="btn btn--outline btn--sm" data-add>+ Leuning toevoegen</button>
+          <label class="check"><input type="checkbox" data-unknown> Ik weet de maten nog niet, kom inmeten</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="qblock" id="q-levering">
+        <legend><span class="qnum">4</span>Levering</legend>
+        <div class="opts opts--3" data-group="delivery"></div>
+        <label class="field js-pc"><span>Postcode</span><input name="Postcode" data-postcode required inputmode="text" autocomplete="postal-code" maxlength="7" placeholder="1234 AB"><span class="field__hint" data-place></span></label>
+      </fieldset>
+
+      <fieldset class="qblock" id="q-gegevens">
+        <legend><span class="qnum">5</span>Je gegevens</legend>
+        <div class="fields">
+          <label class="field"><span>Naam</span><input name="Naam" data-req required autocomplete="name"></label>
+          <label class="field"><span>E-mailadres</span><input name="E-mail" data-req type="email" required autocomplete="email"></label>
+          <label class="field"><span>Telefoonnummer</span><input name="Telefoon" data-req type="tel" required autocomplete="tel"></label>
+          <label class="field"><span>Plaats</span><input name="Plaats" data-plaats autocomplete="address-level2"></label>
+          <label class="field full"><span>Opmerkingen <small>(optioneel)</small></span><textarea name="Opmerkingen" rows="3" placeholder="Bijvoorbeeld het type wand of bijzonderheden van je trap"></textarea></label>
+          <div class="field full">
+            <span>Foto's van je trap <small>(optioneel, max. 6 foto's, samen 10 MB)</small></span>
+            <label class="upload"><input type="file" data-photos accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple><span>Foto's kiezen</span></label>
+            <ul class="uploads" data-photolist></ul>
+            <span class="field__err" data-photoerr hidden></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="js-hidden"></div>
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="sr" aria-hidden="true">
+    </form>
+
+    <aside class="summary" aria-label="Overzicht van je aanvraag">
+      <div class="summary__card">
+        <div class="summary__img"><img data-sumimg src="assets/lux/koker-diagonaal-720.jpg" alt="" width="720" height="960"></div>
+        <div class="summary__body">
+          <h2 class="summary__title">Jouw leuningen</h2>
+          <dl class="sumlist">
+            <div><dt>Profiel</dt><dd data-sum="profile"></dd></div>
+            <div><dt>Kleur</dt><dd data-sum="color"></dd></div>
+            <div><dt>Leuningen</dt><dd data-sum="rails"></dd></div>
+            <div><dt>Totale lengte</dt><dd data-sum="length"></dd></div>
+            <div><dt>Levering</dt><dd data-sum="delivery"></dd></div>
+          </dl>
+          <div class="price"><span>Prijsindicatie</span><strong data-sum="price"></strong><small data-sum="pricenote"></small></div>
+          <button type="submit" form="quote" class="btn btn--primary btn--block" data-submit>Vraag offerte aan</button>
+          <p class="small">Vrijblijvend. Wij controleren je maten en sturen binnen enkele werkdagen een offerte.</p>
+          <p class="field__err" data-formerr role="alert" hidden></p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<div class="mbar" aria-hidden="true"><div><span>Prijsindicatie</span><strong data-sum="price"></strong></div><a class="btn btn--primary btn--sm" href="#q-gegevens">Aanvragen</a></div>
+
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html"><svg viewBox="0 0 28 28" aria-hidden="true"><path fill="#ffffff" d="M5 5h4v14.5l5 3 5-3V5h4v16.8L14 27.4l-9-5.6z"/></svg><span><b>VALIER</b></span></a>
+        <p>Stalen wandleuningen op maat. Gemaakt in onze werkplaats in Ulft en door ons gemonteerd.</p>
+      </div>
+      <div><h4>Producten</h4><a href="producten.html#profielen">Profielen</a><a href="producten.html#kleuren">Kleuren</a><a href="producten.html#montage">Bevestiging en montage</a><a href="offerte.html">Offerte aanvragen</a></div>
+      <div><h4>Informatie</h4><a href="projecten.html">Projecten</a><a href="werkwijze.html">Werkwijze</a><a href="werkwijze.html#meten">Zo meet je</a><a href="werkwijze.html#vragen">Veelgestelde vragen</a></div>
+      <div><h4>Contact</h4><a href="mailto:info@valier.nl">info@valier.nl</a><a href="contact.html">Ulft, Gelderland</a><a href="contact.html">Contactformulier</a></div>
+    </div>
+    <div class="footer__base"><span>© 2026 VALIER Trapleuningen</span><span>Prijzen inclusief btw. Een aanvraag is vrijblijvend.</span></div>
+  </div>
+</footer>
+<dialog class="lightbox" id="lightbox" aria-label="Foto vergroot"><img alt=""><button class="lb-close" type="button" aria-label="Sluiten">×</button><button class="lb-prev" type="button" aria-label="Vorige foto">‹</button><button class="lb-next" type="button" aria-label="Volgende foto">›</button><p class="lb-cap"></p></dialog>
+<script src="js/site.js" defer></script>
+<script type="module" src="js/offerte.js"></script>
+</body>
+</html>

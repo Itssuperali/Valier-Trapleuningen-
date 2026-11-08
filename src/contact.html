@@ -1,0 +1,34 @@
+<!--scripts:<script src="js/contact.js" defer></script>-->
+<section class="pagehead">
+  <div class="container">
+    <nav class="crumbs" aria-label="Kruimelpad"><a href="index.html">Home</a> / Contact</nav>
+    <h1>Contact</h1>
+    <p class="lead">Een vraag over je trap of een leuning? Stuur ons een bericht; we reageren zo snel mogelijk.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split" style="align-items:start">
+    <div>
+      <h2>Gegevens</h2>
+      <div class="prose" style="margin-top:16px">
+        <p><strong>VALIER Trapleuningen</strong><br>Werkplaats in Ulft, Gelderland</p>
+        <p>E-mail: <a href="mailto:info@valier.nl">info@valier.nl</a></p>
+        <p>Weet je al wat je wilt? Via de <a href="offerte.html">offertepagina</a> stel je je leuningen samen en zie je direct een prijsindicatie.</p>
+      </div>
+    </div>
+    <form class="card" id="contact" action="https://formsubmit.co/info@valier.nl" method="POST" novalidate style="padding:28px;gap:16px;display:grid">
+      <div class="fields">
+        <label class="field"><span>Naam</span><input name="Naam" required autocomplete="name"></label>
+        <label class="field"><span>E-mailadres</span><input name="E-mail" type="email" required autocomplete="email"></label>
+        <label class="field full"><span>Telefoonnummer <small>(optioneel)</small></span><input name="Telefoon" type="tel" autocomplete="tel"></label>
+        <label class="field full"><span>Bericht</span><textarea name="Bericht" required rows="5"></textarea></label>
+      </div>
+      <input type="hidden" name="_subject" value="Contactformulier VALIER">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="sr" aria-hidden="true">
+      <button class="btn btn--primary" type="submit">Verstuur bericht</button>
+      <p class="small" data-status role="status"></p>
+    </form>
+  </div>
+</section>
