@@ -345,3 +345,6 @@ a.card:hover .card__img img { transform: scale(1.03); }
   .opts--sw { grid-template-columns: 1fr 1fr; }
   .rail { grid-template-columns: 80px minmax(0, 1fr) 44px; gap: 8px; }
 }
+.measure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; display: grid; gap: 12px; }
+.measure svg { width: 100%; height: auto; display: block; }
+.measure figcaption { font-size: 14px; color: var(--ink-2); }
