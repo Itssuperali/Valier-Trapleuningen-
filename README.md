@@ -26,6 +26,7 @@ Dit zet de gedeelde kop (menu) en voet om elke pagina en schrijft de html-bestan
 - `js/site.js`: mobiel menu, fotofilter en vergroting (lightbox).
 - `js/offerte.js`: offerteformulier, overzicht, prijsindicatie en verzenden.
 - `js/contact.js`: contactformulier.
+- `js/scrollbuild.js` en `assets/build/`: het scrollblok "Van tekening tot leuning" op de homepage. Echte beelden maken: zie `SCROLLBUILD.md`, omzetten met `tools/frames.py`.
 - `js/catalog.js`: **alles wat je aanbiedt en rekent**: profielen, kleuren, leverwijzen, prijsregels, e-mailadres.
 - `js/pricing.js` en `js/state.js`: de prijsberekening op de achtergrond. De klant ziet alleen een totaal (of "Op aanvraag"). De opbouw staat alleen in de mail aan VALIER. Met `PRICING.showToCustomer = false` verberg je de prijs helemaal.
 - `data/pc4.json`: postcodes met coördinaten voor de reiskosten (bron en MIT-licentie in `data/LICENSE-4pp.txt`).

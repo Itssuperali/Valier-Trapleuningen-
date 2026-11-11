@@ -1,0 +1,35 @@
+{
+ "count": 96,
+ "width": 720,
+ "height": 1280,
+ "pattern": "assets/build/f-{n}.webp",
+ "pad": 3,
+ "placeholder": true,
+ "phases": [
+  {
+   "start": 0,
+   "title": "Het ontwerp",
+   "text": "We beginnen met jouw maten en een tekening van de trap."
+  },
+  {
+   "start": 19,
+   "title": "De kale trap",
+   "text": "Elke trap is anders. Daarom controleren wij alle maten."
+  },
+  {
+   "start": 38,
+   "title": "Uitzetten",
+   "text": "De lijn loopt precies mee met de trap. Per wand één rechte leuning."
+  },
+  {
+   "start": 57,
+   "title": "De houders",
+   "text": "Haakse houders met een vierkante wandplaat, stevig verankerd."
+  },
+  {
+   "start": 76,
+   "title": "De leuning",
+   "text": "Op maat gemaakt in Ulft, met een tweelaagse poedercoating."
+  }
+ ]
+}
